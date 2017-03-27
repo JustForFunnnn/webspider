@@ -1,0 +1,50 @@
+<div id="job-city-chart" class="large-chart-div"></div>
+
+<script type="text/javascript">
+    var jobCityChart = echarts.init(document.getElementById('job-city-chart'));
+    // 指定图表的配置项和数据
+
+    var option = {
+        title: {
+            text: '城市关于此职位的数量',
+            subtext: '数据来自拉勾'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'value',
+            boundaryGap: [0, 0.01]
+        },
+        yAxis: {
+            type: 'category',
+            data: [
+                {% for item in city_dict[::-1] %}
+                        '{{item[0]}}',
+                {% end %}
+            ]
+        },
+        series: [
+            {
+                name: '数量(单位:个)',
+                type: 'bar',
+                data: [
+                    {% for item in city_dict[::-1] %}
+                        {{item[1]}},
+                    {% end %}
+                ]
+            }
+        ]
+    };
+
+    jobCityChart.setOption(option);
+</script>

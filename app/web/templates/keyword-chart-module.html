@@ -1,0 +1,89 @@
+<div id="keyword-chart" class="chart-div"></div>
+
+<script>
+    var keywordChart = echarts.init(document.getElementById('keyword-chart'));
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: '关于此职位招聘的关键词',
+            x: 'center',
+            textStyle: {
+                fontSize: 23
+            }
+
+        },
+        backgroundColor: '#F7F7F7',
+        tooltip: {
+            show: true
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {
+                    iconStyle: {
+                        normal: {
+                            color: '#FFFFFF'
+                        }
+                    }
+                }
+            }
+        },
+        series: [{
+            name: '出现次数',
+            type: 'wordCloud',
+            //size: ['9%', '99%'],
+            sizeRange: [6, 66],
+            //textRotation: [0, 45, 90, -45],
+            rotationRange: [-45, 90],
+            //shape: 'circle',
+            textPadding: 0,
+            autoSize: {
+                enable: true,
+                minSize: 6
+            },
+            textStyle: {
+                normal: {
+                    color: function () {
+                        return 'rgb(' + [
+                                Math.round(Math.random() * 160),
+                                Math.round(Math.random() * 160),
+                                Math.round(Math.random() * 160)
+                            ].join(',') + ')';
+                    }
+                },
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowColor: '#333'
+                }
+            },
+            data: [{
+                name: "Jayfee",
+                value: 666
+            }, {
+                name: "Nancy",
+                value: 520
+            }]
+        }]
+    };
+
+    var JosnList = [];
+
+    JosnList.push(
+        {% for item in seg_dict %}
+            {% if item[0].lower() != keyword.lower() %}
+                {
+                    name:"{{item[0]}}",
+                    value: {{item[1]}}
+                },
+            {% end %}
+        {% end %}
+        {
+            name:"你看不到我",
+            value:-100
+        }
+    );
+
+    option.series[0].data = JosnList;
+
+
+    keywordChart.setOption(option);
+</script>

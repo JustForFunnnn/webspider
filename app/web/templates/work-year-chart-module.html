@@ -1,0 +1,52 @@
+<div id="work-year-chart" class="chart-div"></div>
+
+<script type="text/javascript">
+    var wordYearChart = echarts.init(document.getElementById('work-year-chart'));
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: '关于「{{keyword}}」的工作年限要求',
+            subtext: '数据来自于拉勾的爬虫',
+            x: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: [
+                    {% for (work_year, count) in work_year_dict.items() %}
+                        '{{work_year}}',
+                    {% end %}
+                ]
+        },
+        series: [
+            {
+                name: '拉勾数据',
+                type: 'pie',
+                radius: '55%',
+                center: ['50%', '60%'],
+                data: [
+                    {% for (work_year, count) in work_year_dict.items() %}
+                        {
+                            value: '{{count}}',
+                            name: '{{work_year}}'
+                        },
+                    {% end %}
+                ],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    wordYearChart.setOption(option);
+</script>

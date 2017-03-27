@@ -1,0 +1,59 @@
+<h4 class="text-center">学历要求</h4>
+<div id="education-year-chart" class="chart-div"></div>
+
+<script type="text/javascript">
+    var educationChart = echarts.init(document.getElementById('education-year-chart'));
+    // 指定图表的配置项和数据
+    option = {
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b}: {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            x: 'left',
+            data: [
+                    {% for (education, count) in education_dict.items() %}
+                        '{{education}}',
+                    {% end %}
+                ]
+        },
+        series: [
+            {
+                name: '拉勾数据',
+                type: 'pie',
+                radius: ['50%', '70%'],
+                avoidLabelOverlap: false,
+                label: {
+                    normal: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        show: true,
+                        textStyle: {
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data: [
+                    {% for (education, count) in education_dict.items() %}
+                        {
+                            value: '{{count}}',
+                            name: '{{education}}'
+                        },
+                    {% end %}
+                ]
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    educationChart.setOption(option);
+</script>

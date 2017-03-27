@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>LaGou Spider|HeGuozhu</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="{{ static_url('bootstrap/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ static_url('css/mystyle.css') }}"/>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script type="text/javascript" src="{{ static_url('js/jquery.min.js') }}"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="{{ static_url('bootstrap/js/bootstrap.min.js') }}"></script>
+    <link rel="icon" href="{{ static_url('img/favicon.ico') }}">
+    {% block header %}{% end %}
+</head>
+<body>
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container navbar-small">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
+                <span class="sr-only">Toggle navigation</span>
+            </button>
+            <a class="navbar-brand" href="/">LaGou Spider</a>
+        </div>
+        <form class="navbar-form navbar-right" role="search" action="/keyword">
+            <div class="form-group">
+                <input type="text" class="form-control" name="keyword" placeholder="输入些职位的关键词吧......">
+            </div>
+            <button type="submit" class="btn btn-default">Go</button>
+        </form>
+    </div>
+</nav>
+
+<div class="container main-body">
+    {% block body %}
+    {% end %}
+</div>
+
+<footer>
+    <hr>
+    <div class="container">
+        <p class="text-muted">
+            Design By &nbsp<span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp
+            <a href="mailto:heguozhuchn@gmail.com">HeGuozhu</a>&nbsp
+            <span class="glyphicon glyphicon-grain" aria-hidden="true"></span>
+            <a href="https://github.com/GuozhuHe/webspider">Github</a>
+            &nbsp Copyright &copy; 2017 华北科技学院
+        </p>
+    </div>
+</footer>
+
+</body>
+</html>

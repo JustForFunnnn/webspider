@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block body %}
+<div style="padding-top: 85px">
+    <form role="search" action="/keyword">
+        <div class="row form-group-lg ">
+            <div class="col-lg-12 ">
+                <h3 class="text-center">搜些什么吧......</h3>
+                <br/>
+                <br/>
+                <div class="input-group">
+                    <input type="text" class="form-control" name="keyword" placeholder="输入职位关键词...">
+                    <span class="input-group-btn"><button class="btn-lg btn-primary" type="submit">Go</button></span>
+                </div><!-- /input-group -->
+            </div>
+        </div><!-- /.row -->
+    </form>
+    <br/>
+    <br/>
+    <p class="text-center text-muted">收录职位数据
+        <strong style="font-size: 22px">{{ job_count }}</strong> 条, &nbsp公司数据
+        <strong style="font-size: 22px">{{ company_count }}</strong> 条, &nbsp数据库最后更新时间
+        <strong style="font-size: 22px">
+            {{ datetime.datetime.fromtimestamp(last_updated_time).strftime('%Y年%m月%d日%H:%M:%S') }}
+        </strong>
+    </p>
+    <br/>
+    <div style="height: 400px; width:400px;" class="center-block">
+        <div class="tagcloud ">
+            <a href="/keyword?keyword=Java" style="color: darkblue">Java</a>
+            <a href="/keyword?keyword=大数据" style="color: peru">大数据</a>
+            <a href="/keyword?keyword=测试" style="color: yellow">测试</a>
+            <a href="/keyword?keyword=web" style="color: black">web</a>
+            <a href="/keyword?keyword=前端" style="color: teal">前端</a>
+            <a href="/keyword?keyword=算法" style="color: red">算法</a>
+            <a href="/keyword?keyword=PHP" style="color: darkblue">PHP</a>
+            <a href="/keyword?keyword=linux" style="color: green">linux</a>
+            <a href="/keyword?keyword=C++" style="color: teal">C++</a>
+            <a href="/keyword?keyword=MySQL" style="color: red">MySQL</a>
+            <a href="/keyword?keyword=Android" style="color: lavender">Android</a>
+            <a href="/keyword?keyword=架构师" style="color: aqua">架构师</a>
+            <a href="/keyword?keyword=python" style="color: red">python</a>
+            <a href="/keyword?keyword=云计算" style="color: lavender">云计算</a>
+            <a href="/keyword?keyword=信息安全" style="color: aqua">信息安全</a>
+            <a href="/keyword?keyword=数据分析" style="color: chartreuse">数据分析</a>
+            <a href="/keyword?keyword=iOS" style="color: yellow">iOS</a>
+            <a href="/keyword?keyword=机器学习" style="color: red">机器学习</a>
+            <a href="/keyword?keyword=JavaScript" style="color: blue">JavaScript</a>
+            <a href="/keyword?keyword=数据库" style="color: red">数据库</a>
+            <a href="/keyword?keyword=hadoop" style="color: slategray">hadoop</a>
+            <a href="/keyword?keyword=.NET" style="color: red">.NET</a>
+            <a href="/keyword?keyword=嵌入式" style="color: black">嵌入式</a>
+            <a href="/keyword?keyword=深度学习" style="color: chartreuse">深度学习</a>
+            <a href="/keyword?keyword=node.js" style="color: green">node.js</a>
+            <a href="/keyword?keyword=DBA" style="color: slategray">DBA</a>
+            <a href="/keyword?keyword=全栈" style="color: peru">全栈</a>
+            <a href="/keyword?keyword=人工智能" style="color: red">人工智能</a>
+        </div>
+    </div>
+    <script type="text/javascript">
+        tagcloud({
+            selector: ".tagcloud",  //元素选择器
+            fontsize: 20,       //基本字体大小
+            radius: 120,         //滚动半径
+            mspeed: "normal",   //滚动最大速度 fast normal slow
+            ispeed: "fast",   //滚动初速度
+            direction: 135,     //初始滚动方向
+            keep: true          //鼠标移出组件后是否继续随鼠标滚动
+        });
+    </script>
+</div>
+{% end %}
+
+{% block header %}
+<link rel="stylesheet" href="{{ static_url('tagcloud/tagcloud.min.css') }}">
+<script src="{{ static_url('tagcloud/tagcloud.min.js') }}"></script>
+{% end %}

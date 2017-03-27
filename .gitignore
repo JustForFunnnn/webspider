@@ -87,3 +87,9 @@ ENV/
 
 # Rope project settings
 .ropeproject
+.idea/
+bin/
+log/
+dump.rdb
+.DS_Store
+cover/

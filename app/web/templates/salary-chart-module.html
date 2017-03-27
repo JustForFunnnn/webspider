@@ -1,0 +1,65 @@
+<div id="salary-chart" class="large-chart-div"></div>
+
+<script type="text/javascript">
+    var salaryChart = echarts.init(document.getElementById('salary-chart'));
+    // 指定图表的配置项和数据
+    
+    var option = {
+        title: {
+            text: '该职位的薪水情况'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: false,
+                data: [
+                    {% for (salary, count) in salary_dict.items() %}
+                        '{{salary}}k',
+                    {% end %}
+                ]
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: '给出该价位薪水的公司个数',
+                type: 'line',
+                stack: '总量',
+                areaStyle: {normal: {}},
+                data: [
+                    {% for (salary, count) in salary_dict.items() %}
+                        '{{count}}',
+                    {% end %}
+                ]
+            }
+        ]
+    };
+    
+
+    // 使用刚指定的配置项和数据显示图表。
+    salaryChart.setOption(option);
+</script>
