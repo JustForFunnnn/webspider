@@ -27,8 +27,8 @@ CELERY_TASK_PUBLISH_RETRY = False  # 重试
 # schedules
 CELERYBEAT_SCHEDULE = {
     'crawl-jobs-count-task': {
-        'task': 'app.tasks.crontab.crawl_lagou_job_count',
-        'schedule': crontab(hour=0, minute=10),
+        'task': 'app.tasks.jobs_count.crawl_lagou_jobs_count',
+        'schedule': crontab(hour='00', minute='10'),
         # "schedule": timedelta(seconds=5),
         # 'args': (5, 8)  # 任务函数参数
     },

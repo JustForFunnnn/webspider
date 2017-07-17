@@ -20,7 +20,7 @@ from app.utils.time_tools import get_date_begin_by_timestamp
 def crawl_lagou_jobs_count():
     pre_date = get_date_begin_by_timestamp(after_days=-1)
     keywords = KeywordController.get_most_frequently_keywords(limit=400)
-    logging.info('{} crawl_lagou_job_count 定时任务运行中! 关键词 {} 个'.format(pre_date, count(keywords)))
+    logging.info('{} crawl_lagou_job_count 定时任务运行中! 关键词 {} 个'.format(pre_date, len(keywords)))
     for keyword in keywords:
         city_jobs_count = {
             '全国': 0, '北京': 0, '上海': 0, '广州': 0, '深圳': 0, '杭州': 0, '成都': 0

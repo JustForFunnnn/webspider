@@ -12,6 +12,7 @@ class KeywordHandler(BaseHandler):
         keyword = KeywordController.get(name=keyword_name)
         if not keyword:
             self.write_error(404)
+            return
         jobs = JobController.list(keyword_id=keyword.id)
         educations_request_counter = JobController.educations_request_analyze(jobs=jobs)
         finance_stage_distribution = JobController.finance_stage_distribution_analyze(jobs=jobs)
