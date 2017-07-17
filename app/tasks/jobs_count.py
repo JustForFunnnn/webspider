@@ -26,7 +26,7 @@ def crawl_lagou_jobs_count():
             '全国': 0, '北京': 0, '上海': 0, '广州': 0, '深圳': 0, '杭州': 0, '成都': 0
         }
         for city in city_jobs_count:
-            response_json = request_jobs_count_json()
+            response_json = request_jobs_count_json(city=city, keyword=keyword)
             city_jobs_count[city] = response_json['content']['positionResult']['totalCount']
         JobsCountController.add(date=pre_date, keyword_id=keyword.id,
                                 all_city=city_jobs_count['全国'], beijing=city_jobs_count['北京'],
