@@ -25,19 +25,3 @@ class JobKeywordModel(BaseModel):
         job_keyword = cls(job_id=int(job_id), keyword_id=int(keyword_id), city_id=int(city_id))
         cls.session.merge(job_keyword)
         cls.session.commit()
-
-    @classmethod
-    def get_most_frequently_keywords(cls, limit):
-        """
-        获取出现频率最高的 n 个关键字
-        :param limit: 限定前几个关键字
-        :return: [(1,200),(2,100)....]  (keyword_id, count)
-        """
-        sql = text("""SELECT keyword.id, COUNT(*) AS count
-                FROM job_keyword, keyword
-                WHERE job_keyword.keyword_id = keyword.id
-                GROUP BY job_keyword.keyword_id
-                ORDER BY count DESC
-                LIMIT :limit_count""")
-        query = cls.session.execute(sql, {'limit_count': limit})
-        return query.fetchall()

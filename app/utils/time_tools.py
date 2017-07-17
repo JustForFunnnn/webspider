@@ -3,6 +3,22 @@
 import time
 import datetime as dt
 
+from common import constants
+
+
+def get_date_begin_by_timestamp(timestamp=None, after_days=0):
+    """
+    获取时间戳对应的日期的开始时间
+    :param timestamp: 时间戳
+    :param after_days: 相对于当天后 n 天的时间戳 可以为负数
+    :return:
+    """
+    if timestamp is None:
+        timestamp = time.time()
+    date_string = time.strftime('%Y-%m-%d', time.localtime(timestamp))
+    strut_time = time.strptime(date_string, '%Y-%m-%d')
+    return int(time.mktime(strut_time) + constants.SECONDS_OF_DAY * after_days)
+
 
 def date2timestamp(date_string, date_format='%Y-%m-%d'):
     """

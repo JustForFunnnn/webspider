@@ -21,8 +21,3 @@ class JobKeywordModelTestCase(BaseTestCase):
         self.assertEqual(len(job_kyewords), 1)
         for (key, value) in data.items():
             self.assertEqual(getattr(job_kyewords[0], key), value)
-
-    def test_get_most_frequently_keywords(self):
-        keyword_counts = JobKeywordModel.get_most_frequently_keywords(limit=10)
-        self.assertEqual(keyword_counts[0], (100, 2))
-        self.assertEqual(keyword_counts[1], (101, 1))

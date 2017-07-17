@@ -31,3 +31,8 @@ class KeywordModelTestCase(BaseTestCase):
         KeywordModel.insert_if_not_exist(name='python')
         keywords = KeywordModel.list()
         self.assertEqual(len(keywords), 3)
+
+    def test_get_most_frequently_keywords(self):
+        keywords = KeywordModel.get_most_frequently_keywords(limit=10)
+        self.assertEqual(keywords[0].times, 2)
+        self.assertEqual(keywords[1].times, 1)

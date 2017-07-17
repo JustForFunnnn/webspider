@@ -1,5 +1,4 @@
 # coding=utf-8
-import time
 import logging
 from math import ceil
 
@@ -17,7 +16,7 @@ from app.controllers.job_keyword import JobKeywordController
 from app.utils.time_tools import job_date2timestamp
 from app.utils.util import crawler_sleep
 from common.exception import RequestsError
-from common.constants import EDUCATION_DICT, JOB_NATURE_DICT, WORK_YEAR_DICT
+from common.constants import EDUCATION_REQUEST_DICT, JOB_NATURE_DICT, WORK_YEARS_REQUEST_DICT
 from app.utils.http_tools import generate_http_header, filter_http_tag
 
 logger = logging.getLogger(__name__)
@@ -46,11 +45,11 @@ def generate_job_data(job, company_id):
     city_id = 0 if 'city' not in job else CityController.get_city_id_by_name(job['city'])
     title = job['positionName']
     work_year = filter_http_tag(job['workYear'])
-    if work_year not in WORK_YEAR_DICT:
+    if work_year not in WORK_YEARS_REQUEST_DICT:
         logger.error(work_year + 'not in WORK_YEAR_DICT')
-    work_year = WORK_YEAR_DICT[work_year] if work_year in WORK_YEAR_DICT else WORK_YEAR_DICT['unknown']
+    work_year = WORK_YEARS_REQUEST_DICT[work_year] if work_year in WORK_YEARS_REQUEST_DICT else WORK_YEARS_REQUEST_DICT['unknown']
     salary = job['salary']
-    education = EDUCATION_DICT[job['education']]
+    education = EDUCATION_REQUEST_DICT[job['education']]
     department = department
     description = description
     advantage = job['positionAdvantage'] if 'positionAdvantage' in job else ''
@@ -90,6 +89,7 @@ def requests_job_detail_data(job_id):
             allow_redirects=False,
             timeout=constants.TIMEOUT)
     except RequestException as e:
+        logging.error(e)
         raise RequestsError(error_log=e)
     html = etree.HTML(response.text)
     department = html.xpath('//div[@class="job-name"]/div[@class="company"]/text()')
@@ -132,11 +132,12 @@ def request_job_json(company_id, page_no):
     headers = generate_http_header()
     crawler_sleep()
     try:
-        response = requests.get(
+        response_json = requests.get(
             url=constants.COMPANY_JOB_URL,
             params=prams,
             headers=headers,
-            timeout=constants.TIMEOUT)
+            timeout=constants.TIMEOUT).json()
     except RequestException as e:
+        logging.error(e)
         raise RequestsError(error_log=e)
-    return response.json()
+    return response_json

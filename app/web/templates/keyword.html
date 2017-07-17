@@ -6,17 +6,17 @@
     <br>
     {% include 'work-year-chart-module.html' %}
     <hr/>
+    {% include 'salary-chart-module.html' %}
+    <hr/>
     {% include 'education-chart-module.html' %}
     <hr/>
-    {% include 'job-city-chart-module.html' %}
+    {% include 'city-jobs-chart-module.html' %}
     <hr/>
     {% include 'finance-stage-chart-module.html' %}
-    <hr/>
-    {% include 'salary-chart-module.html' %}
+
 </div>
 {% end %}
 
 {% block header %}
 <script src="{{ static_url('js/echarts.min.js') }}"></script>
-<script src="{{ static_url('js/worldcloud.js') }}"></script>
 {% end %}

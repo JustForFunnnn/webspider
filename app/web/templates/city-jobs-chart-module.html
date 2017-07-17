@@ -28,7 +28,7 @@
         yAxis: {
             type: 'category',
             data: [
-                {% for item in city_dict[::-1] %}
+                {% for item in city_jobs_counter[::-1] %}
                         '{{item[0]}}',
                 {% end %}
             ]
@@ -38,7 +38,7 @@
                 name: '数量(单位:个)',
                 type: 'bar',
                 data: [
-                    {% for item in city_dict[::-1] %}
+                    {% for item in city_jobs_counter[::-1] %}
                         {{item[1]}},
                     {% end %}
                 ]

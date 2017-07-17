@@ -40,8 +40,8 @@ def update_company_data(city_id, finance_stage_id, industry_id, update_job=False
         if len(companys) == 0:
             break
         for company in companys:
-            company_id = company['companyId']
-            if CompanyController.count(id=int(company_id)) == 0:
+            company_id = int(company['companyId'])
+            if CompanyController.count(id=company_id) == 0:
                 generate_company_data(company=company, city_id=city_id)
             # 更新公司下职位的数据
             if update_job and not redis_instance.sismember(constants.REDIS_VISITED_COMPANY_KEY, company_id):
@@ -96,6 +96,7 @@ def requests_company_detail_data(company_id):
             allow_redirects=False,
             timeout=constants.TIMEOUT)
     except RequestException as e:
+        logging.error(e)
         raise RequestsError(error_log=e)
     html = etree.HTML(response.text)
     advantage = html.xpath('//div[@id="tags_container"]//li/text()')
@@ -147,12 +148,13 @@ def request_company_json(url, page_no):
     headers = generate_http_header()
     crawler_sleep()
     try:
-        response = requests.get(
+        response_json = requests.get(
             url=url,
             params=prams,
             headers=headers,
             allow_redirects=False,
-            timeout=constants.TIMEOUT)
+            timeout=constants.TIMEOUT).json()
     except RequestException as e:
+        logging.error(e)
         raise RequestsError(error_log=e)
-    return response.json()
+    return response_json

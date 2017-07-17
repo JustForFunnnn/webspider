@@ -13,7 +13,7 @@
             orient: 'vertical',
             x: 'left',
             data: [
-                    {% for (education, count) in education_dict.items() %}
+                    {% for (education, count) in educations_request_counter.items() %}
                         '{{education}}',
                     {% end %}
                 ]
@@ -43,7 +43,7 @@
                     }
                 },
                 data: [
-                    {% for (education, count) in education_dict.items() %}
+                    {% for (education, count) in educations_request_counter.items() %}
                         {
                             value: '{{count}}',
                             name: '{{education}}'

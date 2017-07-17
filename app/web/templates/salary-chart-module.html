@@ -4,61 +4,51 @@
     var salaryChart = echarts.init(document.getElementById('salary-chart'));
     // 指定图表的配置项和数据
     
-    var option = {
+var option = {
         title: {
-            text: '该职位的薪水情况'
+            text: '该职位的薪水分布情况',
+            subtext: '数据来自于拉勾的爬虫',
+            x: 'center'
         },
         tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                type: 'cross',
-                label: {
-                    backgroundColor: '#6a7985'
-                }
-            }
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
-        toolbox: {
-            feature: {
-                saveAsImage: {}
-            }
-        },
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-        xAxis: [
-            {
-                type: 'category',
-                boundaryGap: false,
-                data: [
-                    {% for (salary, count) in salary_dict.items() %}
-                        '{{salary}}k',
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: [
+                    {% for (salary, count) in salary_distribution.items() %}
+                        '{{salary}}',
                     {% end %}
                 ]
-            }
-        ],
-        yAxis: [
-            {
-                type: 'value'
-            }
-        ],
+        },
         series: [
             {
-                name: '给出该价位薪水的公司个数',
-                type: 'line',
-                stack: '总量',
-                areaStyle: {normal: {}},
+                name: '拉勾数据',
+                type: 'pie',
+                radius: '55%',
+                center: ['50%', '60%'],
                 data: [
-                    {% for (salary, count) in salary_dict.items() %}
-                        '{{count}}',
+                    {% for (salary, count) in salary_distribution.items() %}
+                        {
+                            {% if count != 0 %}
+                                value: '{{count}}',
+                                name: '{{salary}}'
+                            {% end %}
+                        },
                     {% end %}
-                ]
+                ],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
             }
         ]
     };
-    
 
     // 使用刚指定的配置项和数据显示图表。
     salaryChart.setOption(option);

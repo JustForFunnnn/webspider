@@ -36,3 +36,25 @@ WHERE NOT EXISTS
 (SELECT id FROM keyword WHERE name = :name)""")
         cls.session.execute(sql, {'name': name})
         cls.session.commit()
+
+    @classmethod
+    def get_most_frequently_keywords(cls, limit=10):
+        """
+        获取出现频率最高的 n 个关键字
+        :param limit: 限定前几个关键字
+        :return:
+        """
+        sql = text("""SELECT keyword.id, keyword.name, COUNT(*) AS count
+                FROM keyword, job_keyword
+                WHERE keyword.id = job_keyword.keyword_id 
+                GROUP BY keyword.id, keyword.name
+                ORDER BY count DESC
+                LIMIT :limit_count""")
+        query = cls.session.execute(sql, {'limit_count': limit})
+        result = query.fetchall()
+        keywords = []
+        for row in result:
+            keyword = KeywordModel(id=row[0], name=row[1])
+            keyword.times = row[2]
+            keywords.append(keyword)
+        return keywords

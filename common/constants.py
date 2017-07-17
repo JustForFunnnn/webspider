@@ -30,7 +30,7 @@ JOB_NATURE_DICT = {
 """
      工作年限要求
 """
-WORK_YEAR_DICT = {
+WORK_YEARS_REQUEST_DICT = {
     'unknown': 0,
     '1-3年': 1,
     '10年以上': 2,
@@ -44,7 +44,7 @@ WORK_YEAR_DICT = {
 """
      学历要求
 """
-EDUCATION_DICT = {
+EDUCATION_REQUEST_DICT = {
     '不限': 0,
     '博士': 1,
     '大专': 2,
@@ -101,12 +101,14 @@ MAX_SLEEP_TIME = 6
 
 TIMEOUT = 5
 
+SECONDS_OF_DAY = 60 * 60 * 24
+
 # 用来设定最大的尝试次数，超过该次数就停止重试
 RETRY_TIMES = 10
 # 函数最久持续时间 单位: s
-STOP_MAX_DELAY = 1000 * 60
+STOP_MAX_DELAY = 1000 * 80
 # 设置在两次retrying之间的停留时间 单位:s
-WAIT_FIXED = 1000 * 5
+WAIT_FIXED = 1000 * 7
 
 REDIS_PROXY_KEY = 'proxys'
 
@@ -119,11 +121,11 @@ HTTP_SUCCESS = 200
 
 HTTP_HEADER = {
     'Host': 'www.lagou.com',
+    'Referer': 'https://www.lagou.com/gongsi/',
     'Accept': 'application/json, text/javascript, */*; q=0.01',
     'X-Anit-Forge-Code': '0',
     'DNT': '1',
-    'Referer': 'https//www.lagou.com/gongsi/',
-    'Accept-Encoding': 'gzip, deflate, sdch, br',
+    'Accept-Encoding': 'gzip, deflate, br',
     'Accept-Language': 'zh-CN,zh;q=0.8,zh-TW;q=0.6,en;q=0.4,en-US;q=0.2,en-GB;q=0.2',
     'Connection': 'keep-alive',
     'Cache-Control': 'no-cache',
@@ -133,7 +135,7 @@ HTTP_HEADER = {
     'X-Anit-Forge-Token': 'None',
     'Pragma': 'no-cache',
     'Upgrade-Insecure-Requests': '1',
-    'Cookie': "JSESSIONID=ABAAABAACEBACDG84DC9D7C2CB67134FCB262EAD8A32D95; _gat=1; user_trace_token=20170524154541-fc775956-4054-11e7-8d90-5254005c3644; PRE_UTM=; PRE_HOST=; PRE_SITE=https%3A%2F%2Fwww.lagou.com%2Fjobs%2Flist_linux%2Bc%3Foquery%3DC%2B%2B%26fromSearch%3Dtrue%26labelWords%3Drelative; PRE_LAND=https%3A%2F%2Fpassport.lagou.com%2Flogin%2Flogin.html%3Fts%3D1495611939816%26serviceId%3Dlagou%26service%3Dhttps%25253A%25252F%25252Fwww.lagou.com%25252F%26action%3Dlogin%26signature%3D667D76BA15743B738600C3B9E5A110BC; LGUID=20170524154541-fc77609e-4054-11e7-8d90-5254005c3644; _putrc=BFF88537FC9713D8; login=true; unick=%E4%BD%95%E5%9B%BD%E6%9F%B1; showExpriedIndex=1; showExpriedCompanyHome=1; showExpriedMyPublish=1; hasDeliver=80; TG-TRACK-CODE=index_hotsearch; SEARCH_ID=b33995ec33c34fb8bb8007ffd5b4c012; index_location_city=%E5%85%A8%E5%9B%BD; _gid=GA1.2.2334757.1495611966; Hm_lvt_4233e74dff0ae5bd0a3d81c6ccf756e6=1495611941; Hm_lpvt_4233e74dff0ae5bd0a3d81c6ccf756e6=1495611966; _ga=GA1.2.1282538269.1495611941; LGSID=20170524154541-fc775c22-4054-11e7-8d90-5254005c3644; LGRID=20170524154606-0b242f06-4055-11e7-8d90-5254005c3"
+    'Cookie': "user_trace_token=20170629151328-68241df74478409db15b5657ed6acc90; LGUID=20170629151328-73324c93-5c9a-11e7-9de8-525400f775ce; JSESSIONID=ABAAABAACDBABJB91A475A55F36EE69BA449977ADA3DD3F; index_location_city=%E4%B8%8A%E6%B5%B7; TG-TRACK-CODE=index_search; SEARCH_ID=4aa271dfd0f14beaaf7772cb79825af1; _ga=GA1.2.462293570.1498720409; LGSID=20170711155914-d50d92bf-660e-11e7-aa75-525400f775ce; LGRID=20170711164139-c198d9bf-6614-11e7-a776-5254005c3644"
 }
 
 USER_AGENT_LIST = [

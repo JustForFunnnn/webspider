@@ -1,5 +1,7 @@
 # coding=utf-8
+from celery.schedules import crontab
 
+# from datetime import timedelta
 
 BROKER_URL = 'redis://127.0.0.1:6379'  # 指定 Broker
 
@@ -22,54 +24,12 @@ CELERY_IMPORTS = (  # 指定导入的任务模块
 
 CELERY_TASK_PUBLISH_RETRY = False  # 重试
 
-# CELERY_TASK_PUBLISH_RETRY_POLICY = {
-#     'max_retries': 3,
-#     'interval_start': 10,
-#     'interval_step': 5,
-#     'interval_max': 20
-# }
-
-# from datetime import timedelta
-# from celery.schedules import crontab
 # schedules
-# CELERYBEAT_SCHEDULE = {
-#     'add-every-30-seconds': {
-#          'task': 'celery_app.task1.add',
-#          'schedule': timedelta(seconds=30),       # 每 30 秒执行一次
-#          'args': (5, 8)                           # 任务函数参数
-#     },
-#     'multiply-at-some-time': {
-#         'task': 'celery_app.task2.multiply',
-#         'schedule': crontab(hour=9, minute=50),   # 每天早上 9 点 50 分执行一次
-#         'args': (3, 7)                            # 任务函数参数
-#     }
-# }
-
-# from kombu import Queue
-#
-# CELERY_QUEUES = ( # 定义任务队列
-#
-# Queue('default', routing_key='task.#'), # 路由键以“task.”开头的消息都进default队列
-#
-# Queue('web_tasks', routing_key='web.#'), # 路由键以“web.”开头的消息都进web_tasks队列
-#
-# )
-#
-# CELERY_DEFAULT_EXCHANGE = 'tasks' # 默认的交换机名字为tasks
-#
-# CELERY_DEFAULT_EXCHANGE_TYPE = 'topic' # 默认的交换类型是topic
-#
-# CELERY_DEFAULT_ROUTING_KEY = 'task.default' # 默认的路由键是task.default，这个路由键符合上面的default队列
-#
-# CELERY_ROUTES = {
-#
-#     'projq.tasks.add': { # tasks.add的消息会进入web_tasks队列
-#
-#     'queue': 'web_tasks',
-#
-#     'routing_key': 'web.add',
-#
-#     }
-#
-# }
-# celery -A projq worker -Q web_tasks -l info 启动指定队列的worker
+CELERYBEAT_SCHEDULE = {
+    'crawl-jobs-count-task': {
+        'task': 'app.tasks.crontab.crawl_lagou_job_count',
+        'schedule': crontab(hour=0, minute=10),
+        # "schedule": timedelta(seconds=5),
+        # 'args': (5, 8)  # 任务函数参数
+    },
+}

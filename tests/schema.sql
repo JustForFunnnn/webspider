@@ -91,3 +91,16 @@ CREATE TABLE IF NOT EXISTS `job_keyword` (
   UNIQUE KEY(`job_id`, `keyword_id`),
   KEY `idx_job_id` (`job_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `jobs_count` (
+  `date` INT(11) UNSIGNED COMMENT '日期',
+  `keyword_id` INT(11) NOT NULL COMMENT '关键词 id',
+  `all_city` INT(11) DEFAULT 0 COMMENT '全国岗位数量',
+  `beijing` INT(11) DEFAULT 0 COMMENT '北京岗位数量',
+  `guangzhou` INT(11) DEFAULT 0 COMMENT '广州岗位数量',
+  `shenzhen` INT(11) DEFAULT 0 COMMENT '深圳岗位数量',
+  `shanghai` INT(11) DEFAULT 0 COMMENT '上海岗位数量',
+  `hangzhou` INT(11) DEFAULT 0 COMMENT '杭州岗位数量',
+  `chengdu` INT(11) DEFAULT 0 COMMENT '成都岗位数量',
+  PRIMARY KEY(`date`, `keyword_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
