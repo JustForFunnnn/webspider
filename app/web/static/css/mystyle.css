@@ -20,15 +20,15 @@ footer {
 }
 
 .chart-div {
-    width: 800px;
-    height: 600px;
+    width: 550px;
+    height: 400px;
     padding-top: 30px;
     margin: 0 auto;
 }
 
 .large-chart-div {
     width: 1000px;
-    height: 800px;
+    height: 700px;
     padding-top: 30px;
     margin: 0 auto;
 }

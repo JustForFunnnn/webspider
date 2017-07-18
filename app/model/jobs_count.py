@@ -25,3 +25,23 @@ class JobsCountModel(BaseModel):
                          hangzhou=int(hangzhou), chengdu=int(chengdu))
         cls.session.merge(jobs_count)
         cls.session.commit()
+
+    @classmethod
+    def list(cls, keyword_id=None, start_time=None, end_time=None, order_key='date', use_desc=True):
+        query = cls.session.query(cls)
+        if keyword_id:
+            query = query.filter(cls.keyword_id == keyword_id)
+        if start_time:
+            query = query.filter(cls.date >= start_time)
+        if end_time:
+            query = query.filter(cls.date <= end_time)
+        if order_key:
+            try:
+                order_key = getattr(cls, order_key)
+            except:
+                raise Exception(u'illegal order key: {}'.format(order_key))
+            if use_desc:
+                query = query.order_by(order_key.desc())
+            else:
+                query = query.order_by(order_key.asc())
+        return query.all()

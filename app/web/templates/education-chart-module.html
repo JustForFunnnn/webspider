@@ -1,47 +1,33 @@
-<h4 class="text-center">学历要求</h4>
-<div id="education-year-chart" class="chart-div"></div>
+<div id="education-year-chart" class="chart-div col-md-6"></div>
 
 <script type="text/javascript">
     var educationChart = echarts.init(document.getElementById('education-year-chart'));
     // 指定图表的配置项和数据
-    option = {
+
+    var option = {
+        title: {
+            text: '学历要求',
+            x: 'center'
+        },
         tooltip: {
             trigger: 'item',
-            formatter: "{a} <br/>{b}: {c} ({d}%)"
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
         legend: {
             orient: 'vertical',
-            x: 'left',
+            left: 'left',
             data: [
-                    {% for (education, count) in educations_request_counter.items() %}
-                        '{{education}}',
-                    {% end %}
-                ]
+                {% for (education, count) in educations_request_counter.items() %}
+                    '{{education}}',
+                {% end %}
+            ]
         },
         series: [
             {
                 name: '拉勾数据',
                 type: 'pie',
-                radius: ['50%', '70%'],
-                avoidLabelOverlap: false,
-                label: {
-                    normal: {
-                        show: false,
-                        position: 'center'
-                    },
-                    emphasis: {
-                        show: true,
-                        textStyle: {
-                            fontSize: '30',
-                            fontWeight: 'bold'
-                        }
-                    }
-                },
-                labelLine: {
-                    normal: {
-                        show: false
-                    }
-                },
+                radius: '55%',
+                center: ['50%', '60%'],
                 data: [
                     {% for (education, count) in educations_request_counter.items() %}
                         {
@@ -49,7 +35,14 @@
                             name: '{{education}}'
                         },
                     {% end %}
-                ]
+                ],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
             }
         ]
     };

@@ -1,4 +1,4 @@
-<div id="salary-chart" class="large-chart-div"></div>
+<div id="salary-chart" class="chart-div  col-md-6"></div>
 
 <script type="text/javascript">
     var salaryChart = echarts.init(document.getElementById('salary-chart'));
@@ -6,8 +6,7 @@
     
 var option = {
         title: {
-            text: '该职位的薪水分布情况',
-            subtext: '数据来自于拉勾的爬虫',
+            text: '薪水分布',
             x: 'center'
         },
         tooltip: {

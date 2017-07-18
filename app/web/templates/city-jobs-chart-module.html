@@ -1,4 +1,4 @@
-<div id="job-city-chart" class="large-chart-div"></div>
+<div id="job-city-chart" class="chart-div col-md-6"></div>
 
 <script type="text/javascript">
     var jobCityChart = echarts.init(document.getElementById('job-city-chart'));
@@ -6,45 +6,45 @@
 
     var option = {
         title: {
-            text: '城市关于此职位的数量',
-            subtext: '数据来自拉勾'
+            text: '各城市职位占比',
+            x: 'center'
         },
         tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                type: 'shadow'
-            }
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-        xAxis: {
-            type: 'value',
-            boundaryGap: [0, 0.01]
-        },
-        yAxis: {
-            type: 'category',
+        legend: {
+            orient: 'vertical',
+            left: 'left',
             data: [
                 {% for item in city_jobs_counter[::-1] %}
-                        '{{item[0]}}',
+                    '{{item[0]}}',
                 {% end %}
             ]
         },
         series: [
             {
-                name: '数量(单位:个)',
-                type: 'bar',
+                name: '拉勾数据',
+                type: 'pie',
+                radius: '55%',
+                center: ['50%', '60%'],
                 data: [
                     {% for item in city_jobs_counter[::-1] %}
-                        {{item[1]}},
+                    {
+                        value: '{{item[1]}}',
+                        name: '{{item[0]}}'
+                    },
                     {% end %}
-                ]
+                ],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
             }
         ]
     };
-
     jobCityChart.setOption(option);
 </script>

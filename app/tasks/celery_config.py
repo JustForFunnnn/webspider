@@ -29,7 +29,9 @@ CELERYBEAT_SCHEDULE = {
     'crawl-jobs-count-task': {
         'task': 'app.tasks.jobs_count.crawl_lagou_jobs_count',
         'schedule': crontab(hour='00', minute='10'),
-        # "schedule": timedelta(seconds=5),
-        # 'args': (5, 8)  # 任务函数参数
+    },
+    'crawl_lagou_data-task': {
+        'task': 'app.tasks.crawl_lagou_data',
+        'schedule': crontab(hour='16', minute='10', day_of_month='01'),
     },
 }

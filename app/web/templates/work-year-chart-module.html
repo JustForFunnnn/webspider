@@ -1,12 +1,11 @@
-<div id="work-year-chart" class="chart-div"></div>
+<div id="work-year-chart" class="chart-div  col-md-6"></div>
 
 <script type="text/javascript">
     var wordYearChart = echarts.init(document.getElementById('work-year-chart'));
     // 指定图表的配置项和数据
     var option = {
         title: {
-            text: '关于「{{keyword}}」的工作年限要求',
-            subtext: '数据来自于拉勾的爬虫',
+            text: '工作年限要求',
             x: 'center'
         },
         tooltip: {

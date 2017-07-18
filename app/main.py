@@ -23,10 +23,7 @@ def make_app():
     logging.config.dictConfig(config.LOGGING_CONFIG)
 
     settings = {
-        # 'cookie_secret': config.COOKIE_SECRET,
         'debug': constants.DEBUG,
-        # 'login_url':'/login',
-        # 'ui_modules': ui_module,
         'template_path': os.path.join(
             os.path.dirname(__file__), "web", "templates"
         ),
