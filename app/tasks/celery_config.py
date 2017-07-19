@@ -34,7 +34,7 @@ CELERYBEAT_SCHEDULE = {
     },
     'crawl_lagou_data-task': {
         'task': 'app.tasks.crawl_lagou_data',
-        'schedule': crontab(hour='16', minute='10', day_of_month='01'),
+        'schedule': crontab(hour='16', minute='10', day_of_month='1'),
     }
 }
 

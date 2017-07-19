@@ -133,12 +133,16 @@ def request_job_json(company_id, page_no):
     headers = generate_http_header()
     crawler_sleep()
     try:
+        cookies = Cookies.get_random_cookies()
         response_json = requests.get(
             url=constants.COMPANY_JOB_URL,
             params=prams,
             headers=headers,
-            cookies=Cookies.get_random_cookies(),
+            cookies=cookies,
             timeout=constants.TIMEOUT).json()
+        if 'content' not in response_json:
+            Cookies.remove_cookies(cookies)
+            raise RequestsError(error_log='wrong response content')
     except RequestException as e:
         logging.error(e)
         raise RequestsError(error_log=e)

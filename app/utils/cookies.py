@@ -27,6 +27,10 @@ class Cookies(object):
         return random.choice(cls._cookies)
 
     @classmethod
+    def remove_cookies(cls, cookies):
+        cls._cookies.remove(cookies)
+
+    @classmethod
     def get_lagou_cookies_from_proxys(cls, proxys, proxy_type='https'):
         cookies = []
         for proxy in proxys:

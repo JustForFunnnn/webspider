@@ -51,13 +51,17 @@ def request_jobs_count_json(city, keyword):
     headers = generate_http_header(is_crawl_jobs_count=True)
     crawler_sleep()
     try:
+        cookies = Cookies.get_random_cookies()
         response = requests.post(url=constants.JOB_JSON_URL,
                                  params=query_string,
                                  data=form_data,
                                  headers=headers,
-                                 cookies=Cookies.get_random_cookies(),
+                                 cookies=cookies,
                                  timeout=constants.TIMEOUT)
         response_json = response.json()
+        if 'content' not in response_json:
+            Cookies.remove_cookies(cookies)
+            raise RequestsError(error_log='wrong response content')
     except RequestException as e:
         logging.error(e)
         raise RequestsError(error_log=e)
