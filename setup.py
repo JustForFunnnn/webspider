@@ -29,7 +29,12 @@ setup(
     entry_points={
         'console_scripts': [
             'web = app.main:main',
-            'spider = app.tasks:crawl_lagou_data'
+            'crawl_lagou_data = app.tasks:crawl_lagou_data',
+            'crawl_jobs_count = app.tasks.jobs_count:crawl_lagou_jobs_count',
+            'celery_jobs_count_worker = app:run_celery_jobs_count_worker',
+            'celery_lagou_data_worker = app:run_celery_lagou_data_worker',
+            'celery_beat = app:run_celery_beat',
+            'celery_flower = app:run_celery_flower',
         ],
     },
     classifiers=[

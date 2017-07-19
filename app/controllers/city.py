@@ -7,9 +7,8 @@ from functools import lru_cache
 import requests
 
 from common import constants
-from common.db import redis_instance
 from app.model.city import CityModel
-from app.utils.http_tools import get_proxy_list, generate_http_header
+from app.utils.http_tools import generate_http_header
 
 logger = logging.getLogger(__name__)
 

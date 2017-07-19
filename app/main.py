@@ -8,15 +8,15 @@ import tornado
 import tornado.web
 import tornado.ioloop
 import tornado.httpserver
-from tornado.options import define, options
+from tornado.options import options
 
 from common import config
 from common import constants
 from app.web.urls import url_handlers
 from app.web.handlers.base import BaseHandler
+from app.utils.cmd import parse_cmd
 
 logger = logging.getLogger(__name__)
-define(name='port', default=8000, type=int, help='run on the given port')
 
 
 def make_app():
@@ -38,11 +38,12 @@ def make_app():
 
 
 def main():
+    parse_cmd()
     logger.info('================ spider web server has started ================ ')
-    logger.info('       server start at port -> {}, debug mode = {}'.format(options.port, constants.DEBUG))
+    logger.info('       server start at port -> {}, debug mode = {}'.format(options.web_port, constants.DEBUG))
     app = make_app()
     http_server = tornado.httpserver.HTTPServer(app)
-    http_server.listen(options.port)
+    http_server.listen(options.web_port)
     tornado.ioloop.IOLoop.instance().start()
 
 

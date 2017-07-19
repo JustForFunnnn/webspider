@@ -16,15 +16,16 @@ from common.exception import RequestsError
 from app.controllers.company import CompanyController
 from app.controllers.company_industry import CompanyIndustryController
 from app.controllers.industry import IndustryController
-from app.utils.http_tools import generate_http_header, filter_http_tag
+from app.utils.cookies import Cookies
 from app.utils.util import crawler_sleep
+from app.utils.http_tools import generate_http_header, filter_http_tag
 from common.constants import FINANCE_STAGE_DICT, COMPANY_SIZE_DICT
 
 logger = logging.getLogger(__name__)
 
 
 @celery_app.task(ignore_result=True)
-def update_company_data(city_id, finance_stage_id, industry_id, update_job=False):
+def update_company_data(city_id, finance_stage_id, industry_id):
     """更新公司数据"""
     logger.info('正在爬取城市={}, 融资类型={}, 行业类别={}'.format(city_id, finance_stage_id, industry_id))
     # 生成访问链接
@@ -44,7 +45,7 @@ def update_company_data(city_id, finance_stage_id, industry_id, update_job=False
             if CompanyController.count(id=company_id) == 0:
                 generate_company_data(company=company, city_id=city_id)
             # 更新公司下职位的数据
-            if update_job and not redis_instance.sismember(constants.REDIS_VISITED_COMPANY_KEY, company_id):
+            if redis_instance.sismember(constants.REDIS_VISITED_COMPANY_KEY, company_id):
                 redis_instance.sadd(constants.REDIS_VISITED_COMPANY_KEY, company_id)
                 update_job_data(company_id=company_id)
     logger.info('爬取城市={}, 融资类型={}, 行业类别={}, 任务结束'.format(city_id, finance_stage_id, industry_id))
@@ -93,6 +94,7 @@ def requests_company_detail_data(company_id):
         response = requests.get(
             url=constants.COMPANY_DETAIL_URL.format(company_id=company_id),
             headers=headers,
+            cookies=Cookies.get_random_cookies(),
             allow_redirects=False,
             timeout=constants.TIMEOUT)
     except RequestException as e:
@@ -152,6 +154,7 @@ def request_company_json(url, page_no):
             url=url,
             params=prams,
             headers=headers,
+            cookies=Cookies.get_random_cookies(),
             allow_redirects=False,
             timeout=constants.TIMEOUT).json()
     except RequestException as e:

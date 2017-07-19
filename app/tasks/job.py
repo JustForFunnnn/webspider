@@ -15,6 +15,7 @@ from app.controllers.keyword import KeywordController
 from app.controllers.job_keyword import JobKeywordController
 from app.utils.time_tools import job_date2timestamp
 from app.utils.util import crawler_sleep
+from app.utils.cookies import Cookies
 from common.exception import RequestsError
 from common.constants import EDUCATION_REQUEST_DICT, JOB_NATURE_DICT, WORK_YEARS_REQUEST_DICT
 from app.utils.http_tools import generate_http_header, filter_http_tag
@@ -85,7 +86,7 @@ def requests_job_detail_data(job_id):
         response = requests.get(
             url=constants.JOB_DETAIL_URL.format(job_id=job_id),
             headers=headers,
-            # proxies=proxies,
+            cookies=Cookies.get_random_cookies(),
             allow_redirects=False,
             timeout=constants.TIMEOUT)
     except RequestException as e:
@@ -136,6 +137,7 @@ def request_job_json(company_id, page_no):
             url=constants.COMPANY_JOB_URL,
             params=prams,
             headers=headers,
+            cookies=Cookies.get_random_cookies(),
             timeout=constants.TIMEOUT).json()
     except RequestException as e:
         logging.error(e)

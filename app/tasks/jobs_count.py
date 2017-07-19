@@ -12,11 +12,12 @@ from common.exception import RequestsError
 from app.controllers.keyword import KeywordController
 from app.controllers.jobs_count import JobsCountController
 from app.utils.util import crawler_sleep
+from app.utils.cookies import Cookies
 from app.utils.http_tools import generate_http_header
 from app.utils.time_tools import get_date_begin_by_timestamp
 
 
-@celery_app.task
+@celery_app.task()
 def crawl_lagou_jobs_count():
     pre_date = get_date_begin_by_timestamp(after_days=-1)
     keywords = KeywordController.get_most_frequently_keywords(limit=400)
@@ -54,6 +55,7 @@ def request_jobs_count_json(city, keyword):
                                  params=query_string,
                                  data=form_data,
                                  headers=headers,
+                                 cookies=Cookies.get_random_cookies(),
                                  timeout=constants.TIMEOUT)
         response_json = response.json()
     except RequestException as e:

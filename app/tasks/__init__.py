@@ -15,11 +15,11 @@ from app.tasks.company import update_company_data
 logger = logging.getLogger(__name__)
 
 
-def crawl_lagou_data(update_job=True, use_celery=False):
+@celery_app.task(queue='lagou_data')
+def crawl_lagou_data():
     """
     爬取拉勾上 company, city 的数据
     :param update_job: 是否更新工作的数据
-    :param use_celery: 是否使用celery爬取
     :return:
     """
     update_city_data()
@@ -34,10 +34,5 @@ def crawl_lagou_data(update_job=True, use_celery=False):
     for city_id in city_ids:
         for finance_stage_id in finance_stage_ids:
             for industry_id in industry_ids:
-                if use_celery:
-                    update_company_data.delay(city_id=city_id, finance_stage_id=finance_stage_id,
-                                              industry_id=industry_id, update_job=update_job)
-                else:
-                    update_company_data(city_id=city_id, finance_stage_id=finance_stage_id, industry_id=industry_id,
-                                        update_job=update_job)
+                update_company_data(city_id=city_id, finance_stage_id=finance_stage_id, industry_id=industry_id)
     logger.info('任务结束 !')

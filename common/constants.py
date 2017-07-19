@@ -95,9 +95,9 @@ HTTP_PROXY_FORMATTER = "http://{ip}:{port}"
 
 HTTPS_PROXY_FORMATTER = "https://{ip}:{port}"
 
-MIN_SLEEP_TIME = 3
+MIN_SLEEP_TIME = 4
 
-MAX_SLEEP_TIME = 6
+MAX_SLEEP_TIME = 7
 
 TIMEOUT = 5
 
@@ -134,8 +134,7 @@ HTTP_HEADER = {
     'X-Requested-With': 'XMLHttpRequest',
     'X-Anit-Forge-Token': 'None',
     'Pragma': 'no-cache',
-    'Upgrade-Insecure-Requests': '1',
-    'Cookie': "user_trace_token=20170629151328-68241df74478409db15b5657ed6acc90; LGUID=20170629151328-73324c93-5c9a-11e7-9de8-525400f775ce; JSESSIONID=ABAAABAACDBABJB91A475A55F36EE69BA449977ADA3DD3F; index_location_city=%E4%B8%8A%E6%B5%B7; TG-TRACK-CODE=index_search; SEARCH_ID=4aa271dfd0f14beaaf7772cb79825af1; _ga=GA1.2.462293570.1498720409; LGSID=20170711155914-d50d92bf-660e-11e7-aa75-525400f775ce; LGRID=20170711164139-c198d9bf-6614-11e7-a776-5254005c3644"
+    'Upgrade-Insecure-Requests': '1'
 }
 
 USER_AGENT_LIST = [

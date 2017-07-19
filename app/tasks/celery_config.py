@@ -1,4 +1,6 @@
 # coding=utf-8
+from kombu import Queue
+from kombu import Exchange
 from celery.schedules import crontab
 
 # from datetime import timedelta
@@ -33,5 +35,16 @@ CELERYBEAT_SCHEDULE = {
     'crawl_lagou_data-task': {
         'task': 'app.tasks.crawl_lagou_data',
         'schedule': crontab(hour='16', minute='10', day_of_month='01'),
-    },
+    }
+}
+
+CELERY_QUEUES = (
+    Queue('default', Exchange('default'), routing_key='default'),
+    Queue('lagou_data', Exchange('lagou_data'), routing_key='lagou_data'),
+    Queue('jobs_count', Exchange('jobs_count'), routing_key='jobs_count'),
+)
+
+CELERY_ROUTES = {
+    'app.tasks.jobs_count.crawl_lagou_jobs_count': {'queue': 'jobs_count', 'routing_key': 'jobs_count'},
+    'app.tasks.crawl_lagou_data': {'queue': 'lagou_data', 'routing_key': 'lagou_data'}
 }

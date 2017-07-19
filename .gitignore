@@ -89,7 +89,7 @@ ENV/
 .ropeproject
 .idea/
 bin/
-log/
+spider_log.txt
 dump.rdb
 .DS_Store
 cover/
