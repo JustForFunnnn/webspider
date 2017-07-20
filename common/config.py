@@ -46,7 +46,7 @@ LOGGING_CONFIG = {
             'level': 'WARNING',
             'formatter': 'default',
             'class': 'logging.FileHandler',
-            'filename': 'log/spider_log.txt',
+            'filename': 'spider_log.txt',
             'encoding': 'utf8'
         },
         'smtp': {

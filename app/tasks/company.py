@@ -59,8 +59,7 @@ def generate_company_data(company, city_id):
     finance_stage = filter_http_tag(company['financeStage']).upper()
     if finance_stage not in FINANCE_STAGE_DICT:
         logger.error(company['financeStage'] + 'not in FINANCE_STAGE_DICT')
-    finance_stage = FINANCE_STAGE_DICT[finance_stage] \
-        if finance_stage in FINANCE_STAGE_DICT else FINANCE_STAGE_DICT[finance_stage]
+    finance_stage = FINANCE_STAGE_DICT[finance_stage] if finance_stage in FINANCE_STAGE_DICT else FINANCE_STAGE_DICT['unknown']
     process_rate = company['processRate'] if 'processRate' in company else -1
     features = filter_http_tag(company['companyFeatures'])
     advantage, address, size, introduce = requests_company_detail_data(company_id=company_id)
