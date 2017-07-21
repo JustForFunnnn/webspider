@@ -25,3 +25,4 @@ class BaseHandler(RequestHandler):
 
     def get(self, *args, **kwargs):
         self.write_error(404)
+        return

@@ -33,7 +33,7 @@ setup(
             'crawl_jobs_count = app.tasks.jobs_count:crawl_lagou_jobs_count',
             'celery_jobs_count_worker = app.quickly_cmd.py:run_celery_jobs_count_worker',
             'celery_lagou_data_worker = app.quickly_cmd.py:run_celery_lagou_data_worker',
-            'celery_beat = app,quickly_cmd.py:run_celery_beat',
+            'celery_beat = app.quickly_cmd.py:run_celery_beat',
             'celery_flower = app.quickly_cmd.py:run_celery_flower',
         ],
     },

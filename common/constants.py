@@ -85,7 +85,7 @@ COMPANY_JOB_URL = 'https://www.lagou.com/gongsi/searchPosition.json'
     其他常量
 """
 
-DEBUG = (os.environ.get('DEPLOY_ENV', 'testing') == 'testing')
+DEBUG = (os.environ.get('DEPLOY_ENV', 'dev') == 'dev')
 
 TEST_API = 'https://www.baidu.com/'
 

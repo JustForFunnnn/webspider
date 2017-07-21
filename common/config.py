@@ -10,12 +10,17 @@ FROM_EMAIL_ADDRESS = os.environ.get('FROM_EMAIL_ADDRESS')
 TO_EMAIL_ADDRESS = os.environ.get('TO_EMAIL_ADDRESS')
 MYSQL_USERNAME = os.environ.get('MYSQL_USERNAME', 'root')
 MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD', '')
+DB_HOST = os.environ.get('DB_HOST', 'localhost')
+DB_PORT = os.environ.get('DB_PORT', '3306')
+
 
 # MYSQL 配置
 DB_CONF = {
-    'host': 'mysql+mysqldb://{username}:{password}@localhost:3306/spider?charset=utf8mb4'.format(
+    'host': 'mysql+mysqldb://{username}:{password}@{db_host}:{db_port}/spider?charset=utf8mb4'.format(
         username=MYSQL_USERNAME,
-        password=MYSQL_PASSWORD
+        password=MYSQL_PASSWORD,
+        db_host=DB_HOST,
+        db_port=DB_PORT
     )
 }
 

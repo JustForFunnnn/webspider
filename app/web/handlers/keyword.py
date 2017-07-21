@@ -15,9 +15,9 @@ class KeywordHandler(BaseHandler):
             return
         # 前2个月
         pre_two_month = get_date_begin_by_timestamp(after_days=-62)
-        keyword_jobs_count = JobsCountController.list(keyword_id=keyword.id, start_time=pre_two_month)
+        keyword_jobs_count = JobsCountController.list(keyword_id=keyword.id, start_time=pre_two_month, sort_by='asc')
         for item in keyword_jobs_count:
-            item.date_string = timestamp2string(timestamp=item.date, date_format='%Y/%m/%d')
+            item.date_string = timestamp2string(timestamp=item.date, date_format='%m/%d')
         jobs = JobController.list(keyword_id=keyword.id)
         educations_request_counter = JobController.educations_request_analyze(jobs=jobs)
         finance_stage_distribution = JobController.finance_stage_distribution_analyze(jobs=jobs)

@@ -27,7 +27,7 @@ class JobsCountModel(BaseModel):
         cls.session.commit()
 
     @classmethod
-    def list(cls, keyword_id=None, start_time=None, end_time=None, order_key='date', use_desc=True):
+    def list(cls, keyword_id=None, start_time=None, end_time=None, order_key='date', sort_by='desc'):
         query = cls.session.query(cls)
         if keyword_id:
             query = query.filter(cls.keyword_id == keyword_id)
@@ -40,7 +40,7 @@ class JobsCountModel(BaseModel):
                 order_key = getattr(cls, order_key)
             except:
                 raise Exception(u'illegal order key: {}'.format(order_key))
-            if use_desc:
+            if sort_by == 'desc':
                 query = query.order_by(order_key.desc())
             else:
                 query = query.order_by(order_key.asc())
