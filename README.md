@@ -5,7 +5,7 @@
 --|--
 ---- | ----
 Version | 1.0.0
-WebSite | http://jobinfo.cc/
+WebSite | http://119.23.223.90/
 Source |  https://github.com/GuozhuHe/webspider
 Keywords |  `Python3`, `Tornado`, `Celery`, `Spider`, `Lagou`, `Requests`
 
