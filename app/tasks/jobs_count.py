@@ -20,7 +20,7 @@ from app.utils.time_tools import get_date_begin_by_timestamp
 @celery_app.task()
 def crawl_lagou_jobs_count():
     pre_date = get_date_begin_by_timestamp(after_days=-1)
-    keywords = KeywordController.get_most_frequently_keywords(limit=400)
+    keywords = KeywordController.get_most_frequently_keywords(limit=800)
     logging.info('{} crawl_lagou_job_count 定时任务运行中! 关键词 {} 个'.format(pre_date, len(keywords)))
     for keyword in keywords:
         city_jobs_count = {

@@ -45,7 +45,7 @@ def update_company_data(city_id, finance_stage_id, industry_id):
             if CompanyController.count(id=company_id) == 0:
                 generate_company_data(company=company, city_id=city_id)
             # 更新公司下职位的数据
-            if redis_instance.sismember(constants.REDIS_VISITED_COMPANY_KEY, company_id):
+            if not redis_instance.sismember(constants.REDIS_VISITED_COMPANY_KEY, company_id):
                 redis_instance.sadd(constants.REDIS_VISITED_COMPANY_KEY, company_id)
                 update_job_data(company_id=company_id)
     logger.info('爬取城市={}, 融资类型={}, 行业类别={}, 任务结束'.format(city_id, finance_stage_id, industry_id))

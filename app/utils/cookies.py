@@ -22,7 +22,7 @@ class Cookies(object):
     @classmethod
     def get_random_cookies(cls):
         now = time.time()
-        if len(cls._cookies) == 0 or (now - cls._last_update_time) >= constants.SECONDS_OF_DAY:
+        if len(cls._cookies) == 0 or (now - cls._last_update_time) >= constants.SECONDS_OF_DAY * 3:
             cls.refresh_cookies()
         return random.choice(cls._cookies)
 
@@ -32,6 +32,8 @@ class Cookies(object):
 
     @classmethod
     def get_lagou_cookies_from_proxys(cls, proxys, proxy_type='https'):
+        logging.info('重新获取 cookies !')
+        logging.info('代理 IP 的数量:{}'.format(len(proxys)))
         cookies = []
         for proxy in proxys:
             try:
@@ -42,5 +44,5 @@ class Cookies(object):
                     cookies.append(response.cookies)
             except:
                 pass
-        logging.info('可用cookies数量 {}'.format(len(cookies)))
+        logging.info('可用 cookies 数量: {}'.format(len(cookies)))
         return cookies
