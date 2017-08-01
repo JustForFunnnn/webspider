@@ -15,13 +15,14 @@ class Cookies(object):
     @classmethod
     def refresh_cookies(cls):
         """刷新 cookie """
-        proxys = get_proxys(400)
+        proxys = get_proxys()
         cls._cookies = cls.get_lagou_cookies_from_proxys(proxys)
         cls._last_update_time = time.time()
 
     @classmethod
     def get_random_cookies(cls):
         now = time.time()
+        # cookie 超时时间
         if len(cls._cookies) == 0 or (now - cls._last_update_time) >= constants.SECONDS_OF_DAY * 3:
             cls.refresh_cookies()
         return random.choice(cls._cookies)
