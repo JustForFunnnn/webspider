@@ -40,8 +40,9 @@ class Cookies(object):
             try:
                 response = requests.get('https://www.lagou.com/',
                                         proxies={proxy_type: proxy},
+                                        allow_redirects=False,
                                         timeout=2)
-                if response.status_code == constants.HTTP_SUCCESS and len(response.cookies):
+                if len(response.cookies):
                     cookies.append(response.cookies)
             except:
                 pass
