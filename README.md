@@ -9,6 +9,8 @@ WebSite | http://www.jobinfo.cc:8000/
 Source |  https://github.com/GuozhuHe/webspider
 Keywords |  `Python3`, `Tornado`, `Celery`, `Spider`, `Lagou`, `Requests`
 
+爬取到的数据分享链接: https://pan.baidu.com/s/1gfIi5gv 密码: `gikp`
+
 ## 关于本系统
 
 本系统是一个主要使用`python3`, `celery`和`requests`来爬取职位数据的爬虫，实现了定时任务，出错重试，日志记录，自动更改`Cookies`等的功能，并使用`echar.js` + `bootstrap` 来构建前端页面，来展示爬取到的数据。
