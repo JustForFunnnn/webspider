@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
+from functools import lru_cache
+
 from common import constants
 from app.model.job import JobModel
 from app.controllers.city import CityController
 from app.controllers.company import CompanyController
+from app.controllers.jobs_count import JobsCountController
 from app.utils.util import reverse_dict
 from app.utils.util import get_salary_section
+from app.utils.time_tools import timestamp2string
 
 
 class JobController(object):
@@ -22,6 +26,25 @@ class JobController(object):
     @classmethod
     def list(cls, keyword_id=None, limit=None, offset=None):
         return JobModel.list(keyword_id=keyword_id, limit=limit, offset=offset)
+
+    @classmethod
+    @lru_cache(maxsize=constants.CACHE_SIZE)
+    def get_jobs_statistics(cls, keyword_id):
+        keyword_jobs_count = JobsCountController.list(keyword_id=keyword_id, sort_by='asc')
+        for item in keyword_jobs_count:
+            item.date_string = timestamp2string(timestamp=item.date, date_format='%m/%d')
+        jobs = JobController.list(keyword_id=keyword_id)
+        educations_request_counter = cls.educations_request_analyze(jobs=jobs)
+        finance_stage_distribution = cls.finance_stage_distribution_analyze(jobs=jobs)
+        city_jobs_counter = cls.city_jobs_count_analyze(jobs=jobs)
+        salary_distribution = cls.salary_distribution_analyze(jobs=jobs)
+        work_years_request_analyze = cls.work_years_request_analyze(jobs=jobs)
+        return (keyword_jobs_count,
+                educations_request_counter,
+                finance_stage_distribution,
+                city_jobs_counter,
+                salary_distribution,
+                work_years_request_analyze)
 
     @classmethod
     def work_years_request_analyze(cls, jobs):

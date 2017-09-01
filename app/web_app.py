@@ -9,6 +9,7 @@ import tornado.web
 import tornado.ioloop
 import tornado.httpserver
 from tornado.options import options
+from tornado.wsgi import WSGIAdapter
 
 from common import config
 from common import constants
@@ -17,6 +18,10 @@ from app.web.handlers.base import BaseHandler
 from app.utils.cmd import parse_cmd
 
 logger = logging.getLogger(__name__)
+
+
+def make_wsgi_app():
+    return tornado.wsgi.WSGIAdapter(make_app())
 
 
 def make_app():

@@ -94,3 +94,4 @@ dump.rdb
 .DS_Store
 cover/
 celerybeat.pid
+oj.py

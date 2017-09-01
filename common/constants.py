@@ -114,6 +114,8 @@ REDIS_PROXY_KEY = 'proxys'
 
 REDIS_VISITED_COMPANY_KEY = 'visited_company'
 
+CACHE_SIZE = 128
+
 """
     HTTP 相关
 """

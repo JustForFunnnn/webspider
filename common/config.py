@@ -68,17 +68,17 @@ LOGGING_CONFIG = {
 
     'loggers': {
         '': {
-            'handlers': ['console', 'file', 'smtp'],
+            'handlers': ['console', 'file'],
             'level': 'DEBUG',
             'propagate': False,
         },
         'app': {
-            'handlers': ['console', 'file', 'smtp'],
+            'handlers': ['console', 'file'],
             'level': 'DEBUG',
             'propagate': False,
         },
         'tornado': {
-            'handlers': ['console', 'file', 'smtp'],
+            'handlers': ['console', 'file'],
             'level': 'INFO',
             'propagate': False,
         },

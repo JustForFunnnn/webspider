@@ -28,7 +28,8 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'web = app.main:main',
+            'web = app.web_app:main',
+            'production_web = app.quickly_cmd:run_web_app_by_gunicorn',
             'crawl_lagou_data = app.tasks:crawl_lagou_data',
             'crawl_jobs_count = app.tasks.jobs_count:crawl_lagou_jobs_count',
             'celery_jobs_count_worker = app.quickly_cmd:run_celery_jobs_count_worker',
