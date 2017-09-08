@@ -38,4 +38,4 @@ def crawl_lagou_data():
                 update_company_data(city_id=city_id, finance_stage_id=finance_stage_id, industry_id=industry_id)
     # 失效缓存
     JobController.get_jobs_statistics.cache_clear()
-    logging.info('主动效缓存成功')
+    logging.info('主动失效缓存成功')

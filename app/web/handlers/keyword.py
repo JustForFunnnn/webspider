@@ -1,4 +1,6 @@
 # coding: utf-8
+from common import constants
+from common.db import redis_instance
 from app.web.handlers.base import BaseHandler
 from app.controllers.keyword import KeywordController
 from app.controllers.job import JobController
@@ -6,6 +8,8 @@ from app.controllers.job import JobController
 
 class KeywordHandler(BaseHandler):
     def get(self):
+        # 统计访问人数  incr() 操作线程安全
+        redis_instance.incr(constants.REDIS_VISITED_PEOPLES_COUNT_KEY)
         keyword_name = self.get_argument('keyword', 'python')
         keyword = KeywordController.get(name=keyword_name)
         if not keyword:

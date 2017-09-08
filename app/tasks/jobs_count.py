@@ -37,7 +37,7 @@ def crawl_lagou_jobs_count():
                                 chengdu=city_jobs_count['成都'])
     logging.info('crawl_lagou_job_count 任务完成!')
     JobController.get_jobs_statistics.cache_clear()
-    logging.info('主动效缓存成功')
+    logging.info('主动失效缓存成功')
 
 
 @retry(stop_max_attempt_number=constants.RETRY_TIMES, stop_max_delay=constants.STOP_MAX_DELAY,

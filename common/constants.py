@@ -114,6 +114,8 @@ REDIS_PROXY_KEY = 'proxys'
 
 REDIS_VISITED_COMPANY_KEY = 'visited_company'
 
+REDIS_VISITED_PEOPLES_COUNT_KEY = 'visited_peoples_count'
+
 CACHE_SIZE = 128
 
 """
