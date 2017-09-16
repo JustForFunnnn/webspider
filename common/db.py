@@ -10,7 +10,7 @@ from common import config
 
 LOGGER = logging.getLogger(__name__)
 # isolation_level 读取没提交的数据 避免脏数据
-DB_engine = create_engine(config.DB_CONF['host'], isolation_level="READ UNCOMMITTED", pool_recycle=7200)
+DB_engine = create_engine(config.DB_CONF['host'], isolation_level="READ UNCOMMITTED", pool_recycle=3600)
 _BaseModel = declarative_base()
 _Session = sessionmaker(bind=DB_engine)
 

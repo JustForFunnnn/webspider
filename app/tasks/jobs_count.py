@@ -21,7 +21,7 @@ from app.controllers.job import JobController
 @celery_app.task()
 def crawl_lagou_jobs_count():
     pre_date = get_date_begin_by_timestamp(after_days=-1)
-    keywords = KeywordController.get_most_frequently_keywords(limit=800)
+    keywords = KeywordController.get_most_frequently_keywords(limit=2000)
     logging.info('{} crawl_lagou_job_count 定时任务运行中! 关键词 {} 个'.format(pre_date, len(keywords)))
     for keyword in keywords:
         city_jobs_count = {
@@ -29,7 +29,10 @@ def crawl_lagou_jobs_count():
         }
         for city in city_jobs_count:
             response_json = request_jobs_count_json(city=city, keyword=keyword)
-            city_jobs_count[city] = response_json['content']['positionResult']['totalCount']
+            try:
+                city_jobs_count[city] = response_json['content']['positionResult']['totalCount']
+            except Exception:
+                logging.getLogger(__name__).error('获取 jobs count 信息失败, 关键词为 {}'.format(keyword.name), exc_info=True)
         JobsCountController.add(date=pre_date, keyword_id=keyword.id,
                                 all_city=city_jobs_count['全国'], beijing=city_jobs_count['北京'],
                                 shanghai=city_jobs_count['上海'], guangzhou=city_jobs_count['广州'],
