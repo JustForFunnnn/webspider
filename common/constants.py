@@ -138,7 +138,7 @@ HTTP_HEADER = {
     'X-Requested-With': 'XMLHttpRequest',
     'X-Anit-Forge-Token': 'None',
     'Pragma': 'no-cache',
-    'Upgrade-Insecure-Requests': '1'
+    'Upgrade-Insecure-Requests': '1',
 }
 
 USER_AGENT_LIST = [
