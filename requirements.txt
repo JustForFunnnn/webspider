@@ -4,6 +4,7 @@
 tornado
 gevent
 gunicorn
+ipython
 lxml
 nose
 requests

@@ -1,5 +1,7 @@
 # Lagou Spider
 
+[![Build Status](https://travis-ci.org/GuozhuHe/webspider.png)](https://travis-ci.org/GuozhuHe/webspider)
+
 > 如果感觉项目还不错，给个 Star 吧  `_(:з」∠)_`
 
 --|--

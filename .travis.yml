@@ -1,0 +1,13 @@
+language: python
+python:
+  - "3.6"
+
+services:
+  - mysql
+  - redis-server
+
+install:
+  - make
+
+script:
+  - make test
