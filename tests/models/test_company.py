@@ -25,7 +25,7 @@ class CompanyModelTestCase(BaseTestCase):
         CompanyModel.add(**data)
         companys = CompanyModel.list()
         self.assertEqual(len(companys), 3)
-        companys = CompanyModel.list(ids=[10001,])
+        companys = CompanyModel.list(ids=[10001, ])
         self.assertEqual(len(companys), 1)
         for (key, value) in data.items():
             self.assertEqual(getattr(companys[0], key), value)

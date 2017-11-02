@@ -4,7 +4,7 @@
 
 --|--
 ---- | ----
-Version | 1.0.0
+Version | 1.0.1
 WebSite | http://www.jobinfo.cc:8000/
 Source |  https://github.com/GuozhuHe/webspider
 Keywords |  `Python3`, `Tornado`, `Celery`, `Spider`, `Lagou`, `Requests`
@@ -19,20 +19,8 @@ Keywords |  `Python3`, `Tornado`, `Celery`, `Spider`, `Lagou`, `Requests`
 
 ![Alt text](job-chart.jpeg)
 
-
-## 项目依赖
-
-* `requests`
-* `sqlalchemy`
-* `python-redis`
-* `redis`
-* `mysqlclient`
-* `lxml`
-* `retrying`
-* `celery`
-* `tornado`
-
-## 安装使用
+## Quick Start
+> 以下操作均是在 `Linux - Ubuntu` 环境下执行
 
 * 克隆项目
 
@@ -40,62 +28,81 @@ Keywords |  `Python3`, `Tornado`, `Celery`, `Spider`, `Lagou`, `Requests`
 git clone git@github.com:GuozhuHe/webspider.git
 ```
 
-* 安装 `virtualenv` (推荐使用方式)
+* 安装 `MySQL`, `Redis`, `Python3`
+
 ```bash
-pip install virtualenv
-# 创建 python3 虚拟环境
-virtualenv -p /usr/bin/python3 webspider
-# 激活虚拟环境
-source webspider/bin/activate
+# 安装 redis
+apt-get install redis-server
+
+# 后台启动 redis-server
+nohup redis-server &
+
+# 安装 python3
+apt-get install python3
+
+# 安装 MySQL
+apt-get install mysql-server
+
+# 启动 MySQL
+sudo service mysql start
 ```
 
-* 安装 `zc.buildout`
-```
-pip3 intstall zc.buildout
+* 配置数据库和表
+```mysql
+# 创建数据库
+CREATE DATABASE `spider` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+# 还需要创建相关表，表的定义语句在 tests/schema.sql 文件中，可自行复制进 MySQL 命令行中执行。
 ```
 
 * 在项目根目录下构建
 ```bash
-buildout
-# 构建成功后项目的 bin/ 目录下会有可执行脚本
-```
-
-* 启动 `redis` 和 `mysql`
-```bash
-# mac os 环境下
-redis-server
-mysql.server start
+make
+# 构建成功后项目的 env/bin 目录下会有可执行脚本
 ```
 
 * 执行单元测试
 ```bash
-bin/test
+make test
+```
+
+* 代码风格检查
+```bash
+make flake8
 ```
 
 * 运行 `Web Server`
 ```bash
-bin/web
+env/bin/web
 ```
 
 * 运行爬虫程序
 ```bash
 # 启动定时任务分发器
-bin/celery_beat
+env/bin/celery_beat
 # 启动爬取 职位数据 的 worker(每个月自动执行一次)
-bin/celery_lagou_data_worker
+env/bin/celery_lagou_data_worker
 # 启动爬取 职位数量 的 worker(每天晚上自动执行一次)
-bin/celery_jobs_count_worker 
+env/bin/celery_jobs_count_worker 
 ```
 
-* bin目录下其他可执行脚本
+* env/bin 目录下其他可执行脚本
 ```bash
 # 直接爬取职位数量
-bin/crawl_jobs_count        
+env/bin/crawl_jobs_count        
 # 直接爬取职位数据
-bin/crawl_lagou_data       
+env/bin/crawl_lagou_data       
 # 启动celery监控 
-bin/celery_flower            
+env/bin/celery_flower            
 ```
+
+* 清除构建信息
+```bash
+make clean
+```
+
+## TODO
+* 前后端分离
+* 重构数据库访问方式
 
 ## 其他常见问题
 有问题？联系我解决:

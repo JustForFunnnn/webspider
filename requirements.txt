@@ -1,0 +1,19 @@
+# All requirements put in this file
+# You **MUST** specify the package version in this file
+
+tornado
+gevent
+gunicorn
+lxml
+nose
+requests
+coverage
+flake8
+mysqlclient
+sqlalchemy
+redis
+python-redis
+retrying
+celery
+flower
+

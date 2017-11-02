@@ -1,6 +1,4 @@
 # coding=utf-8
-import logging
-
 from tests import BaseTestCase
 from app.model.job import JobModel
 

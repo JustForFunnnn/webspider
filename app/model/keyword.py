@@ -27,8 +27,8 @@ class KeywordModel(BaseModel):
     def insert_if_not_exist(cls, name):
         """
         如果不存在 name == name　的数据库记录，则插入该条记录 
-        :param name: 
-        :return: 
+        :param name:
+        :return:
         """
         sql = text("""INSERT INTO keyword(name)
 SELECT :name as name FROM dual
@@ -45,11 +45,11 @@ WHERE NOT EXISTS
         :return:
         """
         sql = text("""SELECT keyword.id, keyword.name, COUNT(*) AS count
-                FROM keyword, job_keyword
-                WHERE keyword.id = job_keyword.keyword_id 
-                GROUP BY keyword.id, keyword.name
-                ORDER BY count DESC
-                LIMIT :limit_count""")
+FROM keyword, job_keyword
+WHERE keyword.id = job_keyword.keyword_id 
+GROUP BY keyword.id, keyword.name
+ORDER BY count DESC
+LIMIT :limit_count""")
         query = cls.session.execute(sql, {'limit_count': limit})
         result = query.fetchall()
         keywords = []

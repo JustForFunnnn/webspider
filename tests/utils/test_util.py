@@ -1,7 +1,7 @@
 # coding=utf-8
 from unittest import TestCase
 
-from app.utils.util import *
+from app.utils.util import (update_salary_dict, get_salary_section, reverse_dict)
 
 
 class UtilTestCase(TestCase):

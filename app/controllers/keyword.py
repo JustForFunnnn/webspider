@@ -1,6 +1,5 @@
 # coding=utf-8
 from app.model.keyword import KeywordModel
-from app.controllers.job_keyword import JobKeywordController
 
 
 class KeywordController(object):

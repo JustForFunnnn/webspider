@@ -6,7 +6,7 @@ import requests
 from retrying import retry
 from requests.exceptions import RequestException
 
-from . import celery_app
+from app.tasks import celery_app
 from common import constants
 from common.exception import RequestsError
 from app.controllers.keyword import KeywordController
@@ -63,6 +63,7 @@ def request_jobs_count_json(city, keyword):
                                  data=form_data,
                                  headers=headers,
                                  cookies=cookies,
+                                 allow_redirects=False,
                                  timeout=constants.TIMEOUT)
         response_json = response.json()
         if 'content' not in response_json:

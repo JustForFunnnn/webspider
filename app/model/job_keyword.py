@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from sqlalchemy import Column, text
+from sqlalchemy import Column
 from sqlalchemy.dialects.mysql import INTEGER
 
 from common.db import BaseModel

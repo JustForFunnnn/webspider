@@ -48,7 +48,8 @@ def generate_job_data(job, company_id):
     work_year = filter_http_tag(job['workYear'])
     if work_year not in WORK_YEARS_REQUEST_DICT:
         logger.error(work_year + 'not in WORK_YEAR_DICT')
-    work_year = WORK_YEARS_REQUEST_DICT[work_year] if work_year in WORK_YEARS_REQUEST_DICT else WORK_YEARS_REQUEST_DICT['unknown']
+    work_year = WORK_YEARS_REQUEST_DICT[work_year] \
+        if work_year in WORK_YEARS_REQUEST_DICT else WORK_YEARS_REQUEST_DICT['unknown']
     salary = job['salary']
     education = EDUCATION_REQUEST_DICT[job['education']]
     department = department

@@ -10,11 +10,7 @@ from common import constants
 
 
 def filter_http_tag(string):
-    """
-    过滤网页端的多余字符和标签
-    :param string:
-    :return:
-    """
+    """过滤网页端的多余字符和标签"""
     pattern = r'<br/?>|\n'
     replace_char = ''
     string = re.sub(pattern=pattern, repl=replace_char, string=string)
@@ -22,10 +18,7 @@ def filter_http_tag(string):
 
 
 def generate_http_header(is_crawl_jobs_count=False):
-    """
-    构造 HTTP 请求头
-    :return:
-    """
+    """构造 HTTP 请求头"""
     header = constants.HTTP_HEADER
     header['User-Agent'] = random.choice(constants.USER_AGENT_LIST)
     # lagou 会针对访问的不同链接 检测header 的referer
@@ -35,12 +28,7 @@ def generate_http_header(is_crawl_jobs_count=False):
 
 
 def filter_unavailable_proxy(proxy_list, proxy_type='HTTPS'):
-    """
-    过滤掉无用的代理
-    :param proxy_list: 全部代理列表
-    :param proxy_type: 
-    :return: 可用的代理列表
-    """
+    """过滤掉无用的代理"""
     available_proxy_list = []
     for proxy in proxy_list:
         if proxy_type == 'HTTPS':
@@ -54,7 +42,7 @@ def filter_unavailable_proxy(proxy_list, proxy_type='HTTPS'):
             if response.status_code == constants.HTTP_SUCCESS and 'totalCount' in response.json():
                 available_proxy_list.append(proxy)
                 logging.info('可用代理数量 {}'.format(len(available_proxy_list)))
-        except:
+        except Exception:
             pass
     return available_proxy_list
 

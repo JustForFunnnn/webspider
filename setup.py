@@ -1,8 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import os
 from setuptools import find_packages, setup
 
 from app import __version__
+
+# get the dependencies and installs
+here = os.path.abspath(os.path.dirname(__file__))
+with open(os.path.join(here, 'requirements.txt')) as f:
+    all_requirements = f.read().split('\n')
 
 setup(
     name='webspider',
@@ -15,17 +21,7 @@ setup(
     packages=find_packages(exclude=['tests']),
     package_data={'webspider': ['README.md']},
     zip_safe=False,
-    install_requires=[
-        'requests',
-        'sqlalchemy',
-        'python-redis',
-        'redis',
-        'mysqlclient',
-        'lxml',
-        'retrying',
-        'celery',
-        'tornado',
-    ],
+    install_requires=all_requirements,
     entry_points={
         'console_scripts': [
             'web = app.web_app:main',
@@ -37,10 +33,5 @@ setup(
             'celery_beat = app.quickly_cmd:run_celery_beat',
             'celery_flower = app.quickly_cmd.py:run_celery_flower',
         ],
-    },
-    classifiers=[
-        'Environment :: Console',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: Implementation :: CPython'
-    ]
+    }
 )

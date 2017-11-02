@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from sqlalchemy import Column, text
-from sqlalchemy.dialects.mysql import INTEGER, VARCHAR
+from sqlalchemy import Column
+from sqlalchemy.dialects.mysql import INTEGER
 
 from common.db import BaseModel
 
@@ -38,7 +38,7 @@ class JobsCountModel(BaseModel):
         if order_key:
             try:
                 order_key = getattr(cls, order_key)
-            except:
+            except Exception:
                 raise Exception(u'illegal order key: {}'.format(order_key))
             if sort_by == 'desc':
                 query = query.order_by(order_key.desc())

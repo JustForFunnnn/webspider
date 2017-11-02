@@ -18,11 +18,6 @@ class IndustryModel(BaseModel):
 
     @classmethod
     def insert_if_not_exist(cls, name):
-        """
-        如果不存在 name == name　的数据库记录，则插入该条记录 
-        :param name: 
-        :return: 
-        """
         sql = text("""INSERT INTO industry(name)
     SELECT :name AS name FROM dual
     WHERE NOT EXISTS

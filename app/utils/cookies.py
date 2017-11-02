@@ -44,7 +44,7 @@ class Cookies(object):
                                         timeout=2)
                 if len(response.cookies):
                     cookies.append(response.cookies)
-            except:
+            except Exception:
                 pass
         logging.info('可用 cookies 数量: {}'.format(len(cookies)))
         return cookies

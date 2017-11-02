@@ -95,3 +95,4 @@ dump.rdb
 cover/
 celerybeat.pid
 oj.py
+log/
