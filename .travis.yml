@@ -6,8 +6,14 @@ services:
   - mysql
   - redis-server
 
+before_install:
+  - mysql -e 'CREATE DATABASE spider CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;'
+
 install:
   - make
 
 script:
   - make test
+
+after_success:
+  - env/bin/coveralls

@@ -17,4 +17,4 @@ python-redis
 retrying
 celery
 flower
-
+python-coveralls

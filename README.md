@@ -1,7 +1,10 @@
 # Lagou Spider
 
-[![Build Status](https://travis-ci.org/GuozhuHe/webspider.png)](https://travis-ci.org/GuozhuHe/webspider)
-
+[![Build Status](https://travis-ci.org/GuozhuHe/webspider.svg?branch=master)](https://travis-ci.org/GuozhuHe/webspider)
+[![Coverage Status](https://coveralls.io/repos/github/GuozhuHe/webspider/badge.svg?branch=master)](https://coveralls.io/github/GuozhuHe/webspider?branch=master)
+[![Implementation](https://img.shields.io/pypi/implementation/Django.svg)](https://github.com/GuozhuHe/webspider)
+[![Lic](https://img.shields.io/npm/l/express.svg)](https://github.com/GuozhuHe/webspider)
+[![Python](https://img.shields.io/badge/python-3-ff69b4.svg)](https://github.com/GuozhuHe/webspider)
 > 如果感觉项目还不错，给个 Star 吧  `_(:з」∠)_`
 
 --|--
