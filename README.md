@@ -108,6 +108,8 @@ make clean
 ## TODO
 * 前后端分离
 * 重构数据库访问方式
+* ~~缓存、失效机制~~
+* fix bug: `MySQL Server has gone away`
 
 ## 其他常见问题
 有问题？联系我解决:

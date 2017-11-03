@@ -8,7 +8,7 @@ ipython
 lxml
 nose
 requests
-coverage
+coverage == 4.0.3
 flake8
 mysqlclient
 sqlalchemy

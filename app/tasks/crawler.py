@@ -4,9 +4,10 @@ import logging
 from common import constants
 from common.db import redis_instance
 from app.tasks import celery_app
-from app.controllers.job import JobController
 from app.tasks.city import update_city_data
 from app.tasks.company import update_company_data
+from app.controllers.job import get_jobs_statistics
+from app.utils.cache import cache_clear
 
 logger = logging.getLogger(__name__)
 
@@ -32,5 +33,5 @@ def crawl_lagou_data():
             for industry_id in industry_ids:
                 update_company_data(city_id=city_id, finance_stage_id=finance_stage_id, industry_id=industry_id)
     # 失效缓存
-    JobController.get_jobs_statistics.cache_clear()
-    logging.info('主动失效缓存成功')
+    remove_count = cache_clear(get_jobs_statistics)
+    logging.info('主动失效缓存成功, 数量{}'.format(remove_count))

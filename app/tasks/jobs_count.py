@@ -15,7 +15,8 @@ from app.utils.util import crawler_sleep
 from app.utils.cookies import Cookies
 from app.utils.http_tools import generate_http_header
 from app.utils.time_tools import get_date_begin_by_timestamp
-from app.controllers.job import JobController
+from app.controllers.job import get_jobs_statistics
+from app.utils.cache import cache_clear
 
 
 @celery_app.task()
@@ -39,8 +40,9 @@ def crawl_lagou_jobs_count():
                                 shenzhen=city_jobs_count['深圳'], hangzhou=city_jobs_count['杭州'],
                                 chengdu=city_jobs_count['成都'])
     logging.info('crawl_lagou_job_count 任务完成!')
-    JobController.get_jobs_statistics.cache_clear()
-    logging.info('主动失效缓存成功')
+    # 失效缓存
+    remove_count = cache_clear(get_jobs_statistics)
+    logging.info('主动失效缓存成功, 数量{}'.format(remove_count))
 
 
 @retry(stop_max_attempt_number=constants.RETRY_TIMES, stop_max_delay=constants.STOP_MAX_DELAY,

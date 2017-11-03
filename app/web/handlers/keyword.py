@@ -3,7 +3,7 @@ from common import constants
 from common.db import redis_instance
 from app.web.handlers.base import BaseHandler
 from app.controllers.keyword import KeywordController
-from app.controllers.job import JobController
+from app.controllers.job import get_jobs_statistics
 
 
 class KeywordHandler(BaseHandler):
@@ -21,7 +21,7 @@ class KeywordHandler(BaseHandler):
          finance_stage_distribution,
          city_jobs_counter,
          salary_distribution,
-         work_years_request_analyze) = JobController.get_jobs_statistics(keyword_id=keyword.id)
+         work_years_request_analyze) = get_jobs_statistics(keyword.id)
 
         self.render("keyword.html",
                     keyword=keyword_name,
