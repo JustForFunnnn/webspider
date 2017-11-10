@@ -20,7 +20,7 @@ class CityModel(BaseModel):
     def add(cls, id, name):
         city = cls(id=id, name=name)
         cls.session.merge(city)
-        cls.session.commit()
+        cls.session.flush()
 
     @classmethod
     def get(cls, id=None, name=None):

@@ -23,4 +23,4 @@ class IndustryModel(BaseModel):
     WHERE NOT EXISTS
     (SELECT id FROM industry WHERE name = :name)""")
         cls.session.execute(sql, {'name': name})
-        cls.session.commit()
+        cls.session.flush()

@@ -24,7 +24,7 @@ class JobsCountModel(BaseModel):
                          guangzhou=int(guangzhou), shenzhen=int(shenzhen), shanghai=int(shanghai),
                          hangzhou=int(hangzhou), chengdu=int(chengdu))
         cls.session.merge(jobs_count)
-        cls.session.commit()
+        cls.session.flush()
 
     @classmethod
     def list(cls, keyword_id=None, start_time=None, end_time=None, order_key='date', sort_by='desc'):

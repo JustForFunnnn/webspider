@@ -35,7 +35,7 @@ SELECT :name as name FROM dual
 WHERE NOT EXISTS
 (SELECT id FROM keyword WHERE name = :name)""")
         cls.session.execute(sql, {'name': name})
-        cls.session.commit()
+        cls.session.flush()
 
     @classmethod
     def get_most_frequently_keywords(cls, limit=10):

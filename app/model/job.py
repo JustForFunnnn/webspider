@@ -34,7 +34,7 @@ class JobModel(BaseModel):
                   advantage=advantage, job_nature=int(job_nature), created_at=created_at)
         try:
             cls.session.merge(job)
-            cls.session.commit()
+            cls.session.flush()
         except InvalidRequestError as e:
             cls.session.rollback()
             raise e

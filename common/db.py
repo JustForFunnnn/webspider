@@ -10,9 +10,9 @@ from common import config
 
 LOGGER = logging.getLogger(__name__)
 # isolation_level 读取没提交的数据 避免脏数据
-DB_engine = create_engine(config.DB_CONF['host'], isolation_level="READ UNCOMMITTED", pool_recycle=3600)
+DB_engine = create_engine(config.DB_CONF['host'], pool_recycle=3600)
 _BaseModel = declarative_base()
-_Session = sessionmaker(bind=DB_engine)
+_Session = sessionmaker(bind=DB_engine, autoflush=True, autocommit=True)
 
 
 class BaseModel(_BaseModel):
@@ -23,7 +23,7 @@ class BaseModel(_BaseModel):
         'mysql_charset': 'utf8mb4',
         'extend_existing': True,
     }
-    session = _Session(autocommit=False)
+    session = _Session()
 
 
 redis_pool = redis.ConnectionPool(host=config.REDIS_CONF['host'],

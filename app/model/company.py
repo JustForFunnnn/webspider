@@ -32,7 +32,7 @@ class CompanyModel(BaseModel):
                       address=address, advantage=advantage, size=int(size))
         try:
             cls.session.merge(company)
-            cls.session.commit()
+            cls.session.flush()
         except InvalidRequestError as e:
             cls.session.rollback()
             raise e
@@ -51,7 +51,7 @@ class CompanyModel(BaseModel):
     @classmethod
     def update(cls, id, update_attr):
         cls.session.query(cls).filter_by(id=id).update(update_attr)
-        cls.session.commit()
+        cls.session.flush()
 
     @classmethod
     def count(cls, id=None):

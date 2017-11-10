@@ -106,10 +106,14 @@ make clean
 ```
 
 ## TODO
-* 前后端分离
-* 重构数据库访问方式
-* ~~缓存、失效机制~~
-* fix bug: `MySQL Server has gone away`
+
+- [ ] 前后端分离
+
+- [ ] 重构数据库访问方式
+
+- [x] 缓存、失效机制
+
+- [x] Fix Bug: `MySQL Server has gone away`. 详见此[MR](https://github.com/GuozhuHe/webspider/pull/4) 
 
 ## 其他常见问题
 有问题？联系我解决:

@@ -24,4 +24,4 @@ class CompanyIndustryModel(BaseModel):
     def add(cls, company_id, industry_id, city_id):
         company_industry = cls(company_id=int(company_id), industry_id=int(industry_id), city_id=int(city_id))
         cls.session.merge(company_industry)
-        cls.session.commit()
+        cls.session.flush()

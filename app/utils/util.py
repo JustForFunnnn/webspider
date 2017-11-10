@@ -72,7 +72,7 @@ def execute_sql_file(file_paths, db_session):
                 if sql_command.endswith(';'):
                     # Try to execute statemente and commit it
                     db_session.execute(text(sql_command))
-                    db_session.commit()
+                    db_session.flush()
                     sql_command = ''
 
 

@@ -24,4 +24,4 @@ class JobKeywordModel(BaseModel):
     def add(cls, job_id, keyword_id, city_id):
         job_keyword = cls(job_id=int(job_id), keyword_id=int(keyword_id), city_id=int(city_id))
         cls.session.merge(job_keyword)
-        cls.session.commit()
+        cls.session.flush()
