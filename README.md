@@ -1,9 +1,9 @@
 # Lagou Spider
 
-[![Build Status](https://travis-ci.org/GuozhuHe/webspider.svg?branch=master)](https://travis-ci.org/GuozhuHe/webspider)
-[![Coverage Status](https://coveralls.io/repos/github/GuozhuHe/webspider/badge.svg?branch=master)](https://coveralls.io/github/GuozhuHe/webspider?branch=master)
-[![Implementation](https://img.shields.io/pypi/implementation/Django.svg)](https://github.com/GuozhuHe/webspider)
-[![Lic](https://img.shields.io/npm/l/express.svg)](https://github.com/GuozhuHe/webspider)
+[![Build Status](https://travis-ci.org/GuozhuHe/webspider.svg)](https://travis-ci.org/GuozhuHe/webspider)
+[![Coverage Status](https://coveralls.io/repos/github/GuozhuHe/webspider/badge.svg)](https://coveralls.io/github/GuozhuHe/webspider?branch=master)
+[![License](https://img.shields.io/github/license/GuozhuHe/webspider.svg)](https://github.com/guozhuhe/webspider/blob/master/LICENSE)
+[![Maintainability](https://api.codeclimate.com/v1/badges/0195c3f3572166b54292/maintainability)](https://codeclimate.com/github/GuozhuHe/webspider/maintainability)
 [![Python](https://img.shields.io/badge/python-3-ff69b4.svg)](https://github.com/GuozhuHe/webspider)
 > 如果感觉项目还不错，给个 Star 吧  `_(:з」∠)_`
 

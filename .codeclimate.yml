@@ -1,0 +1,33 @@
+languages:
+  JavaScript: false
+  Python: true
+
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+        - python
+  fixme:
+    enabled: true
+  pep8:
+    checks:
+      W291:
+        enabled: false
+
+ratings:
+  paths:
+  - "**.py"
+
+exclude_paths:
+- "**.pyc"
+- "**.cfg"
+- "**.egg-info"
+- "**.egg"
+- "**log.txt"
+- "env/"
+- "log/"
+- "app/web/web_app.py"
+- "app/web/static"
+- "LICENSE"
+- "*.yml"
