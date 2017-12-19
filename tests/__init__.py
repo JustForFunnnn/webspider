@@ -4,7 +4,7 @@ from unittest import TestCase
 
 from sqlalchemy.exc import OperationalError
 
-from common.db import BaseModel
+from app.model.base import BaseModel
 from app.utils.util import execute_sql_file
 
 

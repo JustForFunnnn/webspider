@@ -6,4 +6,4 @@ export MYSQL_HOST="${MYSQL_HOST:=localhost}"
 export MYSQL_DATABASE="${MYSQL_DATABASE:=test}"
 
 echo 'Running unittest.......'
-env/bin/nosetests -vd --with-coverage --cover-package=app
+env/bin/nosetests -vsd --with-coverage --cover-package=app

@@ -46,8 +46,8 @@ def make_web_app():
 def main():
     define(name='port', default=8000, type=int, help='run on the given port')
     tornado.options.parse_command_line()
-    logger.info('================ spider web server has started ================ ')
-    logger.info('       server start at port -> {}, debug mode = {}'.format(options.port, constants.DEBUG))
+    logger.info('\n================ spider web server has started ================ ')
+    logger.info('\n      server start at port -> {}, debug mode = {}'.format(options.port, constants.DEBUG))
     app = make_web_app()
     http_server = tornado.httpserver.HTTPServer(app)
     http_server.listen(options.port)

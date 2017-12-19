@@ -1,19 +1,19 @@
 -- CREATE DATABASE `spider` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `job` (
-  `id` INT(11) UNSIGNED PRIMARY KEY,
-  `title` VARCHAR(64) NOT NULL COMMENT '职位标题',
-  `work_year` TINYINT  NOT NULL DEFAULT 0 COMMENT '工作年限要求',
-  `city_id` INT(11) UNSIGNED NOT NULL COMMENT '城市',
-  `company_id` INT(11) UNSIGNED NOT NULL COMMENT '公司 id',
-  `department` VARCHAR(64)  NOT NULL DEFAULT '' COMMENT '招聘部门',
-  `salary` VARCHAR(32)  NOT NULL DEFAULT '' COMMENT '薪水',
-  `education` TINYINT  NOT NULL DEFAULT 0 COMMENT '教育背景要求',
+  `id`          INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+  `title`       VARCHAR(64) NOT NULL COMMENT '职位标题',
+  `work_year`   TINYINT  NOT NULL DEFAULT 0 COMMENT '工作年限要求',
+  `city_id`     INT UNSIGNED NOT NULL COMMENT '城市',
+  `company_id`  INT UNSIGNED NOT NULL COMMENT '公司 id',
+  `department`  VARCHAR(64)  NOT NULL DEFAULT '' COMMENT '招聘部门',
+  `salary`      VARCHAR(32)  NOT NULL DEFAULT '' COMMENT '薪水',
+  `education`   TINYINT  NOT NULL DEFAULT 0 COMMENT '教育背景要求',
   `description` TEXT DEFAULT NULL COMMENT '额外描述',
-  `advantage` VARCHAR(128)  NOT NULL DEFAULT '' COMMENT '职位优势',
-  `job_nature` TINYINT  NOT NULL DEFAULT 0 COMMENT '工作性质',
-  `created_at` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '职位创建时间',
-  `updated_at` INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后更新时间'
+  `advantage`   VARCHAR(128)  NOT NULL DEFAULT '' COMMENT '职位优势',
+  `job_nature`  TINYINT  NOT NULL DEFAULT 0 COMMENT '工作性质',
+  `created_at`  INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '职位创建时间',
+  `updated_at`  INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后更新时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 

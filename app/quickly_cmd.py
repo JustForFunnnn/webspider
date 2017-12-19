@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 def run_web_app_by_gunicorn():
     define(name='port', default=8000, type=int, help='run on the given port')
     logger.info('\n================ spider web server(require gunicorn and gevent) has started ================ ')
-    logger.info('                       server start at port -> {}, debug mode = {} '.format(options.port,
+    logger.info('\n                       server start at port -> {}, debug mode = {} '.format(options.port,
                                                                                              constants.DEBUG))
     os.system(
         "env/bin/gunicorn 'app.web_app:make_wsgi_app()' -b 0.0.0.0:{port} -w 1 -k gevent".format(
