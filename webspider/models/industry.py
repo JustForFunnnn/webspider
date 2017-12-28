@@ -1,0 +1,21 @@
+# -*- coding: utf-8 -*-
+from sqlalchemy import Column, text
+from sqlalchemy.dialects.mysql import INTEGER, VARCHAR
+
+from common.db import BaseModel
+
+
+class IndustryModel(BaseModel):
+    __tablename__ = 'industry'
+
+    id = Column(INTEGER, nullable=False, primary_key=True, autoincrement=True)
+    name = Column(VARCHAR(64), nullable=False, doc=u'行业名称')
+
+    @classmethod
+    def insert_if_not_exist(cls, name):
+        sql = text("""INSERT INTO industry(name)
+    SELECT :name AS name FROM dual
+    WHERE NOT EXISTS
+    (SELECT id FROM industry WHERE name = :name)""")
+        cls.session.execute(sql, {'name': name})
+        cls.session.flush()

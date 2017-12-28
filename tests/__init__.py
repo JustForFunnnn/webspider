@@ -4,8 +4,8 @@ from unittest import TestCase
 
 from sqlalchemy.exc import OperationalError
 
-from app.model.base import BaseModel
-from app.utils.util import execute_sql_file
+from webspider.model.base import BaseModel
+from webspider.utils.util import execute_sql_file
 
 
 class BaseTestCase(TestCase):

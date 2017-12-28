@@ -87,13 +87,13 @@ env/bin/celery_beat
 # 启动爬取 职位数据 的 worker(每个月自动执行一次)
 env/bin/celery_lagou_data_worker
 # 启动爬取 职位数量 的 worker(每天晚上自动执行一次)
-env/bin/celery_jobs_count_worker 
+env/bin/celery_job_quantity_worker 
 ```
 
 * env/bin 目录下其他可执行脚本
 ```bash
 # 直接爬取职位数量
-env/bin/crawl_jobs_count        
+env/bin/crawl_job_quantity        
 # 直接爬取职位数据
 env/bin/crawl_lagou_data       
 # 启动celery监控 

@@ -1,8 +1,8 @@
 # coding=utf-8
-from sqlalchemy import and_
+from sqlalchemy import and_, func
 
 from tests import BaseTestCase
-from app.model.job import JobModel
+from webspider.model.job import JobModel
 
 test_job_data = dict(id=4789,
                      title=u'Android开发工程师',
@@ -14,7 +14,7 @@ test_job_data = dict(id=4789,
                      education=3,
                      description=u'职位描述，福利等等 blablabla....',
                      advantage='发展空间大，成长快',
-                     job_nature=0,
+                     nature=0,
                      created_at=1494864000,
                      updated_at=1495006329)
 
@@ -45,7 +45,7 @@ class JobModelTestCase(BaseTestCase):
                                 education=2,
                                 description=u'日常工作:吃饭！',
                                 advantage='饭管饱, 管够',
-                                job_nature=0)
+                                nature=0)
         job_id = JobModel.add(**to_add_data_dict)
 
         self.assertTrue(job_id > 0)
@@ -96,15 +96,15 @@ class JobModelTestCase(BaseTestCase):
         self.assertEqual(jobs[1].dict(), test_job_data)
 
     def test_count(self):
-        jobs_counts = JobModel.count()
-        self.assertEqual(jobs_counts, 2)
+        job_quantitys = JobModel.count()
+        self.assertEqual(job_quantitys, 2)
 
         # test count filter_by
-        jobs_counts = JobModel.count(filter_by={'id': 4789})
-        self.assertEqual(jobs_counts, 1)
+        job_quantitys = JobModel.count(filter_by={'id': 4789})
+        self.assertEqual(job_quantitys, 1)
 
-        jobs_counts = JobModel.count(filter_by={'id': 1})
-        self.assertEqual(jobs_counts, 0)
+        job_quantitys = JobModel.count(filter_by={'id': 1})
+        self.assertEqual(job_quantitys, 0)
 
     def test_update(self):
         init_job_data_dict = JobModel.get_by_pk(pk=4789).dict()
@@ -142,3 +142,19 @@ class JobModelTestCase(BaseTestCase):
         affect_rows = JobModel.update_by_pk(pk=6814, values={'title': '你好啊啊'})
         self.assertEqual(affect_rows, 1)
         self.assertEqual(JobModel.get_by_pk(pk=6814).title, u'你好啊啊')
+
+    def test_execute_sql_string(self):
+        job_rows = JobModel.execute_sql_string('select id, title from job where id = :id', {'id': 4789})
+        self.assertEqual(len(job_rows), 1)
+        self.assertEqual(job_rows[0][0], 4789)
+        self.assertEqual(job_rows[0][1], u'Android开发工程师')
+
+        job_rows = JobModel.execute_sql_string('select id, title from job')
+        self.assertEqual(len(job_rows), 2)
+        self.assertEqual(job_rows[0][0], 4789)
+        self.assertEqual(job_rows[0][1], u'Android开发工程师')
+
+        affect_rows = JobModel.execute_sql_string("update job set title = '测试' where id = :id", {'id': 4789})
+        self.assertEqual(affect_rows, 1)
+        job = JobModel.get_by_pk(pk=4789)
+        self.assertEqual(job.title, u'测试')

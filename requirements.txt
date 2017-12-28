@@ -4,7 +4,7 @@
 tornado
 gevent
 gunicorn
-ipython
+ipython == 5.5.0
 lxml
 nose
 requests

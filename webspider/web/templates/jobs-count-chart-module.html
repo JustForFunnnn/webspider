@@ -1,0 +1,131 @@
+<div id="jobs-count-chart" class="large-chart-div col-md-12"></div>
+
+<script type="text/javascript">
+    var jobsCountChart = echarts.init(document.getElementById('jobs-count-chart'));
+    // 指定图表的配置项和数据
+
+    var option = {
+        title: {
+            text: '岗位热度',
+            subtext: '根据近期岗位数量统计'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+        color: ["#FF0000", "#00BFFF", "#FF00FF", "#1ce322", "#000000", '#EE7942', '#6a7985'],
+        calculable: true,
+        legend: {
+            data: ['全国', '北京', '上海', '深圳', '广州', '杭州', '成都']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                mark: {show: true},
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: [
+                {% for job_quantity in keyword_job_quantity %}
+                    '{{job_quantity.date_string}}',
+                {% end %}
+            ]
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name: '全国',
+                type: 'line',
+                smooth: true,
+                data: [
+                    {% for job_quantity in keyword_job_quantity %}
+                    {{job_quantity.all_city}},
+                    {% end %}
+                ]
+            },
+            {
+                name: '北京',
+                type: 'line',
+                smooth: true,
+                data: [
+                    {% for job_quantity in keyword_job_quantity %}
+                    {{job_quantity.beijing}},
+                    {% end %}
+                ]
+            },
+            {
+                name: '上海',
+                type: 'line',
+                smooth: true,
+                data: [
+                    {% for job_quantity in keyword_job_quantity %}
+                    {{job_quantity.shanghai}},
+                    {% end %}
+                ]
+            },
+            {
+                name: '深圳',
+                type: 'line',
+                smooth: true,
+                data: [
+                    {% for job_quantity in keyword_job_quantity %}
+                    {{job_quantity.shenzhen}},
+                    {% end %}
+                ]
+            },
+            {
+                name: '广州',
+                type: 'line',
+                smooth: true,
+                data: [
+                    {% for job_quantity in keyword_job_quantity %}
+                    {{job_quantity.guangzhou}},
+                    {% end %}
+                ]
+            },
+            {
+                name: '杭州',
+                type: 'line',
+                smooth: true,
+                data: [
+                    {% for job_quantity in keyword_job_quantity %}
+                    {{job_quantity.hangzhou}},
+                    {% end %}
+                ]
+            },
+            {
+                name: '成都',
+                type: 'line',
+                smooth: true,
+                data: [
+                    {% for job_quantity in keyword_job_quantity %}
+                    {{job_quantity.chengdu}},
+                    {% end %}
+                ]
+            }
+        ]
+    };
+
+
+    // 使用刚指定的配置项和数据显示图表。
+    jobsCountChart.setOption(option);
+</script>

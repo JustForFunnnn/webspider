@@ -14,7 +14,7 @@ DB_HOST = os.environ.get('DB_HOST', 'localhost')
 DB_PORT = os.environ.get('DB_PORT', '3306')
 
 # MYSQL 配置
-DB_CONF = {
+MYSQL_CONF = {
     'host': 'mysql+mysqldb://{username}:{password}@{db_host}:{db_port}/spider?charset=utf8mb4'.format(
         username=MYSQL_USERNAME,
         password=MYSQL_PASSWORD,
@@ -60,7 +60,7 @@ LOGGING_CONFIG = {
 
     'loggers': {
         '': {
-            'handlers': ['console', ],
+            'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': False,
         },
@@ -71,7 +71,32 @@ LOGGING_CONFIG = {
         },
         'tornado': {
             'handlers': ['console', ],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'tornado.access': {
+            'handlers': ['console', ],
+            'propagate': False,
             'level': 'INFO',
+        },
+        'tornado.application': {
+            'handlers': ['console', ],
+            'propagate': False,
+            'level': 'INFO',
+        },
+        'tornado.general': {
+            'handlers': ['console', ],
+            'propagate': False,
+            'level': 'INFO',
+        },
+        'sqlalchemy.engine': {
+            'handlers': ['console', ],
+            'propagate': False,
+            'level': 'INFO',
+        },
+        'gunicorn': {
+            'level': 'INFO',
+            'handlers': ['console', ],
             'propagate': False,
         },
     },

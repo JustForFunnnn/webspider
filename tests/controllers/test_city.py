@@ -1,6 +1,6 @@
 # # coding=utf-8
 # from tests import BaseTestCase
-# from app.controllers.city import CityController
+# from webspider.controllers.city import CityController
 #
 #
 # class CityControllerTestCase(BaseTestCase):

@@ -1,7 +1,7 @@
 # coding=utf-8
 from unittest import TestCase
 
-from app.utils.cache import simple_cache, cache_clear, redis_instance
+from webspider.utils.cache import simple_cache, cache_clear, redis_instance
 
 test_numbers = 0
 

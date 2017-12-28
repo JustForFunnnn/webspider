@@ -10,6 +10,7 @@ python: setup.py requirements.txt
 	virtualenv -p $(PYTHON) env
 	echo "\n Use python virtual environment to install required packages......\n"
 	env/bin/pip install -e .
+	ln -s env/bin bin
 
 test: flake8
 	./runtests.sh

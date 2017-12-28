@@ -12,7 +12,7 @@ INSERT INTO `test_spider`.`company_industry` (`id`, `company_id`, `industry_id`,
 VALUES ('128060', '11', '24', '2'),
 ('128061', '10', '25', '3');
 
-INSERT INTO `test_spider`.`job` (`id`, `title`, `work_year`, `city_id`, `company_id`, `department`, `salary`, `education`, `description`, `advantage`, `job_nature`, `created_at`, `updated_at`)
+INSERT INTO `test_spider`.`job` (`id`, `title`, `work_year`, `city_id`, `company_id`, `department`, `salary`, `education`, `description`, `advantage`, `nature`, `created_at`, `updated_at`)
 VALUES ('4789', 'Android开发工程师', '1', '3', '10', '堆糖技术部招聘', '10k-20k', '3', '职位描述，福利等等 blablabla....', '发展空间大，成长快', '0', '1494864000', '1495006329'),
 ('6814', 'web前端', '1', '2', '11', '多盟技术部招聘', '10k-20k', '3', ' 工作内容：  1、基于html5的手机富媒体广告的制作和开发 2、引领行业的先进的移动广告形态的调研和技术实现 3、web网站前端开发 4、前端框架调优和性能优化 能力要求：  1、热爱前端技术，坚信前端技术是用户体验非常关键的一环 2、精通html5系相关技术，如果有手机端html5开发和适配经验更佳 3、熟悉或理解后端开发语言（php/python/java等）的工作原理，及与前端配合的工作模式 4、关注领域前沿技术，喜欢尝试新技术，以不断追求对界面和交互的体验改进 ', '国内领先移动广告平台', '0', '1493049600', '1494931484');
 
@@ -26,7 +26,7 @@ VALUES ('100', 'python'),
 ('101', 'java');
 
 
-INSERT INTO `jobs_count` (`date`, `keyword_id`, `all_city`, `beijing`, `guangzhou`, `shenzhen`, `shanghai`, `hangzhou`, `chengdu`)
+INSERT INTO `job_quantity` (`date`, `keyword_id`, `all_city`, `beijing`, `guangzhou`, `shenzhen`, `shanghai`, `hangzhou`, `chengdu`)
 VALUES
 	(1499702400, 100, 2477, 744, 245, 306, 365, 190, 130),
 	(1499616000, 100, 2477, 744, 245, 306, 365, 190, 130),

@@ -2,7 +2,7 @@
 # import time
 # from unittest import TestCase
 #
-# from app.utils.time_tools import (timestamp2string, date2timestamp, job_date2timestamp)
+# from webspider.utils.time_tools import (timestamp2string, date2timestamp, job_date2timestamp)
 
 #
 # class TimeToolsTestCase(TestCase):
