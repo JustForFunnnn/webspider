@@ -26,12 +26,15 @@ setup(
         'console_scripts': [
             'web = webspider.web.app:main',
             'production_web = webspider.quickly_cmd:run_web_app_by_gunicorn',
-            'crawl_lagou_data = webspider.tasks:crawl_lagou_data',
-            'crawl_job_quantity = webspider.tasks.job_quantity:crawl_lagou_job_quantity',
-            'celery_job_quantity_worker = webspider.quickly_cmd:run_celery_job_quantity_worker',
-            'celery_lagou_data_worker = webspider.quickly_cmd:run_celery_lagou_data_worker',
+            'crawl_lagou_data = webspider.tasks.actor.lagou_data:crawl_lagou_data_task',
+            'crawl_lagou_jobs_count = webspider.tasks.actor.lagou_jobs_count:crawl_lagou_jobs_count_task',
+            # beat
             'celery_beat = webspider.quickly_cmd:run_celery_beat',
             'celery_flower = webspider.quickly_cmd.py:run_celery_flower',
+            # worker
+            'celery_lagou_data_worker = webspider.quickly_cmd:run_celery_lagou_data_worker',
+            'celery_lagou_jobs_data_worker = webspider.quickly_cmd:run_celery_lagou_jobs_data_worker',
+            'celery_lagou_jobs_count_worker = webspider.quickly_cmd:run_celery_lagou_jobs_count_worker',
         ],
     }
 )

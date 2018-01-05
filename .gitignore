@@ -90,8 +90,11 @@ ENV/
 .idea/
 bin/
 spider_log.txt
+spider_log.txt
 dump.rdb
 .DS_Store
 cover/
 celerybeat.pid
 oj.py
+/webspider/log
+/webspider/security_constants.py

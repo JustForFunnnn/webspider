@@ -2,7 +2,7 @@
 
 CREATE TABLE IF NOT EXISTS `job` (
   `id`          INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `lagou_job_id`INT UNSIGNED NOT NULL COMMENT '拉勾接口返回的id',
+  `lagou_job_id`INT UNSIGNED NOT NULL COMMENT '拉勾所使用的职位id',
   `city_id`     INT UNSIGNED NOT NULL COMMENT '城市 id',
   `company_id`  INT UNSIGNED NOT NULL COMMENT '公司 id',
   `title`       VARCHAR(64) NOT NULL COMMENT '职位标题',
@@ -10,8 +10,9 @@ CREATE TABLE IF NOT EXISTS `job` (
   `department`  VARCHAR(64) NOT NULL DEFAULT '' COMMENT '招聘部门',
   `salary`      VARCHAR(32) NOT NULL DEFAULT '' COMMENT '薪水',
   `education`   TINYINT NOT NULL DEFAULT 0 COMMENT '教育背景要求',
-  `advantage`   VARCHAR(128) NOT NULL DEFAULT '' COMMENT '职位优势',
   `nature`      TINYINT NOT NULL DEFAULT 0 COMMENT '工作性质',
+  `description` VARCHAR(2048) NOT NULL DEFAULT '' COMMENT '额外描述',
+  `advantage`   VARCHAR(256) NOT NULL DEFAULT '' COMMENT '职位优势',
   `created_at`  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at`  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
   UNIQUE KEY (`lagou_job_id`),
@@ -19,41 +20,24 @@ CREATE TABLE IF NOT EXISTS `job` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='职位表';
 
 
-CREATE TABLE IF NOT EXISTS `job_extra` (
-  -- 存储 job 大字段 以免影响主表效率
-  `job_id`      INT UNSIGNED NOT NULL PRIMARY KEY,
-  `description` VARCHAR(10000) NOT NULL DEFAULT '' COMMENT '额外描述',
-  `created_at`  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_at`  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='职位表 额外字段';
-
-
 CREATE TABLE IF NOT EXISTS `company` (
   `id`          INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `lagou_company_id` INT UNSIGNED NOT NULL COMMENT '拉勾接口返回的id',
+  `lagou_company_id` INT UNSIGNED NOT NULL COMMENT '拉勾所使用的公司id',
   `city_id`     INT UNSIGNED NOT NULL COMMENT '所在城市 id',
   `shortname`   VARCHAR(64) NOT NULL COMMENT '公司名称',
   `fullname`    VARCHAR(128) NOT NULL COMMENT '公司全称',
   `finance_stage` TINYINT NOT NULL DEFAULT 0 COMMENT '融资阶段',
-  `advantage`   VARCHAR(128) NOT NULL DEFAULT '' COMMENT '公司优势',
   `size`        TINYINT NOT NULL DEFAULT 0 COMMENT '公司规模',
   `address`     VARCHAR(128) NOT NULL DEFAULT '' COMMENT '公司地址',
   `features`    VARCHAR(128) NOT NULL DEFAULT '' COMMENT '公司特点',
   `process_rate` TINYINT NOT NULL DEFAULT 0  COMMENT '简历处理率',
+  `introduce`   VARCHAR(2048) NOT NULL DEFAULT '' COMMENT '公司简介',
+  `advantage`   VARCHAR(256) NOT NULL DEFAULT '' COMMENT '公司优势',
   `created_at`  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at`  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
   UNIQUE KEY (`lagou_company_id`),
   KEY `idx_city_id` (`city_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='公司表';
-
-
-CREATE TABLE IF NOT EXISTS `company_extra` (
-  -- 存储 company 大字段 以免影响主表效率
-  `company_id`  INT UNSIGNED NOT NULL PRIMARY KEY,
-  `introduce`   VARCHAR(10000) NOT NULL DEFAULT '' COMMENT '公司简介',
-  `created_at`  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_at`  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='公司表 额外字段';
 
 
 CREATE TABLE IF NOT EXISTS `city` (
@@ -123,11 +107,12 @@ CREATE TABLE IF NOT EXISTS `job_keyword` (
   `keyword_id`  INT NOT NULL COMMENT '关键词 id',
   `created_at`  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at`  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
-  UNIQUE KEY(`job_id`, `keyword_id`)
+  UNIQUE KEY(`job_id`, `keyword_id`),
+  KEY `idx_keyword_id` (`keyword_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='职位关键词';
 
 
-CREATE TABLE IF NOT EXISTS `job_count` (
+CREATE TABLE IF NOT EXISTS `jobs_count` (
   `id`          INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `date`        INT NOT NULL COMMENT '日期',
   `keyword_id`  INT NOT NULL COMMENT '关键词 id',
@@ -140,7 +125,8 @@ CREATE TABLE IF NOT EXISTS `job_count` (
   `chengdu`     INT NOT NULL DEFAULT 0 COMMENT '成都岗位数量',
   `created_at`  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at`  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
-  UNIQUE KEY(`date`, `keyword_id`)
+  UNIQUE KEY(`date`, `keyword_id`),
+  KEY `idx_keyword_id` (`keyword_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='职位每日数量统计';
 
 

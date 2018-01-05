@@ -7,6 +7,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from tornado.util import ObjectDict
 
 from webspider.utils.sql import db_engine, Session
+from webspider.utils.classproperty import classproperty
 
 __all__ = ['BaseModel']
 
@@ -25,16 +26,16 @@ class BaseModel(_Base):
 
     metadata = MetaData(bind=db_engine, reflect=True)
 
-    @property
-    def session(self):
+    @classproperty
+    def session(cls):
         return Session
 
-    @property
+    @classproperty
     def pk_name(cls):
         """主键名"""
         return inspect(cls).primary_key[0].name
 
-    @property
+    @classproperty
     def pk(cls):
         """表主键"""
         return getattr(cls, cls.pk_name)
@@ -50,7 +51,7 @@ class BaseModel(_Base):
         obj = cls(**values)
         cls.session.add(obj)
         cls.session.flush()
-        return obj.id
+        return getattr(obj, obj.pk_name)
 
     @classmethod
     def get_by_pk(cls, pk):
@@ -78,9 +79,10 @@ class BaseModel(_Base):
         return query.first()
 
     @classmethod
-    def list(cls, filter=None, filter_by=None, order_by=None, offset=None, limit=None):
+    def list(cls, columns=None, filter=None, filter_by=None, order_by=None, group_by=None, offset=None, limit=None):
         """
         批量获取记录
+        :param columns: the columns you want to query, SQL expression, column, or mapped entity expected
         :param filter: apply the given filtering criterion to a copy of this Query,
         using SQL expressions.
         :param filter_by: apply the given filtering criterion to a copy of this Query,
@@ -96,11 +98,14 @@ class BaseModel(_Base):
         :return:
         """
         query = cls.session.query(cls)
-
+        if columns:
+            query = cls.session.query(columns)
         if filter is not None:
             query = query.filter(filter)
         if filter_by is not None:
             query = query.filter_by(**filter_by)
+        if group_by is not None:
+            query = query.group_by(group_by)
         if order_by is not None:
             query = query.order_by(order_by)
         if offset is not None:
@@ -113,9 +118,22 @@ class BaseModel(_Base):
         return result
 
     @classmethod
-    def count(cls, filter=None, filter_by=None):
+    def is_exist(cls, filter=None, filter_by=None):
+        """
+        判断某个记录是否存在
+        :param filter: apply the given filtering criterion to a copy of this Query,
+        using SQL expressions.
+        :param filter_by: apply the given filtering criterion to a copy of this Query,
+        using keyword expressions as a dict.
+        :return: boolean
         """
 
+        return cls.count(filter=filter, filter_by=filter_by) != 0
+
+    @classmethod
+    def count(cls, filter=None, filter_by=None):
+        """
+        获取数据库中记录的数目
         :param filter: apply the given filtering criterion to a copy of this Query,
         using SQL expressions.
         :param filter_by: apply the given filtering criterion to a copy of this Query,
@@ -157,7 +175,7 @@ class BaseModel(_Base):
         """主键更新数据
 
         :param pk: 主键值
-        :param values: 要更新的值，key=value 形式
+        :param values: dict 要更新的值，key=value 形式
         :return: 返回变更的行数
         """
         return cls.update(filter=(cls.pk == pk), values=values)
@@ -178,3 +196,10 @@ class BaseModel(_Base):
             return query.fetchall()
         else:
             return query.rowcount
+
+    @classmethod
+    def batch_add(cls, instances):
+        """批量添加记录"""
+        if not all([isinstance(instance, cls) for instance in instances]):
+            raise ValueError('all instances must be {table_name} model instance'.format(table_name=cls.__tablename__))
+        cls.session.bulk_save_objects(instances)
