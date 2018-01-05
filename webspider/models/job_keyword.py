@@ -2,7 +2,7 @@
 from sqlalchemy import Column
 from sqlalchemy.dialects.mysql import INTEGER
 
-from common.db import BaseModel
+from webspider.models.base import BaseModel
 
 
 class JobKeywordModel(BaseModel):

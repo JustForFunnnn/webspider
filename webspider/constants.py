@@ -7,16 +7,14 @@ import os
 """
 FINANCE_STAGE_DICT = {
     'unknown': 0,
-    '初创型(未融资)': 1,
-    '初创型(天使轮)': 2,
-    '成长型(A轮)': 3,
-    '成长型(B轮)': 4,
-    '成熟型(C轮)': 5,
-    '成熟型(D轮及以上)': 6,
+    '未融资': 1,
+    '天使轮': 2,
+    'A轮': 3,
+    'B轮': 4,
+    'C轮': 5,
+    'D轮及以上': 6,
     '上市公司': 7,
-    '成熟型(不需要融资)': 8,
-    '成长型(不需要融资)': 9,
-    '初创型(不需要融资)': 10
+    '不需要融资': 8,
 }
 
 """
@@ -72,15 +70,18 @@ COMPANY_SIZE_DICT = {
 
 JOB_JSON_URL = 'https://www.lagou.com/jobs/positionAjax.json'
 
-JOB_DETAIL_URL = 'https://www.lagou.com/jobs/{job_id}.html'
+JOB_DETAIL_URL = 'https://www.lagou.com/jobs/{lagou_job_id}.html'
 
-COMPANY_DETAIL_URL = 'https://www.lagou.com/gongsi/{company_id}.html'
+COMPANY_DETAIL_URL = 'https://www.lagou.com/gongsi/{lagou_company_id}.html'
 
 ALL_CITY_URL = 'https://www.lagou.com/gongsi/allCity.html?option=0-0-0'
 
 COMPANIES_URL = 'https://www.lagou.com/gongsi/{city_id}-{finance_stage_id}-{industry_id}.json'
 
 COMPANY_JOB_URL = 'https://www.lagou.com/gongsi/searchPosition.json'
+
+# COMPANIES_URL sort field
+SORTED_BY_JOBS_COUNT = 1
 
 """
     其他常量
@@ -100,16 +101,11 @@ MIN_SLEEP_TIME = 4
 
 MAX_SLEEP_TIME = 7
 
-TIMEOUT = 2
+TIMEOUT = 4
+
+SLEEP_SECS = 4
 
 SECONDS_OF_DAY = 60 * 60 * 24
-
-# 用来设定最大的尝试次数，超过该次数就停止重试
-RETRY_TIMES = 10
-# 函数最久持续时间 单位: s
-STOP_MAX_DELAY = 1000 * 80
-# 设置在两次retrying之间的停留时间 单位:s
-WAIT_FIXED = 1000 * 7
 
 REDIS_PROXY_KEY = 'proxys'
 
@@ -118,6 +114,17 @@ REDIS_VISITED_COMPANY_KEY = 'visited_company'
 REDIS_VISITED_PEOPLES_COUNT_KEY = 'visited_peoples_count'
 
 CACHE_SIZE = 128
+
+"""
+    retry 相关
+"""
+
+# 用来设定最大的尝试次数，超过该次数就停止重试
+RETRY_TIMES = 3
+# 函数最久持续时间
+STOP_MAX_DELAY = 1000 * 30
+# 设置在两次retrying之间的停留时间
+WAIT_FIXED = 1000 * 2
 
 """
     HTTP 相关
@@ -140,6 +147,7 @@ HTTP_HEADER = {
     'X-Anit-Forge-Token': 'None',
     'Pragma': 'no-cache',
     'Upgrade-Insecure-Requests': '1',
+    'Cookie': 'user_trace_token=20171228200800-a343a41c-2539-4034-a0f0-54d164d0ba60; JSESSIONID=ABAAABAACDBABJB1A79D194CD92AFB65C0CFD6177D3294C; _ga=GA1.2.576047458.1514462908; LGUID=20171228200827-d00abdea-ebc7-11e7-b38b-525400f775ce; index_location_city=%E5%B9%BF%E5%B7%9E; TG-TRACK-CODE=index_search; SEARCH_ID=bae02c75722541cf93acd00963a325f4; X_HTTP_TOKEN=20c35481282abe6b14aa0b61535ab01d; LGSID=20171229154521-38d00008-ec6c-11e7-b6bd-525400f775ce; PRE_UTM=; PRE_HOST=; PRE_SITE=; PRE_LAND=https%3A%2F%2Fwww.lagou.com%2F; _gat=1; LGRID=20171229155656-d6fe110f-ec6d-11e7-9f67-5254005c3644'
 }
 
 USER_AGENT_LIST = [

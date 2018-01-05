@@ -7,6 +7,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from tornado.util import ObjectDict
 
 from webspider.utils.sql import db_engine, Session
+from webspider.utils.classproperty import classproperty
 
 __all__ = ['BaseModel']
 
@@ -25,16 +26,16 @@ class BaseModel(_Base):
 
     metadata = MetaData(bind=db_engine, reflect=True)
 
-    @property
-    def session(self):
+    @classproperty
+    def session(cls):
         return Session
 
-    @property
+    @classproperty
     def pk_name(cls):
         """主键名"""
         return inspect(cls).primary_key[0].name
 
-    @property
+    @classproperty
     def pk(cls):
         """表主键"""
         return getattr(cls, cls.pk_name)
@@ -50,7 +51,7 @@ class BaseModel(_Base):
         obj = cls(**values)
         cls.session.add(obj)
         cls.session.flush()
-        return obj.id
+        return getattr(obj, obj.pk_name)
 
     @classmethod
     def get_by_pk(cls, pk):
@@ -113,9 +114,31 @@ class BaseModel(_Base):
         return result
 
     @classmethod
+    def is_exist(cls, pk=None, filter=None, filter_by=None):
+        """
+        判断某个记录是否存在
+        :param pk: table primary key
+        :param filter: apply the given filtering criterion to a copy of this Query,
+        using SQL expressions.
+        :param filter_by: apply the given filtering criterion to a copy of this Query,
+        using keyword expressions as a dict.
+        :return: boolean
+        """
+        query = cls.session.query('1').select_from(cls)
+
+        if pk is not None:
+            query = query.filter(cls.pk == pk)
+        if filter is not None:
+            query = query.filter(filter)
+        if filter_by is not None:
+            query = query.filter_by(**filter_by)
+
+        return query.scalar() is not None
+
+    @classmethod
     def count(cls, filter=None, filter_by=None):
         """
-
+        获取数据库中记录的数目
         :param filter: apply the given filtering criterion to a copy of this Query,
         using SQL expressions.
         :param filter_by: apply the given filtering criterion to a copy of this Query,
@@ -157,7 +180,7 @@ class BaseModel(_Base):
         """主键更新数据
 
         :param pk: 主键值
-        :param values: 要更新的值，key=value 形式
+        :param values: dict 要更新的值，key=value 形式
         :return: 返回变更的行数
         """
         return cls.update(filter=(cls.pk == pk), values=values)

@@ -1,8 +1,8 @@
 # coding=utf-8
-from sqlalchemy import and_, func
+from sqlalchemy import and_
 
 from tests import BaseTestCase
-from webspider.model.job import JobModel
+from webspider.models import JobModel
 
 test_job_data = dict(id=4789,
                      title=u'Android开发工程师',

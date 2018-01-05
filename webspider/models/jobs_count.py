@@ -4,7 +4,7 @@ from datetime import datetime
 from sqlalchemy import Column
 from sqlalchemy.dialects.mysql import INTEGER, TIMESTAMP
 
-from common.db import BaseModel
+from webspider.models.base import BaseModel
 
 
 class JobsQuantityModel(BaseModel):

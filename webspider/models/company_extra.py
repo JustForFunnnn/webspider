@@ -7,10 +7,11 @@ from sqlalchemy.dialects.mysql import INTEGER, VARCHAR, TIMESTAMP
 from webspider.models.base import BaseModel
 
 
-class IndustryModel(BaseModel):
-    __tablename__ = 'industry'
+class CompanyExtraModel(BaseModel):
+    __tablename__ = 'company_extra'
 
-    id = Column(INTEGER, nullable=False, primary_key=True, autoincrement=True)
-    name = Column(VARCHAR(64), nullable=False, doc=u'行业名称')
+    company_id = Column(INTEGER, nullable=False, primary_key=True)
+    introduce = Column(VARCHAR, nullable=False, doc=u'公司简介')
+    advantage = Column(VARCHAR, nullable=False, doc=u'公司优势')
     created_at = Column(TIMESTAMP, nullable=False, default=datetime.now, doc=u'创建时间')
     updated_at = Column(TIMESTAMP, nullable=False, default=datetime.now, onupdate=datetime.now, doc=u'最后更新时间')

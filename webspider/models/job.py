@@ -5,7 +5,7 @@ from datetime import datetime
 from sqlalchemy import Column
 from sqlalchemy.dialects.mysql import INTEGER, VARCHAR, TEXT, TINYINT, TIMESTAMP
 
-from webspider.model.base import BaseModel
+from webspider.models.base import BaseModel
 
 
 class JobModel(BaseModel):

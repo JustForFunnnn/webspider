@@ -1,20 +1,28 @@
 # coding=utf-8
 import re
+import time
 import random
 import logging
 
 import requests
 from lxml import etree
+from retrying import retry
 
 from webspider import constants
 
 
-def filter_http_tag(string):
-    """过滤网页端的多余字符和标签"""
-    pattern = r'<br/?>|\n'
-    replace_char = ''
-    string = re.sub(pattern=pattern, repl=replace_char, string=string)
-    return string.strip()
+def to_plaintext(content, pattern=r'<br/?>|\n', strip=True):
+    """
+    根据 pattern 过滤文本
+    :param content: 需要过滤的文本
+    :param pattern: 需要过滤内容的正则表达式
+    :param strip: 是否去掉首尾空格
+    :return:
+    """
+    plaintext = re.sub(pattern=pattern, repl=pattern, string=content)
+    if strip:
+        plaintext.strip()
+    return plaintext
 
 
 def generate_http_request_headers(referer=None):
@@ -24,6 +32,18 @@ def generate_http_request_headers(referer=None):
     if referer:
         header['Referer'] = referer
     return header
+
+
+@retry(stop_max_attempt_number=constants.RETRY_TIMES, stop_max_delay=constants.STOP_MAX_DELAY,
+       wait_fixed=constants.WAIT_FIXED)
+def requests_get(url, params=None, headers=None, allow_redirects=False, timeout=constants.TIMEOUT,
+                 sleep_secs=constants.SLEEP_SECS, **kwargs):
+    if sleep_secs:
+        time.sleep(sleep_secs)
+    if not headers:
+        headers = generate_http_request_headers()
+    return requests.get(url=url, params=params, headers=headers, allow_redirects=allow_redirects,
+                        timeout=timeout, **kwargs)
 
 
 def filter_unavailable_proxy(proxy_list, proxy_type='HTTPS'):
