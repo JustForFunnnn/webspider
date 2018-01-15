@@ -82,25 +82,6 @@ COMPANY_SIZE_DICT = {
 }
 
 """
-    拉勾相关网页
-"""
-
-JOB_JSON_URL = 'https://www.lagou.com/jobs/positionAjax.json'
-
-JOB_DETAIL_URL = 'https://www.lagou.com/jobs/{lagou_job_id}.html'
-
-COMPANY_DETAIL_URL = 'https://www.lagou.com/gongsi/{lagou_company_id}.html'
-
-ALL_CITY_URL = 'https://www.lagou.com/gongsi/allCity.html?option=0-0-0'
-
-COMPANIES_URL = 'https://www.lagou.com/gongsi/{city_id}-{finance_stage_id}-{industry_id}.json'
-
-COMPANY_JOBS_URL = 'https://www.lagou.com/gongsi/searchPosition.json'
-
-# COMPANIES_URL sort field
-SORTED_BY_JOBS_COUNT = 1
-
-"""
     其他常量
 """
 
@@ -137,8 +118,27 @@ STOP_MAX_DELAY = 1000 * 30
 WAIT_FIXED = 1000 * 2
 
 """
-    HTTP 相关 
+    HTTP 相关 (基于减少 lagou 的网站负载考虑, 屏蔽以下常量的实际内容)
 """
 HTTP_HEADER = {}
 
 USER_AGENT_LIST = {}
+
+"""
+    拉勾相关网页 (基于减少 lagou 的网站负载考虑, 屏蔽以下常量的实际内容)
+"""
+
+JOB_JSON_URL = ''
+
+JOB_DETAIL_URL = ''
+
+COMPANY_DETAIL_URL = ''
+
+ALL_CITY_URL = ''
+
+COMPANIES_URL = ''
+
+COMPANY_JOBS_URL = ''
+
+# COMPANIES_URL sort field
+SORTED_BY_JOBS_COUNT = 1

@@ -14,7 +14,7 @@ from webspider.models import CompanyModel
 logger = logging.getLogger(__name__)
 
 
-def crawl_lagou_companies_pagination(city_id=0, finance_stage_id=0, industry_id=0):
+def crawl_lagou_companies_pagination(city_id=0, finance_stage_id=0, industry_id=0, page_no=1):
     """
     获取拉勾公司 分页数据
     :param city_id: 城市 id, 默认 0 代表全国
@@ -27,7 +27,8 @@ def crawl_lagou_companies_pagination(city_id=0, finance_stage_id=0, industry_id=
                                          finance_stage_id=finance_stage_id,
                                          industry_id=industry_id)
 
-    response_json = utils.http_tools.requests_get(url=url).json()
+    params = {'pn': page_no, 'sortField': constants.SORTED_BY_JOBS_COUNT}
+    response_json = utils.http_tools.requests_get(url=url, params=params).json()
     pagination = utils.pagination.Pagination(per_page=int(response_json['pageSize']),
                                              total=int(response_json['totalCount']))
 
@@ -62,8 +63,8 @@ def crawl_lagou_companies(city_id=0, finance_stage_id=0, industry_id=0, page_no=
     url = constants.COMPANIES_URL.format(city_id=city_id,
                                          finance_stage_id=finance_stage_id,
                                          industry_id=industry_id)
-    prams = {'pn': page_no, 'sortField': constants.SORTED_BY_JOBS_COUNT}
-    response_json = utils.http_tools.requests_get(url=url, params=prams).json()
+    params = {'pn': page_no, 'sortField': constants.SORTED_BY_JOBS_COUNT}
+    response_json = utils.http_tools.requests_get(url=url, params=params).json()
     companies = response_json['result']
 
     companies_dicts = []

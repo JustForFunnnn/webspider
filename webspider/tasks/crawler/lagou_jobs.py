@@ -12,7 +12,7 @@ from webspider.models.job import JobModel
 logger = logging.getLogger(__name__)
 
 
-def crawl_lagou_jobs_pagination(lagou_company_id, job_type, school_job=False):
+def crawl_lagou_jobs_pagination(lagou_company_id, job_type, page_no=1, school_job=False):
     """
     获取拉勾职位 分页数据
     :param lagou_company_id: 拉勾公司 id
@@ -21,8 +21,9 @@ def crawl_lagou_jobs_pagination(lagou_company_id, job_type, school_job=False):
     params = {
         'companyId': lagou_company_id,
         'positionFirstType': job_type,
+        'schoolJob': school_job,
+        'pageNo': page_no,
         'pageSize': 10,
-        'schoolJob': school_job
     }
     response_json = utils.http_tools.requests_get(url=constants.COMPANY_JOBS_URL, params=params).json()
     pagination = utils.pagination.Pagination(per_page=int(response_json['content']['data']['page']['pageSize']),
@@ -35,9 +36,9 @@ def crawl_lagou_jobs(lagou_company_id, job_type, page_no=1, school_job=False, sk
     params = {
         'companyId': lagou_company_id,
         'positionFirstType': job_type,
-        'pageSize': 10,
+        'schoolJob': school_job,
         'pageNo': page_no,
-        'schoolJob': school_job
+        'pageSize': 10,
     }
     response_json = utils.http_tools.requests_get(url=constants.COMPANY_JOBS_URL, params=params).json()
     jobs = response_json['content']['data']['page']['result']

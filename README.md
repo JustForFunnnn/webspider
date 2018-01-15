@@ -1,4 +1,4 @@
-# Lagou Spider
+# Web Spider
 
 [![Build Status](https://travis-ci.org/GuozhuHe/webspider.svg)](https://travis-ci.org/GuozhuHe/webspider)
 [![Coverage Status](https://coveralls.io/repos/github/GuozhuHe/webspider/badge.svg)](https://coveralls.io/github/GuozhuHe/webspider?branch=master)
@@ -114,8 +114,3 @@ make clean
 - [x] 缓存、失效机制
 
 - [x] Fix Bug: `MySQL Server has gone away`. 详见此[MR](https://github.com/GuozhuHe/webspider/pull/4) 
-
-## 其他常见问题
-有问题？联系我解决:
-* `E-mail`: `heguozhu@zhihu.com`
-* `QQ`: `188003202`
