@@ -12,17 +12,13 @@ from webspider.models.job import JobModel
 logger = logging.getLogger(__name__)
 
 
-def crawl_lagou_jobs_pagination(lagou_company_id, job_type, school_job=False):
-    """
-    获取拉勾职位 分页数据
-    :param lagou_company_id: 拉勾公司 id
-    :return: utils.pagination.Pagination instance
-    """
+def crawl_lagou_jobs_pagination(lagou_company_id, job_type, page_no=1, need_school_job=False):
     params = {
         'companyId': lagou_company_id,
         'positionFirstType': job_type,
+        'schoolJob': need_school_job,
+        'pageNo': page_no,
         'pageSize': 10,
-        'schoolJob': school_job
     }
     response_json = utils.http_tools.requests_get(url=constants.COMPANY_JOBS_URL, params=params).json()
     pagination = utils.pagination.Pagination(per_page=int(response_json['content']['data']['page']['pageSize']),
@@ -31,13 +27,13 @@ def crawl_lagou_jobs_pagination(lagou_company_id, job_type, school_job=False):
     return pagination
 
 
-def crawl_lagou_jobs(lagou_company_id, job_type, page_no=1, school_job=False, skip_exist=True):
+def crawl_lagou_jobs(lagou_company_id, job_type, page_no=1, need_school_job=False, skip_exist=True):
     params = {
         'companyId': lagou_company_id,
         'positionFirstType': job_type,
-        'pageSize': 10,
+        'schoolJob': need_school_job,
         'pageNo': page_no,
-        'schoolJob': school_job
+        'pageSize': 10,
     }
     response_json = utils.http_tools.requests_get(url=constants.COMPANY_JOBS_URL, params=params).json()
     jobs = response_json['content']['data']['page']['result']
@@ -46,19 +42,20 @@ def crawl_lagou_jobs(lagou_company_id, job_type, page_no=1, school_job=False, sk
     for job in jobs:
         lagou_job_id = job['positionId']
         if skip_exist and JobModel.is_exist(filter_by={'lagou_job_id': lagou_job_id}):
-            print('跳过 job, lagou job id is {}'.format(lagou_job_id))
+            jobs_dicts.append(ObjectDict(lagou_job_id=lagou_job_id, is_exist=True))
             continue
 
         job_detail = crawl_lagou_job_detail(lagou_job_id=lagou_job_id)
         jobs_dicts.append(ObjectDict(
             lagou_job_id=lagou_job_id,
+            is_exist=False,
             city=job.get('city'),
             title=job.get('positionName'),
             salary=job.get('salary'),
             education=job.get('education'),
             nature=job.get('jobNature'),
             work_year=job.get('workYear'),
-            advantage=job.get('positionAdvantage'),
+            advantage=job.get('positionAdvantage', ''),
             # job detail
             department=job_detail.get('department'),
             keywords=job_detail.get('keywords'),
@@ -116,4 +113,5 @@ def convert_lagou_job_data(job_dict):
     job_dict.education = constants.EDUCATION_REQUEST_DICT.get(job_dict.education,
                                                               constants.EDUCATION_REQUEST_DICT['unknown'])
 
+    city_ctl.insert_city_if_not_exist(job_dict.city)
     job_dict.city_id = city_ctl.get_city_id_by_name(job_dict.city)

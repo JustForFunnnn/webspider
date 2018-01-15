@@ -1,9 +1,8 @@
 # coding=utf-8
-import logging
+
+from tornado.escape import to_unicode
 
 from webspider.models.city import CityModel
-
-logger = logging.getLogger(__name__)
 
 
 def get_city_id_by_name(name):
@@ -12,26 +11,10 @@ def get_city_id_by_name(name):
         raise ValueError('Get None when city name is {}'.format(name))
     return city.id
 
-    # @classmethod
-    # @lru_cache(maxsize=128)
-    # def get_city_id_by_name(cls, name):
-    #     city = CityModel.get(name=name)
-    #     return city.id if city else 0
-    #
-    # @classmethod
-    # def add(cls, id, name):
-    #     CityModel.add(id=id, name=name)
-    #     cls.get_city_id_by_name.cache_clear()
-    #     cls.get_city_name_dict.cache_clear()
-    #
-    # @classmethod
-    # def list(cls):
-    #     return CityModel.list()
-    #
-    # @classmethod
-    # @lru_cache(maxsize=1)
-    # def get_city_name_dict(cls):
-    #     citys = CityModel.list()
-    #     city_name_dict = {city.id: city.name for city in citys}
-    #     city_name_dict[0] = 'unknown'
-    #     return city_name_dict
+
+def insert_city_if_not_exist(name):
+    sql = """INSERT INTO city(name)
+SELECT :name AS name FROM dual
+WHERE NOT EXISTS
+(SELECT 1 FROM city WHERE name = :name)"""
+    CityModel.execute_sql_string(sql_string=sql, parameters_dict={'name': to_unicode(name)})

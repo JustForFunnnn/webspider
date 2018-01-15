@@ -3,8 +3,6 @@ from kombu import Queue
 from kombu import Exchange
 from celery.schedules import crontab
 
-# from datetime import timedelta
-
 BROKER_URL = 'redis://127.0.0.1:6379'  # 指定 Broker
 
 CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'  # 指定 Backend
@@ -20,8 +18,7 @@ CELERY_RESULT_SERIALIZER = 'json'  # 读取任务结果一般性能要求不高�
 CELERY_TASK_RESULT_EXPIRES = 60 * 60 * 4  # 任务过期时间，不建议直接写86400，应该让这样的magic数字表述更明显
 
 CELERY_IMPORTS = (  # 指定导入的任务模块
-    'app.tasks.job',
-    'app.tasks.company'
+    'app.tasks.lagou_data.py'
 )
 
 CELERY_TASK_PUBLISH_RETRY = False  # 重试
@@ -41,10 +38,10 @@ CELERYBEAT_SCHEDULE = {
 CELERY_QUEUES = (
     Queue('default', Exchange('default'), routing_key='default'),
     Queue('lagou_data', Exchange('lagou_data'), routing_key='lagou_data'),
-    Queue('job_quantity', Exchange('job_quantity'), routing_key='job_quantity'),
+    # Queue('job_count', Exchange('job_count'), routing_key='job_count'),
 )
 
 CELERY_ROUTES = {
-    'app.tasks.job_quantity.crawl_lagou_job_quantity': {'queue': 'job_quantity', 'routing_key': 'job_quantity'},
-    'app.tasks.crawl_lagou_data': {'queue': 'lagou_data', 'routing_key': 'lagou_data'}
+    # 'app.tasks.lagou_data.crawl_lagou_job_count': {'queue': 'job_quantity', 'routing_key': 'job_quantity'},
+    'app.tasks.lagou_data.crawl_lagou_data_task': {'queue': 'lagou_data', 'routing_key': 'lagou_data'}
 }
