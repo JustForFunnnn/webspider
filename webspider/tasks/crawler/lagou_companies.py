@@ -9,6 +9,7 @@ from tornado.util import ObjectDict
 from webspider import utils
 from webspider import constants
 from webspider.controllers import city_ctl
+from webspider.models import CompanyModel
 
 logger = logging.getLogger(__name__)
 
@@ -33,7 +34,7 @@ def crawl_lagou_companies_pagination(city_id=0, finance_stage_id=0, industry_id=
     return pagination
 
 
-def crawl_lagou_companies(city_id=0, finance_stage_id=0, industry_id=0, page_no=1):
+def crawl_lagou_companies(city_id=0, finance_stage_id=0, industry_id=0, page_no=1, skip_exist=True):
     """
     获取拉勾 公司数据
     :param city_id: 城市 id, 默认 0 代表全国
@@ -68,8 +69,11 @@ def crawl_lagou_companies(city_id=0, finance_stage_id=0, industry_id=0, page_no=
     companies_dicts = []
     for company in companies:
         lagou_company_id = int(company.get('companyId'))
-        comapny_detail = crawl_lagou_companies_detail(lagou_company_id=lagou_company_id)
+        if skip_exist and CompanyModel.is_exist(filter_by={'lagou_company_id': lagou_company_id}):
+            print('跳过 company, lagou company id is {}'.format(lagou_company_id))
+            continue
 
+        company_detail = crawl_lagou_company_detail(lagou_company_id=lagou_company_id)
         companies_dicts.append(ObjectDict(
             lagou_company_id=lagou_company_id,
             city=company.get('city'),
@@ -80,15 +84,15 @@ def crawl_lagou_companies(city_id=0, finance_stage_id=0, industry_id=0, page_no=
             process_rate=company.get('processRate'),
             industries=company.get('industryField'),
             # company detail
-            advantage=comapny_detail.get('advantage'),
-            address=comapny_detail.get('address'),
-            size=comapny_detail.get('size'),
-            introduce=comapny_detail.get('introduce')
+            advantage=company_detail.get('advantage'),
+            address=company_detail.get('address'),
+            size=company_detail.get('size'),
+            introduce=company_detail.get('introduce')
         ))
     return companies_dicts
 
 
-def crawl_lagou_companies_detail(lagou_company_id):
+def crawl_lagou_company_detail(lagou_company_id):
     """
     爬取拉勾 公司详情页数据
     :param lagou_company_id: 拉勾的 company id
@@ -103,12 +107,15 @@ def crawl_lagou_companies_detail(lagou_company_id):
     ]
     """
     response = utils.http_tools.requests_get(url=constants.COMPANY_DETAIL_URL.format(lagou_company_id=lagou_company_id))
-    companies_detail_html = etree.HTML(response.text)
+    company_detail_html = etree.HTML(response.text)
 
-    advantage = companies_detail_html.xpath('//div[@id="tags_container"]//li/text()')
-    sizes = companies_detail_html.xpath('//div[@id="basic_container"]//li[3]/span/text()')
-    address = companies_detail_html.xpath('//p[@class="mlist_li_desc"]/text()')
-    introduces = companies_detail_html.xpath('//span[@class="company_content"]//text()')
+    advantage = company_detail_html.xpath('//div[@id="tags_container"]//li/text()')
+    sizes = company_detail_html.xpath('//div[@id="basic_container"]//li[3]/span/text()')
+    address = company_detail_html.xpath('//p[@class="mlist_li_desc"]/text()')
+    introduces = company_detail_html.xpath('//span[@class="company_content"]//text()')
+
+    if not sizes:
+        logger.error('can not get size by lagou_company_id = {}'.format(lagou_company_id))
 
     return ObjectDict(
         advantage=advantage,
@@ -141,8 +148,10 @@ def clean_lagou_company_data(company_dict):
         company_dict.address = utils.text.to_plaintext(company_dict.address)
     if 'introduce' in company_dict:
         company_dict.introduce = ''.join(company_dict.introduce) if company_dict.introduce else ''
+        company_dict.introduce = company_dict.introduce[:constants.COMPANY_INTRODUCE_MAX_LEN]
     if 'advantage' in company_dict:
         company_dict.advantage = list(map(utils.text.to_plaintext, company_dict.advantage))
+        company_dict.advantage = json.dumps(company_dict.advantage)[:constants.COMPANY_ADVANTAGE_MAX_LEN]
 
 
 def convert_lagou_company_data(company_dict):
@@ -155,8 +164,6 @@ def convert_lagou_company_data(company_dict):
     add:
     company_dict.city_id: city_name -> city_id
     """
-    company_dict.advantage = json.dumps(company_dict.advantage)
-
     if company_dict.finance_stage not in constants.FINANCE_STAGE_DICT:
         logger.error(
             '{} not in constants.FINANCE_STAGE_DICT, lagou company id is {}'.format(company_dict.finance_stage,
@@ -169,4 +176,5 @@ def convert_lagou_company_data(company_dict):
             '{} not in constants.COMPANY_SIZE_DICT, lagou company id is {}'.format(company_dict.size,
                                                                                    company_dict.lagou_company_id))
     company_dict.size = constants.COMPANY_SIZE_DICT.get(company_dict.size, constants.COMPANY_SIZE_DICT['unknown'])
+
     company_dict.city_id = city_ctl.get_city_id_by_name(company_dict.city)

@@ -13,7 +13,7 @@ CELERY_TIMEZONE = 'Asia/Shanghai'  # 指定时区，默认是 UTC
 
 CELERY_ENABLE_UTC = True
 
-CELERY_TASK_SERIALIZER = 'json'  # 任务序列化和反序列化 ls: json yaml msgpack pickle(不推荐)
+CELERY_TASK_SERIALIZER = 'json'  # 任务序列化和反序列化 eg: json yaml msgpack pickle(不推荐)
 
 CELERY_RESULT_SERIALIZER = 'json'  # 读取任务结果一般性能要求不高，所以使用了可读性更好的JSON
 
