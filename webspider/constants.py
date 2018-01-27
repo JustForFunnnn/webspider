@@ -95,7 +95,11 @@ HTTPS_PROXY_FORMATTER = "https://{ip}:{port}"
 
 TIMEOUT = 4
 
-SLEEP_SECS = 4
+# 爬虫最小睡眠时间
+MIN_SLEEP_SECS = 3
+
+# 爬虫最大睡眠时间
+MAX_SLEEP_SECS = 5
 
 REDIS_VISITED_PEOPLES_COUNT_KEY = 'visited_peoples_count'
 

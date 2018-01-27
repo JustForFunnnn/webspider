@@ -11,16 +11,22 @@ from webspider import constants
 logger = logging.getLogger(__name__)
 
 
-def crawl_lagou_cites():
+def get_cites_from_lagou():
     """
-    获取拉勾上所有城市的信息
-    :return [
-        {
-            'id': 111,
-            'name': '广州'
-        },
-        .....
-    ]
+    爬取拉勾城市数据
+
+    返回的 dict 组成:
+    id:
+        type: int
+        meaning: 城市 id
+        eg: 1
+    name:
+        type: str
+        meaning: 城市名
+        eg: 北京
+
+    :return: 拉勾城市数据集合
+    :rtype: List[tornado.util.ObjectDict]
     """
     logger.info(u'begin crawl cities info......')
 

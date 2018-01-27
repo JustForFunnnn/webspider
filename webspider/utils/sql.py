@@ -16,3 +16,25 @@ db_engine = create_engine(
     logging_name='mysql-sql')
 
 Session = scoped_session(sessionmaker(bind=db_engine, autocommit=True, autoflush=True))
+
+
+def execute_sql_file(file_paths, db_session):
+    """
+    执行 sql 文件
+    :param file_paths: .sql 文件的 path
+    :param db_session:
+    :return:
+    """
+    for file_path in file_paths:
+        sql_file = open(file_path, 'r')
+
+        sql_command = ''
+
+        for line in sql_file:
+            if not line.startswith('--'):
+                sql_command += line.strip('\n')
+
+                if sql_command.endswith(';'):
+                    db_session.execute(text(sql_command))
+                    db_session.flush()
+                    sql_command = ''

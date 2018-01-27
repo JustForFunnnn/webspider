@@ -26,8 +26,7 @@ setup(
         'console_scripts': [
             'web = webspider.web.app:main',
             'production_web = webspider.quickly_cmd:run_web_app_by_gunicorn',
-            'crawl_lagou_data = webspider.tasks:crawl_lagou_data',
-            'crawl_job_quantity = webspider.tasks.job_quantity:crawl_lagou_job_quantity',
+            'crawl_lagou_data = webspider.tasks.actor.lagou_data:crawl_lagou_data_task',
             'celery_job_quantity_worker = webspider.quickly_cmd:run_celery_job_quantity_worker',
             'celery_lagou_data_worker = webspider.quickly_cmd:run_celery_lagou_data_worker',
             'celery_beat = webspider.quickly_cmd:run_celery_beat',

@@ -2,6 +2,7 @@
 from webspider.models.city import CityModel
 from webspider.models.job import JobModel
 from webspider.models.job_extra import JobExtraModel
+from webspider.models.jobs_count import JobsCountModel
 from webspider.models.company import CompanyModel
 from webspider.models.company_extra import CompanyExtraModel
 from webspider.models.company_industry import CompanyIndustryModel

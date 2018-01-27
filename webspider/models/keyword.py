@@ -14,4 +14,3 @@ class KeywordModel(BaseModel):
     name = Column(VARCHAR(64), nullable=False, doc=u'关键词名称')
     created_at = Column(TIMESTAMP, nullable=False, default=datetime.now, doc=u'创建时间')
     updated_at = Column(TIMESTAMP, nullable=False, default=datetime.now, onupdate=datetime.now, doc=u'创建时间')
-

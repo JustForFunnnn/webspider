@@ -7,8 +7,8 @@ from sqlalchemy.dialects.mysql import INTEGER, TIMESTAMP
 from webspider.models.base import BaseModel
 
 
-class JobsQuantityModel(BaseModel):
-    __tablename__ = 'job_quantity'
+class JobsCountModel(BaseModel):
+    __tablename__ = 'jobs_count'
 
     id = Column(INTEGER, nullable=False, primary_key=True, autoincrement=True)
     date = Column(INTEGER, nullable=False, doc=u'日期')

@@ -36,14 +36,26 @@ def generate_http_request_headers(referer=None):
 
 @retry(stop_max_attempt_number=constants.RETRY_TIMES, stop_max_delay=constants.STOP_MAX_DELAY,
        wait_fixed=constants.WAIT_FIXED)
-def requests_get(url, params=None, headers=None, allow_redirects=False, timeout=constants.TIMEOUT,
-                 sleep_secs=constants.SLEEP_SECS, **kwargs):
-    if sleep_secs:
-        time.sleep(sleep_secs)
+def requests_get(url, params=None, headers=None, allow_redirects=False, timeout=constants.TIMEOUT, need_sleep=True,
+                 **kwargs):
+    if need_sleep:
+        time.sleep(random.randint(constants.MIN_SLEEP_SECS, constants.MAX_SLEEP_SECS))
     if not headers:
         headers = generate_http_request_headers()
     return requests.get(url=url, params=params, headers=headers, allow_redirects=allow_redirects,
                         timeout=timeout, **kwargs)
+
+
+@retry(stop_max_attempt_number=constants.RETRY_TIMES, stop_max_delay=constants.STOP_MAX_DELAY,
+       wait_fixed=constants.WAIT_FIXED)
+def requests_post(url, data=None, params=None, headers=None, allow_redirects=False, timeout=constants.TIMEOUT,
+                  need_sleep=True, **kwargs):
+    if need_sleep:
+        time.sleep(random.randint(constants.MIN_SLEEP_SECS, constants.MAX_SLEEP_SECS))
+    if not headers:
+        headers = generate_http_request_headers()
+    return requests.post(url=url, data=data, params=params, headers=headers, allow_redirects=allow_redirects,
+                         timeout=timeout, **kwargs)
 
 
 def filter_unavailable_proxy(proxy_list, proxy_type='HTTPS'):

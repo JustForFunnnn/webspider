@@ -128,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `job_keyword` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='职位关键词';
 
 
-CREATE TABLE IF NOT EXISTS `job_count` (
+CREATE TABLE IF NOT EXISTS `jobs_count` (
   `id`          INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `date`        INT NOT NULL COMMENT '日期',
   `keyword_id`  INT NOT NULL COMMENT '关键词 id',

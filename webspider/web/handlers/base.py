@@ -13,8 +13,6 @@ class BaseHandler(RequestHandler):
         # TODO 后端改成纯 API 后，删除其逻辑
         # 生产环境下 且 页面为前后端混合型页面，渲染错误提示页面
         if not DEBUG and isinstance(self, BasePageHandler):
-            print(exception)
-            print(type(exception))
             if isinstance(exception, ResourceNotFoundException):
                 self.render('404.html')
             else:

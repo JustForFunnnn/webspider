@@ -21,3 +21,4 @@ def update_company(company_id, values):
 
 def add_company(values):
     return CompanyModel.add(**values)
+

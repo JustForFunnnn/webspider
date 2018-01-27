@@ -79,9 +79,10 @@ class BaseModel(_Base):
         return query.first()
 
     @classmethod
-    def list(cls, filter=None, filter_by=None, order_by=None, offset=None, limit=None):
+    def list(cls, columns=None, filter=None, filter_by=None, order_by=None, group_by=None, offset=None, limit=None):
         """
         批量获取记录
+        :param columns: the columns you want to query, SQL expression, column, or mapped entity expected
         :param filter: apply the given filtering criterion to a copy of this Query,
         using SQL expressions.
         :param filter_by: apply the given filtering criterion to a copy of this Query,
@@ -97,11 +98,14 @@ class BaseModel(_Base):
         :return:
         """
         query = cls.session.query(cls)
-
+        if columns:
+            query = cls.session.query(columns)
         if filter is not None:
             query = query.filter(filter)
         if filter_by is not None:
             query = query.filter_by(**filter_by)
+        if group_by is not None:
+            query = query.group_by(group_by)
         if order_by is not None:
             query = query.order_by(order_by)
         if offset is not None:
@@ -114,26 +118,17 @@ class BaseModel(_Base):
         return result
 
     @classmethod
-    def is_exist(cls, pk=None, filter=None, filter_by=None):
+    def is_exist(cls, filter=None, filter_by=None):
         """
         判断某个记录是否存在
-        :param pk: table primary key
         :param filter: apply the given filtering criterion to a copy of this Query,
         using SQL expressions.
         :param filter_by: apply the given filtering criterion to a copy of this Query,
         using keyword expressions as a dict.
         :return: boolean
         """
-        query = cls.session.query('1').select_from(cls)
 
-        if pk is not None:
-            query = query.filter(cls.pk == pk)
-        if filter is not None:
-            query = query.filter(filter)
-        if filter_by is not None:
-            query = query.filter_by(**filter_by)
-
-        return query.scalar() is not None
+        return cls.count(filter=filter, filter_by=filter_by) != 0
 
     @classmethod
     def count(cls, filter=None, filter_by=None):
@@ -201,3 +196,10 @@ class BaseModel(_Base):
             return query.fetchall()
         else:
             return query.rowcount
+
+    @classmethod
+    def batch_add(cls, instances):
+        """批量添加记录"""
+        if not all([isinstance(instance, cls) for instance in instances]):
+            raise ValueError('all instances must be {table_name} model instance'.format(table_name=cls.__tablename__))
+        cls.session.bulk_save_objects(instances)
