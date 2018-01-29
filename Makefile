@@ -20,6 +20,6 @@ flake8:
 	env/bin/flake8
 
 clean:
-	-rm -r env cover *eggs *.egg-info *.egg
+	-rm -rf env cover *eggs *.egg-info *.egg webspider/log
 	@find . -type f -name "*.py[co]" -delete
 	@find . -type d -name "__pycache__" -delete

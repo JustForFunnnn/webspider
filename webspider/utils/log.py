@@ -48,7 +48,7 @@ LOGGING_CONFIG = {
             'level': 'DEBUG',
             'propagate': False,
         },
-        'app': {
+        'webspider': {
             'handlers': ['console', 'file'],
             'level': 'DEBUG',
             'propagate': False,
@@ -80,8 +80,13 @@ LOGGING_CONFIG = {
         },
         'gunicorn': {
             'level': 'INFO',
-            'handlers': ['console', 'file'],
             'propagate': False,
+            'handlers': ['console', 'file'],
+        },
+        'celery': {
+            'level': 'DEBUG',
+            'propagate': False,
+            'handlers': ['console', 'file'],
         },
     },
 }
