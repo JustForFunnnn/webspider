@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from tornado.escape import to_unicode
+from sqlalchemy.exc import IntegrityError
 
 from webspider.models.city import CityModel
 
@@ -13,8 +13,10 @@ def get_city_id_by_name(name):
 
 
 def insert_city_if_not_exist(name):
-    sql = """INSERT INTO city(name)
-SELECT :name AS name FROM dual
-WHERE NOT EXISTS
-(SELECT 1 FROM city WHERE name = :name)"""
-    CityModel.execute_sql_string(sql_string=sql, parameters_dict={'name': to_unicode(name)})
+    if CityModel.is_exist(filter_by={'name': name}):
+        return
+    try:
+        city_id = CityModel.add(name=name)
+        return city_id
+    except IntegrityError:
+        pass

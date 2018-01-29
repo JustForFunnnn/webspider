@@ -1,15 +1,17 @@
 # coding=utf-8
-from webspider.models.industry import IndustryModel
+from sqlalchemy.exc import IntegrityError
 
-from tornado.escape import to_unicode
+from webspider.models.industry import IndustryModel
 
 
 def insert_industry_if_not_exist(name):
-    sql = """INSERT INTO industry(name)
-SELECT :name AS name FROM dual
-WHERE NOT EXISTS
-(SELECT 1 FROM industry WHERE name = :name)"""
-    IndustryModel.execute_sql_string(sql_string=sql, parameters_dict={'name': to_unicode(name)})
+    if IndustryModel.is_exist(filter_by={'name': name}):
+        return
+    try:
+        industry_id = IndustryModel.add(name=name)
+        return industry_id
+    except IntegrityError:
+        pass
 
 
 def get_industry_id_by_name(name):

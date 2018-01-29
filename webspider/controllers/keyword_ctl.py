@@ -1,15 +1,18 @@
 # coding=utf-8
-from tornado.escape import to_unicode
+
+from sqlalchemy.exc import IntegrityError
 
 from webspider.models.keyword import KeywordModel
 
 
 def insert_keyword_if_not_exist(name):
-    sql = """INSERT INTO keyword(name)
-SELECT :name AS name FROM dual
-WHERE NOT EXISTS
-(SELECT 1 FROM keyword WHERE name = :name)"""
-    KeywordModel.execute_sql_string(sql_string=sql, parameters_dict={'name': to_unicode(name)})
+    if KeywordModel.is_exist(filter_by={'name': name}):
+        return
+    try:
+        keyword_id = KeywordModel.add(name=name)
+        return keyword_id
+    except IntegrityError:
+        pass
 
 
 def get_keyword_name_by_id(keyword_id):

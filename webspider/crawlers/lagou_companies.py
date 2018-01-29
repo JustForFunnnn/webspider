@@ -197,4 +197,4 @@ def clean_lagou_company_data(company_dict):
         company_dict.advantage = list(map(utils.text.to_plaintext, company_dict.advantage))
         company_dict.advantage = json.dumps(company_dict.advantage)[:constants.COMPANY_ADVANTAGE_MAX_LEN]
     if 'industries' in company_dict:
-        company_dict.industries = set(re.split(r",|，|、", company_dict.industries))
+        company_dict.industries = set(re.split(r",|，|、|\s", company_dict.industries))

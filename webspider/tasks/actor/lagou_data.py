@@ -20,8 +20,8 @@ def crawl_lagou_data_task():
     lagou_finance_stage_ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     lagou_industry_ids = [24, 25, 26, 27, 28, 29, 31, 32, 33, 34, 35, 38, 41, 43, 45, 47, 48, 49, 10594]
     # 爬取公司数据
-    for city_id in lagou_city_ids:
-        for industry_id in lagou_industry_ids:
+    for industry_id in lagou_industry_ids:
+        for city_id in lagou_city_ids:
             for finance_stage_id in lagou_finance_stage_ids:
                 crawl_lagou_company_data_task.delay(city_id=city_id, finance_stage_id=finance_stage_id,
                                                     industry_id=industry_id)
