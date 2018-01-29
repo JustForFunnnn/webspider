@@ -10,7 +10,7 @@ from webspider import setting
 logger = logging.getLogger(__name__)
 
 db_engine = create_engine(
-    setting.MYSQL_CONF['host'], echo=False,
+    setting.MYSQL_CONF['connect_string'], echo=False,
     pool_size=2, max_overflow=48,
     pool_timeout=0, pool_recycle=3600,
     logging_name='mysql-sql')

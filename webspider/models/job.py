@@ -2,8 +2,9 @@
 from datetime import datetime
 
 from sqlalchemy import Column
-from sqlalchemy.dialects.mysql import INTEGER, VARCHAR, TEXT, TINYINT, TIMESTAMP
+from sqlalchemy.dialects.mysql import INTEGER, VARCHAR, TINYINT, TIMESTAMP
 
+from webspider import constants
 from webspider.models.base import BaseModel
 
 
@@ -20,5 +21,7 @@ class JobModel(BaseModel):
     salary = Column(VARCHAR(32), nullable=False, doc=u'薪水')
     education = Column(TINYINT, nullable=False, doc=u'教育背景要求')
     nature = Column(TINYINT, nullable=False, doc=u'工作性质')
+    description = Column(VARCHAR(constants.JOB_DESCRIPTION_MAX_LEN), nullable=False, doc=u'额外描述')
+    advantage = Column(VARCHAR(constants.JOB_ADVANTAGE_MAX_LEN), nullable=False, doc=u'职位优势')
     created_at = Column(TIMESTAMP, nullable=False, default=datetime.now, doc=u'职位创建时间')
     updated_at = Column(TIMESTAMP, nullable=False, default=datetime.now, onupdate=datetime.now, doc=u'职位创建时间')

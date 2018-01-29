@@ -38,10 +38,10 @@ CELERYBEAT_SCHEDULE = {
         'task': 'webspider.tasks.actor.lagou_jobs_count.crawl_lagou_jobs_count_task',
         'schedule': crontab(hour='01', minute='01', day_of_week='2, 5'),
     },
-    # 'crawl_lagou_data_task': {
-    #     'task': 'webspider.tasks.actor.lagou_data.crawl_lagou_data_task',
-    #     'schedule': crontab(hour='01', minute='01', day_of_month='1'),
-    # }
+    #     'crawl_lagou_data_task': {
+    #         'task': 'webspider.tasks.actor.lagou_data.crawl_lagou_data_task',
+    #         'schedule': crontab(hour='01', minute='01', day_of_month='1'),
+    #     }
 }
 
 default_exchange = Exchange('default', type='direct')
@@ -50,10 +50,13 @@ lagou_exchange = Exchange('lagou', type='direct')
 CELERY_QUEUES = (
     Queue(name='default', exchange=default_exchange),
     Queue(name='lagou_data', exchange=lagou_exchange, routing_key='for_lagou_data'),
+    Queue(name='lagou_jobs_data', exchange=lagou_exchange, routing_key='for_lagou_jobs_data'),
     Queue(name='lagou_jobs_count', exchange=lagou_exchange, routing_key='for_lagou_jobs_count'),
 )
 
 CELERY_ROUTES = {
     'webspider.tasks.actor.lagou_jobs_count.*': {'exchange': 'lagou', 'routing_key': 'for_lagou_jobs_count'},
+    'webspider.tasks.actor.lagou_data.crawl_lagou_job_data_task': {'exchange': 'lagou',
+                                                                   'routing_key': 'for_lagou_jobs_data'},
     'webspider.tasks.actor.lagou_data.*': {'exchange': 'lagou', 'routing_key': 'for_lagou_data'}
 }

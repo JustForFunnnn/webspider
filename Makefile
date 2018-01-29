@@ -10,6 +10,8 @@ python: setup.py requirements.txt
 	virtualenv -p $(PYTHON) env
 	echo "\n Use python virtual environment to install required packages......\n"
 	env/bin/pip install -e .
+	mkdir -p webspider/log
+	touch webspider/log/spider_log.txt
 
 test: flake8
 	./runtests.sh

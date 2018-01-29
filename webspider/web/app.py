@@ -11,10 +11,11 @@ import tornado.httpserver
 from tornado.options import options, define, parse_command_line
 from tornado.wsgi import WSGIAdapter
 
-from webspider import constants, setting
+from webspider import constants
 from webspider.web.urls import url_handlers
+from webspider.utils.log import config_logging
 
-logging.config.dictConfig(setting.LOGGING_CONFIG)
+config_logging()
 logger = logging.getLogger(__name__)
 
 
