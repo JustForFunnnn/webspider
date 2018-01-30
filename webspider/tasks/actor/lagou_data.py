@@ -4,6 +4,7 @@ import logging
 from webspider import utils
 from webspider import crawlers
 from webspider import constants
+from webspider.utils.cache import redis_instance
 from webspider.tasks.celery_app import celery_app
 from webspider.controllers import industry_ctl, keyword_ctl, city_ctl
 from webspider.models import (CityModel, CompanyModel, CompanyIndustryModel, JobModel, JobKeywordModel)
@@ -14,11 +15,19 @@ logger = logging.getLogger(__name__)
 @celery_app.task()
 def crawl_lagou_data_task():
     """爬取拉勾数据任务"""
+
+    # 清除抓取记录
+    keys = redis_instance.keys('crawled_company_jobs*')
+    redis_instance.delete(*keys)
+
     crawl_lagou_city_data_task.delay()
     # 目前只抓取这几个城市 全国:0, 北京:2 上海:3 杭州:6 深圳:215 广州:213 成都:252
-    lagou_city_ids = [2, 3, 6, 215, 213, 252]
-    lagou_finance_stage_ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    lagou_industry_ids = [24, 25, 26, 27, 28, 29, 31, 32, 33, 34, 35, 38, 41, 43, 45, 47, 48, 49, 10594]
+    # lagou_city_ids = [2, 3, 6, 215, 213, 252]
+    lagou_city_ids = [0]
+    # lagou_finance_stage_ids = [1, 2, 3, 4, 5, 6, 7, 8]
+    lagou_finance_stage_ids = [0]
+    # lagou_industry_ids = [24, 25, 33, 27, 29, 45, 31, 28, 47, 34, 35, 43, 32, 41, 26, 48, 38, 49, 10594]
+    lagou_industry_ids = [0]
     # 爬取公司数据
     for industry_id in lagou_industry_ids:
         for city_id in lagou_city_ids:
@@ -78,6 +87,9 @@ def crawl_lagou_company_data_task(city_id, finance_stage_id, industry_id):
 @celery_app.task()
 def crawl_lagou_job_data_task(lagou_company_id):
     """爬取拉勾职位数据任务"""
+    # 过滤本轮已经爬取过职位的公司
+    if not redis_instance.setnx(constants.CRAWLED_COMPANY_JOBS_REDIS_KEY.format(lagou_company_id=lagou_company_id)):
+        return
     jobs_pagination = crawlers.get_jobs_pagination_from_lagou(lagou_company_id=lagou_company_id,
                                                               job_type=constants.LagouJobType.technology)
     for page_no in jobs_pagination.iter_pages:

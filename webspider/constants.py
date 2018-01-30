@@ -104,6 +104,12 @@ MAX_SLEEP_SECS = 5
 REDIS_VISITED_PEOPLES_COUNT_KEY = 'visited_peoples_count'
 
 """
+    REDIS KEY 相关    
+"""
+
+CRAWLED_COMPANY_JOBS_REDIS_KEY = 'crawled_company_jobs_{lagou_company_id}'
+
+"""
     字段长度限制
 """
 COMPANY_INTRODUCE_MAX_LEN = 2048

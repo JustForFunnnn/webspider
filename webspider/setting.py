@@ -16,6 +16,9 @@ MYSQL_USERNAME = os.environ.get('MYSQL_USERNAME', 'root')
 MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD', '')
 DB_HOST = os.environ.get('DB_HOST', 'localhost')
 DB_PORT = os.environ.get('DB_PORT', '3306')
+# REDIS
+REDIS_HOST = os.environ.get('DB_HOST', 'localhost')
+REDIS_PORT = os.environ.get('DB_PORT', '6379')
 
 # MYSQL 配置
 MYSQL_CONF = {
@@ -41,4 +44,9 @@ SMTP_CONF = {
 MAIL_CONF = {
     'username': MAIL_USER_NAME,
     'password': MAIL_USER_PASSWORD,
+}
+
+REDIS_CONF = {
+    'host': REDIS_HOST,
+    'port': REDIS_PORT
 }

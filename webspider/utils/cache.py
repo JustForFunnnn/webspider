@@ -5,10 +5,10 @@ from functools import wraps
 
 import redis
 
-from common import config
+from webspider import setting
 
-redis_pool = redis.ConnectionPool(host=config.REDIS_CONF['host'],
-                                  port=config.REDIS_CONF['port'])
+redis_pool = redis.ConnectionPool(host=setting.REDIS_CONF['host'],
+                                  port=setting.REDIS_CONF['port'])
 redis_instance = redis.Redis(connection_pool=redis_pool)
 
 

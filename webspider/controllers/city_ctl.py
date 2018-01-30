@@ -20,3 +20,11 @@ def insert_city_if_not_exist(name):
         return city_id
     except IntegrityError:
         pass
+
+
+def get_city_name_dict():
+    """
+    :return: dict eg: {'北京': 2, '上海':3, ......}
+    """
+    cities = CityModel.list()
+    return {city.name: city.id for city in cities}
