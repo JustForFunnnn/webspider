@@ -1,4 +1,5 @@
 # coding=utf-8
+# flake8: noqa
 import os
 import logging
 
@@ -19,6 +20,11 @@ def run_web_app_by_gunicorn():
             port=options.port
         )
     )
+
+
+def run_celery_default_worker():
+    os.system(
+        u'env/bin/celery worker -A webspider.tasks.celery_app -Q default -n default_worker --loglevel=debug')
 
 
 def run_celery_lagou_data_worker():

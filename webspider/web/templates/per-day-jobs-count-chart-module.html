@@ -1,7 +1,7 @@
-<div id="jobs-count-chart" class="large-chart-div col-md-12"></div>
+<div id="per-day-jobs-count-chart" class="large-chart-div col-md-12"></div>
 
 <script type="text/javascript">
-    var jobsCountChart = echarts.init(document.getElementById('jobs-count-chart'));
+    var perDayJobsCountChart = echarts.init(document.getElementById('per-day-jobs-count-chart'));
     // 指定图表的配置项和数据
 
     var option = {
@@ -43,8 +43,8 @@
             type: 'category',
             boundaryGap: false,
             data: [
-                {% for job_quantity in keyword_job_quantity %}
-                    '{{job_quantity.date_string}}',
+                {% for jobs_count in per_day_jobs_count_statistic %}
+                    '{{jobs_count.date}}',
                 {% end %}
             ]
         },
@@ -57,8 +57,8 @@
                 type: 'line',
                 smooth: true,
                 data: [
-                    {% for job_quantity in keyword_job_quantity %}
-                    {{job_quantity.all_city}},
+                    {% for jobs_count in per_day_jobs_count_statistic %}
+                    {{jobs_count.all_city}},
                     {% end %}
                 ]
             },
@@ -67,8 +67,8 @@
                 type: 'line',
                 smooth: true,
                 data: [
-                    {% for job_quantity in keyword_job_quantity %}
-                    {{job_quantity.beijing}},
+                    {% for jobs_count in per_day_jobs_count_statistic %}
+                    {{jobs_count.beijing}},
                     {% end %}
                 ]
             },
@@ -77,8 +77,8 @@
                 type: 'line',
                 smooth: true,
                 data: [
-                    {% for job_quantity in keyword_job_quantity %}
-                    {{job_quantity.shanghai}},
+                    {% for jobs_count in per_day_jobs_count_statistic %}
+                    {{jobs_count.shanghai}},
                     {% end %}
                 ]
             },
@@ -87,8 +87,8 @@
                 type: 'line',
                 smooth: true,
                 data: [
-                    {% for job_quantity in keyword_job_quantity %}
-                    {{job_quantity.shenzhen}},
+                    {% for jobs_count in per_day_jobs_count_statistic %}
+                    {{jobs_count.shenzhen}},
                     {% end %}
                 ]
             },
@@ -97,8 +97,8 @@
                 type: 'line',
                 smooth: true,
                 data: [
-                    {% for job_quantity in keyword_job_quantity %}
-                    {{job_quantity.guangzhou}},
+                    {% for jobs_count in per_day_jobs_count_statistic %}
+                    {{jobs_count.guangzhou}},
                     {% end %}
                 ]
             },
@@ -107,8 +107,8 @@
                 type: 'line',
                 smooth: true,
                 data: [
-                    {% for job_quantity in keyword_job_quantity %}
-                    {{job_quantity.hangzhou}},
+                    {% for jobs_count in per_day_jobs_count_statistic %}
+                    {{jobs_count.hangzhou}},
                     {% end %}
                 ]
             },
@@ -117,8 +117,8 @@
                 type: 'line',
                 smooth: true,
                 data: [
-                    {% for job_quantity in keyword_job_quantity %}
-                    {{job_quantity.chengdu}},
+                    {% for jobs_count in per_day_jobs_count_statistic %}
+                    {{jobs_count.chengdu}},
                     {% end %}
                 ]
             }
@@ -127,5 +127,5 @@
 
 
     // 使用刚指定的配置项和数据显示图表。
-    jobsCountChart.setOption(option);
+    perDayJobsCountChart.setOption(option);
 </script>

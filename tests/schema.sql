@@ -130,11 +130,11 @@ CREATE TABLE IF NOT EXISTS `jobs_count` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='职位每日数量统计';
 
 
-CREATE TABLE IF NOT EXISTS `keyword_statistics` (
+CREATE TABLE IF NOT EXISTS `keyword_statistic` (
   `id`          INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `keyword_id`  INT UNSIGNED NOT NULL COMMENT '关键词 id',
   `educations`  VARCHAR(2048) NOT NULL DEFAULT '' COMMENT '教育背景要求情况',
-  `jobs_count` VARCHAR(2048) NOT NULL DEFAULT '' COMMENT '城市职位数量情况',
+  `city_jobs_count`VARCHAR(2048) NOT NULL DEFAULT '' COMMENT '城市职位数量情况',
   `salary`      VARCHAR(2048) NOT NULL DEFAULT '' COMMENT '薪水分布情况',
   `financing_stage` VARCHAR(2048) NOT NULL DEFAULT '' COMMENT '公司融资阶段情况',
   `work_years`  VARCHAR(2048) NOT NULL DEFAULT '' COMMENT '要求的工作年限情况',

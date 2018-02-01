@@ -14,14 +14,3 @@ def to_plaintext(content, pattern=r'<br/?>|\n', strip=True):
     if strip:
         plaintext = plaintext.strip()
     return plaintext
-
-
-def replace_text_inside_space(content, fill_str=''):
-    """
-    替换 content 内多余空格
-    :param content: 需要被替代的文本
-    :param fill_str: 填补的字符串， 默认为''
-    :return:
-    """
-    plaintext = re.sub(pattern='\s+', repl=fill_str, string=content)
-    return plaintext

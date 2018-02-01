@@ -2,13 +2,13 @@
 {% block body %}
 <div class="container center_div">
     
-    <h1>about {{ keyword }}: </h1>
+    <h1>about {{ keyword_name }}: </h1>
     <br>
     {% include 'work-year-chart-module.html' %}
     {% include 'salary-chart-module.html' %}
-    {% include 'city-jobs-chart-module.html' %}
+    {% include 'city-jobs-count-chart-module.html' %}
     {% include 'education-chart-module.html' %}
-    {% include 'jobs-count-chart-module.html' %}
+    {% include 'per-day-jobs-count-chart-module.html' %}
     {% include 'finance-stage-chart-module.html' %}
 
 </div>

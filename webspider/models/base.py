@@ -6,7 +6,7 @@ from sqlalchemy import MetaData, inspect, func, text
 from sqlalchemy.ext.declarative import declarative_base
 from tornado.util import ObjectDict
 
-from webspider.utils.sql import db_engine, Session
+from webspider.utils import sql
 from webspider.utils.classproperty import classproperty
 
 __all__ = ['BaseModel']
@@ -24,11 +24,11 @@ class BaseModel(_Base):
         'extend_existing': True,
     }
 
-    metadata = MetaData(bind=db_engine, reflect=True)
+    metadata = MetaData(bind=sql.db_engine, reflect=True)
 
     @classproperty
     def session(cls):
-        return Session
+        return sql.get_session()
 
     @classproperty
     def pk_name(cls):

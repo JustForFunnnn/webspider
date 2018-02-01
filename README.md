@@ -82,18 +82,20 @@ env/bin/web
 ```bash
 # 启动定时任务分发器
 env/bin/celery_beat
-# 启动爬取 职位数据 的 worker(每个月自动执行一次)
+# 启动爬取 拉勾数据 的 worker
 env/bin/celery_lagou_data_worker
-# 启动爬取 职位数量 的 worker(每天晚上自动执行一次)
-env/bin/celery_job_quantity_worker 
+# 启动爬取 职位数据 的 worker
+env/bin/celery_lagou_jobs_data_worker
+# 启动爬取 职位数量 的 worker
+env/bin/celery_lagou_jobs_count_worker
 ```
 
 * env/bin 目录下其他可执行脚本
 ```bash
 # 直接爬取职位数量
-env/bin/crawl_job_quantity        
+env/bin/crawl_lagou_jobs_count
 # 直接爬取职位数据
-env/bin/crawl_lagou_data       
+env/bin/crawl_lagou_data
 # 启动celery监控 
 env/bin/celery_flower            
 ```
@@ -107,7 +109,7 @@ make clean
 
 - [ ] 前后端分离
 
-- [ ] 重构数据库访问方式
+- [x] 重构爬虫
 
 - [x] 缓存、失效机制
 

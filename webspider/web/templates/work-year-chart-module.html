@@ -16,7 +16,7 @@
             orient: 'vertical',
             left: 'left',
             data: [
-                    {% for (work_year, count) in work_years_request_analyze.items() %}
+                    {% for (work_year, count) in work_years_statistic.items() %}
                         '{{work_year}}',
                     {% end %}
                 ]
@@ -28,7 +28,7 @@
                 radius: '55%',
                 center: ['50%', '60%'],
                 data: [
-                    {% for (work_year, count) in work_years_request_analyze.items() %}
+                    {% for (work_year, count) in work_years_statistic.items() %}
                         {
                             value: '{{count}}',
                             name: '{{work_year}}'

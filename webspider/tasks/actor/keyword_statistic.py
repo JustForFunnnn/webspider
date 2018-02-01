@@ -1,12 +1,10 @@
 # coding=utf-8
 import logging
+import json
 
-from webspider import utils
-from webspider import crawlers
-from webspider import constants
 from webspider.tasks.celery_app import celery_app
-from webspider.controllers import job_ctl, keyword_ctl
-from webspider.models import (KeywordModel, KeywordStatisticModel, JobModel)
+from webspider.controllers import keyword_statistic_ctl
+from webspider.models import (KeywordModel, JobModel, JobKeywordModel, KeywordStatisticModel)
 
 logger = logging.getLogger(__name__)
 
@@ -16,27 +14,34 @@ def update_keywords_statistic_task():
     """更新关键词统计任务"""
     keywords = KeywordModel.list()
     for keyword in keywords:
-        update_single_keyword_statistic_task(keyword.id)
+        update_single_keyword_statistic_task.delay(keyword.id)
 
 
+@celery_app.task()
 def update_single_keyword_statistic_task(keyword_id):
     """更新关键词统计任务"""
-    KeywordStatisticModel(keyword_id=keyword_id)
 
+    job_keywords = JobKeywordModel.list(filter_by={'keyword_id': keyword_id})
+    jobs = JobModel.list(filter=(JobModel.id.in_([job_keyword.job_id for job_keyword in job_keywords])))
+    if not jobs:
+        return
 
-# def get_jobs_statistics(keyword_id):
-#     keyword_job_quantity = job_ctl.list(keyword_id=keyword_id, sort_by='asc')
-#     for item in keyword_job_quantity:
-#         item.date_string = timestamp2string(timestamp=item.date, date_format='%m/%d')
-#     jobs = keyword_ctl.list(filter_by={'keyword_id': keyword_id})
-#     educations_request_counter = educations_request_analyze(jobs=jobs)
-#     finance_stage_distribution = finance_stage_distribution_analyze(jobs=jobs)
-#     city_job_quantityer = city_job_quantity_analyze(jobs=jobs)
-#     salary_distribution = salary_distribution_analyze(jobs=jobs)
-#     work_years_request = work_years_request_analyze(jobs=jobs)
-#     return (keyword_job_quantity,
-#             educations_request_counter,
-#             finance_stage_distribution,
-#             city_job_quantityer,
-#             salary_distribution,
-#             work_years_request)
+    educations_statistic = keyword_statistic_ctl.get_educations_statistic(jobs=jobs)
+    finance_stage_statistic = keyword_statistic_ctl.get_finance_stage_statistic(jobs=jobs)
+    city_jobs_count_statistic = keyword_statistic_ctl.get_sorted_city_jobs_count_statistic(jobs=jobs)
+    salary_statistic = keyword_statistic_ctl.get_salary_statistic(jobs=jobs)
+    work_years_statistic = keyword_statistic_ctl.get_work_years_statistic(jobs=jobs)
+
+    statistic_values = dict(
+        keyword_id=keyword_id,
+        educations=json.dumps(educations_statistic),
+        city_jobs_count=json.dumps(city_jobs_count_statistic),
+        salary=json.dumps(salary_statistic),
+        financing_stage=json.dumps(finance_stage_statistic),
+        work_years=json.dumps(work_years_statistic)
+    )
+
+    if KeywordStatisticModel.is_exist(filter_by={'keyword_id': keyword_id}):
+        KeywordStatisticModel.update(filter_by={'keyword_id': keyword_id}, values=statistic_values)
+    else:
+        KeywordStatisticModel.add(**statistic_values)

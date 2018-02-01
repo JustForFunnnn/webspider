@@ -2,27 +2,37 @@
 from tornado.escape import json_encode
 from tornado.web import RequestHandler
 
-from webspider.constants import DEBUG
+from webspider import constants
 from webspider.exceptions import BaseException, ResourceNotFoundException
+from webspider.web.formatter import Formatter
+from webspider.utils.sql import remove_sessions
 
 
-class BaseHandler(RequestHandler):
+class BaseApiHandler(RequestHandler):
     def write_error(self, status_code, **kwargs):
         exception = kwargs['exc_info'][1]
 
         # TODO 后端改成纯 API 后，删除其逻辑
-        # 生产环境下 且 页面为前后端混合型页面，渲染错误提示页面
-        if not DEBUG and isinstance(self, BasePageHandler):
-            if isinstance(exception, ResourceNotFoundException):
-                self.render('404.html')
-            else:
-                self.render('500.html')
+        # 生产环境下, 且请求非 API 接口, 渲染错误页面
+        if not constants.DEBUG and isinstance(self, BasePageHandler):
+            self._handler_production_page_error(exception)
             return
 
         if isinstance(exception, BaseException):
             self.render_exception(exception)
         else:
             RequestHandler.write_error(self, status_code=status_code, **kwargs)
+
+    def auto_render(self, data):
+        formatted_dict = Formatter.format(data)
+        self.render_json(formatted_dict)
+
+    def _handler_production_page_error(self, exception):
+        """处理生产环境下页面的错误"""
+        if isinstance(exception, ResourceNotFoundException):
+            self.render('404.html')
+        else:
+            self.render('500.html')
 
     def render_exception(self, exception):
         self.set_status(
@@ -44,8 +54,11 @@ class BaseHandler(RequestHandler):
         self.set_header('Content-Type', 'application/json')
         self.finish(json_encode(data))
 
+    def on_finish(self):
+        remove_sessions()
+
 
 # TODO page to api
-class BasePageHandler(BaseHandler):
+class BasePageHandler(BaseApiHandler):
     """前后端代码混合型的页面 Handler"""
     pass

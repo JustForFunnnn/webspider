@@ -1,5 +1,6 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
+# flake8: noqa
 
 import os
 import logging.config
