@@ -1,36 +1,26 @@
-# coding: utf-8
-# import time
-# from unittest import TestCase
-#
-# from webspider.utils.time_tools import (timestamp2string, date2timestamp, job_date2timestamp)
+# coding=utf-8
+from datetime import datetime
+from unittest import TestCase
 
-#
-# class TimeToolsTestCase(TestCase):
-#     def test_date2timestamp(self):
-#         date_string = '2017-05-10'
-#         timestamp = date2timestamp(date_string=date_string)
-#         self.assertEqual(1494345600, timestamp)
-#
-#         date_string = '2017-05-10 12:00:01'
-#         timestamp = date2timestamp(date_string=date_string, date_format='%Y-%m-%d %H:%M:%S')
-#         self.assertEqual(1494388801, timestamp)
-#
-#     def test_timestamp2string(self):
-#         timestamp = 1494345600
-#         timestamp = timestamp2string(timestamp=timestamp)
-#         self.assertEqual('2017-05-10', timestamp)
-#
-#         timestamp = 1494388801
-#         timestamp = timestamp2string(timestamp=timestamp, date_format='%Y-%m-%d %H:%M:%S')
-#         self.assertEqual('2017-05-10 12:00:01', timestamp)
-#
-#     def test_job_date2timestamp(self):
-#         date_str = '2017-11-12'
-#         timestamp = job_date2timestamp(time_string=date_str)
-#         self.assertEqual(timestamp, 1510416000)
-#
-#         now_date_str = timestamp2string(timestamp=time.time())
-#         date_str = now_date_str + ' 12:01'
-#         right_timestamp = date2timestamp(date_string=date_str, date_format='%Y-%m-%d %H:%M')
-#         timestamp = job_date2timestamp(time_string='12:01')
-#         self.assertEqual(timestamp, right_timestamp)
+from webspider.utils.time_tools import (datetime_to_timestamp, timestamp_to_datetime, timestamp_to_datetime_str)
+
+
+class TestUtilTimeTools(TestCase):
+    def test_datetime_to_timestamp(self):
+        datetime_obj = datetime.strptime('2017-05-10', '%Y-%m-%d')
+        timestamp = datetime_to_timestamp(datetime_obj)
+        self.assertEqual(1494345600, timestamp)
+
+    def test_timestamp_to_datetime(self):
+        timestamp = 1494345600
+        datetime_obj = timestamp_to_datetime(timestamp=timestamp)
+        self.assertEqual(datetime_obj.isoformat(), '2017-05-10T00:00:00')
+
+    def test_timestamp_to_datetime_str(self):
+        timestamp = 1494345600
+        datetime_str = timestamp_to_datetime_str(ts=timestamp)
+        self.assertEqual(datetime_str, '2017-05-10')
+
+        timestamp = 1517485617
+        datetime_str = timestamp_to_datetime_str(ts=timestamp, time_format='%Y/%m/%d %H:%M:%S')
+        self.assertEqual(datetime_str, '2018/02/01 19:46:57')

@@ -26,7 +26,7 @@ class TestClass(object):
         self.name = name
 
 
-class TestCache(TestCase):
+class TestUtilCache(TestCase):
 
     def setUp(self):
         keys = redis_instance.keys('*incr_then_return_test_number*')
@@ -65,9 +65,15 @@ class TestCache(TestCase):
         test_number = 0
         self.assertEqual(1, incr_then_return_test_number('test'))
         self.assertEqual(2, incr_then_return_test_number('test_1'))
+        # 清除全部函数缓存
         cache_clear(incr_then_return_test_number)
         self.assertEqual(3, incr_then_return_test_number('test'))
         self.assertEqual(4, incr_then_return_test_number('test_1'))
+
+        # 清除部分函数缓存
+        cache_clear(incr_then_return_test_number, 'test_1')
+        self.assertEqual(3, incr_then_return_test_number('test'))
+        self.assertEqual(5, incr_then_return_test_number('test_1'))
 
     def test_cache_class_instance(self):
         """测试缓存类实例"""
