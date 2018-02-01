@@ -126,7 +126,7 @@ WAIT_FIXED = 1000 * 2
 """
 HTTP_HEADER = {}
 
-USER_AGENT_LIST = {}
+USER_AGENT_LIST = ['for_test']
 
 """
     拉勾相关网页 (基于减少 lagou 的网站负载考虑, 屏蔽以下常量的实际内容)

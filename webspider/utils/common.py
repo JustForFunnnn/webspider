@@ -10,7 +10,7 @@ def get_key_from_dict_by_value(value, dictionary):
     if not keys:
         raise ValueError(u'can not get key from dict by value {}'.format(value))
     if len(keys) > 1:
-        raise ValueError(u'get multi keys from dict by value {}'.format(value))
+        raise AttributeError(u'get multi keys from dict by value {}'.format(value))
     return keys[0]
 
 
@@ -18,11 +18,8 @@ def get_field_statistics(values, constants_dict):
     """
     获得某批数据的统计情况
     eg:
-        input:
-            constants_dict = {'男': 0, '女': 1}
-            values = [0, 0, 0, 1, 1]
-        return:
-            {'男':3, '女':2}
+        >>>get_field_statistics([0, 0, 0, 1, 1], {'男': 0, '女': 1})
+        >>>{'男':3, '女':2}
 
     :param values: list[int], field values list
     :param constants_dict: Dict

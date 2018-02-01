@@ -46,6 +46,6 @@ def convert_field_to_constants(field_name, field_value, constants_map=CONSTANTS_
     if field_value in field_constant_map:
         return field_constant_map[field_value]
     else:
-        logger.error('{field_name} not in constants_map, value is {field_value}'.format(field_name=field_name,
-                                                                                        field_value=field_value))
+        logger.error('error {field_name}, value is {field_value}'.format(field_name=field_name,
+                                                                         field_value=field_value))
         return field_constant_map['unknown'] if 'unknown' in field_constant_map else -1

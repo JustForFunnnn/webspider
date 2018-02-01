@@ -2,9 +2,9 @@
 from sqlalchemy import text
 
 
-def execute_sql_file(file_paths, db_session, expectant_db_name=''):
-    if expectant_db_name:
-        assert get_current_database_name(db_session) == expectant_db_name
+def execute_sql_file(file_paths, db_session, predictive_db_name=''):
+    if predictive_db_name:
+        assert get_current_database_name(db_session) == predictive_db_name
     for file_path in file_paths:
         sql_file = open(file_path, 'r')
 
