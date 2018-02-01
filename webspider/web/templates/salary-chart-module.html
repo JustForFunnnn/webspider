@@ -17,7 +17,7 @@ var option = {
             orient: 'vertical',
             left: 'left',
             data: [
-                    {% for (salary, count) in salary_distribution.items() %}
+                    {% for (salary, count) in salary_statistic.items() %}
                         '{{salary}}',
                     {% end %}
                 ]
@@ -29,7 +29,7 @@ var option = {
                 radius: '55%',
                 center: ['50%', '60%'],
                 data: [
-                    {% for (salary, count) in salary_distribution.items() %}
+                    {% for (salary, count) in salary_statistic.items() %}
                         {
                             {% if count != 0 %}
                                 value: '{{count}}',

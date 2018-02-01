@@ -1,5 +1,6 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
+__all__ = ['BaseException', 'ResourceNotFoundException']
 
 
 class BaseException(Exception):
@@ -46,15 +47,3 @@ class ResourceNotFoundException(BaseException):
 
     def __init__(self, message=u'资源不存在', data=None, debug_message=None):
         super(ResourceNotFoundException, self).__init__(message, data, debug_message)
-
-
-class ProxyCountException(BaseException):
-    pass
-
-
-class ProxyFormatterException(BaseException):
-    pass
-
-
-class RequestsException(BaseException):
-    pass

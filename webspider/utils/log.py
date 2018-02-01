@@ -60,13 +60,13 @@ LOGGING_CONFIG = {
         },
         'tornado.access': {
             'handlers': ['console', 'file'],
-            'propagate': False,
             'level': 'INFO',
+            'propagate': False,
         },
         'tornado.application': {
             'handlers': ['console', 'file'],
-            'propagate': False,
             'level': 'INFO',
+            'propagate': False,
         },
         'tornado.general': {
             'handlers': ['console', 'file'],
@@ -75,18 +75,18 @@ LOGGING_CONFIG = {
         },
         'sqlalchemy.engine': {
             'handlers': ['console', 'file'],
-            'propagate': False,
             'level': 'INFO',
+            'propagate': False,
         },
         'gunicorn': {
+            'handlers': ['console', 'file'],
             'level': 'INFO',
             'propagate': False,
-            'handlers': ['console', 'file'],
         },
         'celery': {
+            'handlers': ['console', 'file'],
             'level': 'DEBUG',
             'propagate': False,
-            'handlers': ['console', 'file'],
         },
     },
 }

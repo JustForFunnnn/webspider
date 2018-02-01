@@ -29,6 +29,7 @@ CELERY_IGNORE_RESULT = True  # 忽略任务结果
 CELERY_IMPORTS = (  # 指定导入的任务模块
     'webspider.tasks.actor.lagou_data',
     'webspider.tasks.actor.lagou_jobs_count',
+    'webspider.tasks.actor.keyword_statistic',
 )
 
 CELERY_TASK_PUBLISH_RETRY = False  # 重试
@@ -38,25 +39,30 @@ CELERYBEAT_SCHEDULE = {
         'task': 'webspider.tasks.actor.lagou_jobs_count.crawl_lagou_jobs_count_task',
         'schedule': crontab(hour='01', minute='01', day_of_week='2, 5'),
     },
-    #     'crawl_lagou_data_task': {
-    #         'task': 'webspider.tasks.actor.lagou_data.crawl_lagou_data_task',
-    #         'schedule': crontab(hour='01', minute='01', day_of_month='1'),
-    #     }
+    'crawl_lagou_data_task': {
+        'task': 'webspider.tasks.actor.lagou_data.crawl_lagou_data_task',
+        'schedule': crontab(hour='01', minute='01', day_of_month='1'),
+    },
+    'update_keyword_statistic': {
+        'task': 'webspider.tasks.actor.keyword_statistic.update_keywords_statistic_task',
+        'schedule': crontab(hour='01', minute='01', day_of_week='1, 4'),
+    },
 }
 
 default_exchange = Exchange('default', type='direct')
 lagou_exchange = Exchange('lagou', type='direct')
 
 CELERY_QUEUES = (
-    Queue(name='default', exchange=default_exchange),
+    Queue(name='default', exchange=default_exchange, routing_key='default'),
     Queue(name='lagou_data', exchange=lagou_exchange, routing_key='for_lagou_data'),
     Queue(name='lagou_jobs_data', exchange=lagou_exchange, routing_key='for_lagou_jobs_data'),
     Queue(name='lagou_jobs_count', exchange=lagou_exchange, routing_key='for_lagou_jobs_count'),
 )
 
 CELERY_ROUTES = {
-    'webspider.tasks.actor.lagou_jobs_count.*': {'exchange': 'lagou', 'routing_key': 'for_lagou_jobs_count'},
     'webspider.tasks.actor.lagou_data.crawl_lagou_job_data_task': {'exchange': 'lagou',
                                                                    'routing_key': 'for_lagou_jobs_data'},
-    'webspider.tasks.actor.lagou_data.*': {'exchange': 'lagou', 'routing_key': 'for_lagou_data'}
+    'webspider.tasks.actor.lagou_jobs_count.*': {'exchange': 'lagou', 'routing_key': 'for_lagou_jobs_count'},
+    'webspider.tasks.actor.lagou_data.*': {'exchange': 'lagou', 'routing_key': 'for_lagou_data'},
+    '*': {'exchange': 'default', 'routing_key': 'default'}
 }

@@ -1,7 +1,7 @@
-<div id="job-city-chart" class="chart-div col-md-6"></div>
+<div id="city-jobs-count-chart" class="chart-div col-md-6"></div>
 
 <script type="text/javascript">
-    var jobCityChart = echarts.init(document.getElementById('job-city-chart'));
+    var cityJobsCountChart = echarts.init(document.getElementById('city-jobs-count-chart'));
     // 指定图表的配置项和数据
 
     var option = {
@@ -17,8 +17,8 @@
             orient: 'vertical',
             left: 'left',
             data: [
-                {% for item in city_job_quantityer[::-1] %}
-                    '{{item[0]}}',
+                {% for (city, count) in city_jobs_count_statistic.items() %}
+                    '{{city}}',
                 {% end %}
             ]
         },
@@ -29,11 +29,11 @@
                 radius: '55%',
                 center: ['50%', '60%'],
                 data: [
-                    {% for item in city_job_quantityer[::-1] %}
-                    {
-                        value: '{{item[1]}}',
-                        name: '{{item[0]}}'
-                    },
+                    {% for (city, count) in city_jobs_count_statistic.items() %}
+                        {
+                            value: '{{count}}',
+                            name: '{{city}}'
+                        },
                     {% end %}
                 ],
                 itemStyle: {
@@ -46,5 +46,5 @@
             }
         ]
     };
-    jobCityChart.setOption(option);
+    cityJobsCountChart.setOption(option);
 </script>

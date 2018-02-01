@@ -18,7 +18,8 @@ def crawl_lagou_data_task():
 
     # 清除抓取记录
     keys = redis_instance.keys('crawled_company_jobs*')
-    redis_instance.delete(*keys)
+    if keys:
+        redis_instance.delete(*keys)
 
     crawl_lagou_city_data_task.delay()
     # 目前只抓取这几个城市 全国:0, 北京:2 上海:3 杭州:6 深圳:215 广州:213 成都:252
@@ -88,7 +89,7 @@ def crawl_lagou_company_data_task(city_id, finance_stage_id, industry_id):
 def crawl_lagou_job_data_task(lagou_company_id):
     """爬取拉勾职位数据任务"""
     # 过滤本轮已经爬取过职位的公司
-    if not redis_instance.setnx(constants.CRAWLED_COMPANY_JOBS_REDIS_KEY.format(lagou_company_id=lagou_company_id)):
+    if not redis_instance.setnx(constants.CRAWLED_COMPANY_JOBS_REDIS_KEY.format(lagou_company_id=lagou_company_id), 1):
         return
     jobs_pagination = crawlers.get_jobs_pagination_from_lagou(lagou_company_id=lagou_company_id,
                                                               job_type=constants.LagouJobType.technology)

@@ -87,21 +87,15 @@ COMPANY_SIZE_DICT = {
 
 DEBUG = (os.environ.get('ENV', 'dev') == 'dev')
 
-MIN_PROXY_COUNT = 30
+SECONDS_OF_DAY = 60 * 60 * 24
 
-HTTP_PROXY_FORMATTER = "http://{ip}:{port}"
-
-HTTPS_PROXY_FORMATTER = "https://{ip}:{port}"
-
-TIMEOUT = 4
+REQUEST_TIMEOUT = 4
 
 # 爬虫最小睡眠时间
 MIN_SLEEP_SECS = 3
 
 # 爬虫最大睡眠时间
 MAX_SLEEP_SECS = 5
-
-REDIS_VISITED_PEOPLES_COUNT_KEY = 'visited_peoples_count'
 
 """
     REDIS KEY 相关    

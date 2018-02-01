@@ -1,12 +1,17 @@
 # -*- coding: utf-8 -*-
 import re
+from collections import Counter
 
 from webspider import utils
 from webspider import constants
-from webspider.models import CompanyModel
+from webspider.models import CompanyModel, KeywordStatisticModel
 from webspider.controllers import city_ctl
 
 ONE_TIME_MAX_RESULT = 10000
+
+
+def get_keyword_statistic(keyword_id):
+    return KeywordStatisticModel.get_one(filter_by={'keyword_id': keyword_id})
 
 
 def update_salary_dict(salary_dict, start, end):
@@ -46,17 +51,11 @@ def get_salary_section(string):
 
 def get_salary_statistic(jobs):
     """职位的薪水分布情况"""
-    salary_statistic = {
-        '10k及以下': 0,
-        '11k-20k': 0,
-        '21k-35k': 0,
-        '36k-60k': 0,
-        '61k以上': 0
-    }
+    salary_statistic = Counter()
     for job in jobs:
         start_salary, end_salary = get_salary_section(job.salary)
         if start_salary <= 10:
-            salary_statistic['10k 及以下'] += 1
+            salary_statistic['10k及以下'] += 1
         if start_salary <= 20 and end_salary >= 11:
             salary_statistic['11k-20k'] += 1
         if start_salary <= 35 and end_salary >= 21:
@@ -64,7 +63,7 @@ def get_salary_statistic(jobs):
         if start_salary <= 60 and end_salary >= 36:
             salary_statistic['36k-60k'] += 1
         if end_salary >= 61:
-            salary_statistic['61k 以上'] += 1
+            salary_statistic['61k以上'] += 1
     return salary_statistic
 
 
@@ -77,26 +76,21 @@ def get_finance_stage_statistic(jobs):
     return finance_stage_statistic
 
 
-def get_educations_request_statistic(jobs):
+def get_educations_statistic(jobs):
     return utils.common.get_field_statistics(values=[job.education for job in jobs],
                                              constants_dict=constants.EDUCATION_REQUEST_DICT)
 
 
-def get_work_years_request_statistic(jobs):
-    return utils.common.get_field_statistics(values=[job.work_year for job in jobs],
-                                             constants_dict=constants.WORK_YEARS_REQUEST_DICT)
-
-
-def get_per_day_jobs_count_statistic(jobs):
+def get_work_years_statistic(jobs):
     return utils.common.get_field_statistics(values=[job.work_year for job in jobs],
                                              constants_dict=constants.WORK_YEARS_REQUEST_DICT)
 
 
 def get_sorted_city_jobs_count_statistic(jobs, limit=10):
     city_name_dict = city_ctl.get_city_name_dict()
-    job_count_statistic = utils.common.get_field_statistics(values=[job.city_id for job in jobs],
-                                                            constants_dict=city_name_dict)
-    sorted_job_count_statistic = sorted(job_count_statistic.items(), key=lambda x: x[1], reverse=True)
+    city_job_count = utils.common.get_field_statistics(values=[job.city_id for job in jobs],
+                                                       constants_dict=city_name_dict)
+    sorted_city_job_count = sorted(city_job_count.items(), key=lambda x: x[1], reverse=True)
     if limit:
-        sorted_job_count_statistic = sorted_job_count_statistic[:limit]
-    return sorted_job_count_statistic
+        sorted_city_job_count = sorted_city_job_count[:limit]
+    return Counter({item[0]: item[1] for item in sorted_city_job_count})

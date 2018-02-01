@@ -12,26 +12,34 @@ redis_pool = redis.ConnectionPool(host=setting.REDIS_CONF['host'],
 redis_instance = redis.Redis(connection_pool=redis_pool)
 
 
-def simple_cache(func):
+def simple_cache(ex=None):
     """利用 redis 进行缓存，暂不支持 kwargs 类型的参数传入方式"""
 
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        if kwargs:
-            raise ValueError(
-                "args key generator does not accept kwargs arguments")
-        redis_key = func.__name__ + '(' + ','.join(map(str, args)) + ')'
-        result = redis_instance.get(redis_key)
-        if result:
-            logging.info('cache: get func result from redis key - {}'.format(redis_key))
-            result = pickle.loads(result)
-        else:
-            logging.info('cache: get func result from func key - {}'.format(redis_key))
-            result = func(*args)
-            redis_instance.set(redis_key, pickle.dumps(result))
-        return result
+    print(ex)
 
-    return wrapper
+    def decorator(func):
+        print(func)
+
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            print(args, kwargs)
+            if kwargs:
+                raise ValueError(
+                    "args key generator does not accept kwargs arguments")
+            redis_key = func.__name__ + '(' + ','.join(map(str, args)) + ')'
+            result = redis_instance.get(redis_key)
+            if result:
+                logging.info('cache: get func result from redis key - {}'.format(redis_key))
+                result = pickle.loads(result)
+            else:
+                logging.info('cache: get func result from func key - {}'.format(redis_key))
+                result = func(*args)
+                redis_instance.set(name=redis_key, value=pickle.dumps(result), ex=ex)
+            return result
+
+        return wrapper
+
+    return decorator
 
 
 def cache_clear(func, *args):

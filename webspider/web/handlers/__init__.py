@@ -1,8 +1,7 @@
 # coding=utf-8
-from webspider.web.handlers.index import IndexHandler
-from webspider.web.handlers.statistics import StatisticsHandler
+from webspider.web.handlers.keyword_statistics import KeywordStatisticsApiHandler, KeywordStatisticsPageHandler
 
 __all__ = [
-    'IndexHandler',
-    'StatisticsHandler'
+    'KeywordStatisticsApiHandler',
+    'KeywordStatisticsPageHandler'
 ]

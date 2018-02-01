@@ -6,7 +6,6 @@ from tornado.util import ObjectDict
 
 from webspider import utils
 from webspider import constants
-from webspider.models.job import JobModel
 
 logger = logging.getLogger(__name__)
 

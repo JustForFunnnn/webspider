@@ -3,6 +3,7 @@
 from sqlalchemy.exc import IntegrityError
 
 from webspider.models.city import CityModel
+from webspider.utils.cache import simple_cache
 
 
 def get_city_id_by_name(name):
@@ -22,6 +23,7 @@ def insert_city_if_not_exist(name):
         pass
 
 
+@simple_cache(ex=60 * 60 * 1)
 def get_city_name_dict():
     """
     :return: dict eg: {'北京': 2, '上海':3, ......}
