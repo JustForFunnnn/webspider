@@ -46,6 +46,25 @@ class BaseModel(_Base):
         return ObjectDict((column, getattr(self, column)) for column in columns)
 
     @classmethod
+    def count(cls, filter=None, filter_by=None):
+        """
+        获取数据库中记录的数目
+        :param filter: apply the given filtering criterion to a copy of this Query,
+        using SQL expressions.
+        :param filter_by: apply the given filtering criterion to a copy of this Query,
+        using keyword expressions as a dict.
+        :return:
+        """
+        query = cls.session.query(func.count(cls.pk))
+
+        if filter is not None:
+            query = query.filter(filter)
+        if filter_by is not None:
+            query = query.filter_by(**filter_by)
+
+        return query.scalar()
+
+    @classmethod
     def add(cls, **values):
         """添加记录"""
         obj = cls(**values)
@@ -129,25 +148,6 @@ class BaseModel(_Base):
         """
 
         return cls.count(filter=filter, filter_by=filter_by) != 0
-
-    @classmethod
-    def count(cls, filter=None, filter_by=None):
-        """
-        获取数据库中记录的数目
-        :param filter: apply the given filtering criterion to a copy of this Query,
-        using SQL expressions.
-        :param filter_by: apply the given filtering criterion to a copy of this Query,
-        using keyword expressions as a dict.
-        :return:
-        """
-        query = cls.session.query(func.count(cls.pk))
-
-        if filter is not None:
-            query = query.filter(filter)
-        if filter_by is not None:
-            query = query.filter_by(**filter_by)
-
-        return query.scalar()
 
     @classmethod
     def update(cls, filter=None, filter_by=None, values=None):

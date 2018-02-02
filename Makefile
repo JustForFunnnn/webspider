@@ -14,7 +14,7 @@ python: setup.py requirements.txt
 	touch webspider/log/spider_log.txt
 
 test: flake8
-	./runtests.sh
+	env/bin/nosetests -vd
 
 flake8:
 	env/bin/flake8

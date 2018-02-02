@@ -98,3 +98,4 @@ oj.py
 /webspider/log
 /webspider/security_constants.py
 celerybeat-schedule
+cove

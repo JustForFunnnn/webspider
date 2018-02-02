@@ -27,7 +27,7 @@ class BaseTestCase(TestCase):
         execute_sql_file(
             file_paths=[os.path.join(path, "schema.sql"), ],
             db_session=self.session,
-            expectant_db_name=test_db_name
+            predictive_db_name=test_db_name
         )
         fixture_path = os.path.join(path, 'fixture')
         # 装载表数据
@@ -35,9 +35,9 @@ class BaseTestCase(TestCase):
         execute_sql_file(
             file_paths=fixture_file_paths,
             db_session=self.session,
-            expectant_db_name=test_db_name
+            predictive_db_name=test_db_name
         )
-        assert get_current_database_name(self.session) == 'test_spider'
+        assert get_current_database_name(self.session) == test_db_name
 
     def teardown(self):
         # 测试结束 销毁测试数据库
