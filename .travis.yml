@@ -19,4 +19,4 @@ script:
   - make test
 
 after_success:
-  - env/bin/coveralls
+  - env/bin/codecov

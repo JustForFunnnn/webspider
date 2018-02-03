@@ -13,5 +13,5 @@ class TestClass(object):
 
 
 class TestUtilClassProperty(TestCase):
-    def test_class_property(self):
+    def test_read_class_property(self):
         self.assertEqual(TestClass.name, '阿河')
