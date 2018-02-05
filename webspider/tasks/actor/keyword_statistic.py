@@ -28,7 +28,7 @@ def update_single_keyword_statistic_task(keyword_id):
 
     educations_statistic = keyword_statistic_ctl.get_educations_statistic(jobs=jobs)
     finance_stage_statistic = keyword_statistic_ctl.get_finance_stage_statistic(jobs=jobs)
-    city_jobs_count_statistic = keyword_statistic_ctl.get_sorted_city_jobs_count_statistic(jobs=jobs)
+    city_jobs_count_statistic = keyword_statistic_ctl.get_city_jobs_count_statistic(jobs=jobs)
     salary_statistic = keyword_statistic_ctl.get_salary_statistic(jobs=jobs)
     work_years_statistic = keyword_statistic_ctl.get_work_years_statistic(jobs=jobs)
 

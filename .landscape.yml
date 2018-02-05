@@ -6,9 +6,7 @@ max-line-length: 120
 python-targets: 3
 
 uses:
-  - tornado
   - celery
-  - sqlalchemy
 
 ignore-paths:
   - .git

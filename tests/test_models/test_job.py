@@ -22,7 +22,7 @@ test_job_dict = dict(id=1,
                      updated_at=datetime.strptime('2018-01-30 17:22:30', '%Y-%m-%d %H:%M:%S'))
 
 
-class JobModelTestCase(BaseTestCase):
+class TestJobModel(BaseTestCase):
     def test_pk_name(self):
         self.assertEqual(JobModel.pk_name, 'id')
 

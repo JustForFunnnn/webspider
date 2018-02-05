@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from webspider import utils
-from webspider.web.formatter.base import Field
+from webspider.web.formatter.base import Field, Formatter
 
 
-class JobsCountFormatter(object):
+class JobsCountFormatter(Formatter):
     FIELDS = [
         Field('date'),
         Field('all_city'),

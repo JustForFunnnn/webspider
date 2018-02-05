@@ -1,6 +1,6 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
-__all__ = ['BaseException', 'ResourceNotFoundException']
+__all__ = ['BaseException', 'ResourceNotFoundWebException', 'DowngradeException']
 
 
 class BaseException(Exception):
@@ -38,7 +38,7 @@ class BaseException(Exception):
         return self.__str__()
 
 
-class ResourceNotFoundException(BaseException):
+class ResourceNotFoundWebException(BaseException):
     """
     Corresponding to HTTP code 404
     """
@@ -46,4 +46,11 @@ class ResourceNotFoundException(BaseException):
     STATUS_CODE = 404
 
     def __init__(self, message=u'资源不存在', data=None, debug_message=None):
-        super(ResourceNotFoundException, self).__init__(message, data, debug_message)
+        super(ResourceNotFoundWebException, self).__init__(message, data, debug_message)
+
+
+class DowngradeException(BaseException):
+    ERROR_CODE = 101
+
+    def __init__(self, message=u'降级异常', data=None, debug_message=None):
+        super(DowngradeException, self).__init__(message, data, debug_message)

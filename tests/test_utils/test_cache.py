@@ -56,7 +56,7 @@ class TestUtilCache(TestCase):
         test_number = 0
         self.assertEqual(1, incr_then_return_test_number_with_ex('test'))
         self.assertEqual(1, incr_then_return_test_number_with_ex('test'))
-        time.sleep(1)
+        time.sleep(1.1)
         self.assertEqual(2, incr_then_return_test_number_with_ex('test'))
 
     def test_cache_clear(self):

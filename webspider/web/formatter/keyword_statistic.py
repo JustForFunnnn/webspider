@@ -2,10 +2,10 @@
 import json
 
 from webspider import utils
-from webspider.web.formatter.base import Field, Downgrade
+from webspider.web.formatter.base import Field, Downgrade, Formatter
 
 
-class KeywordStatisticFormatter(object):
+class KeywordStatisticFormatter(Formatter):
     FIELDS = [
         Field('educations', converter=json.loads, downgrade=Downgrade({})),
         Field('city_jobs_count', converter=json.loads, downgrade=Downgrade({})),

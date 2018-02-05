@@ -20,7 +20,7 @@ Keywords |  `Python3`, `Tornado`, `Celery`, `Spider`, `Requests`
 
 ## 展示页面
 
-![Alt text](job-chart.jpeg)
+![Alt text](job-chart.jpg)
 
 ## Quick Start
 > 以下操作均是在 `Linux - Ubuntu` 环境下执行
@@ -108,6 +108,8 @@ make clean
 ## TODO
 
 - [ ] 前后端分离
+
+- [ ] 更为丰富的数据展示维度
 
 - [x] 重构爬虫
 

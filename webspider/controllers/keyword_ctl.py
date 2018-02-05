@@ -18,12 +18,5 @@ def insert_keyword_if_not_exist(name):
 def get_keyword_name_by_id(keyword_id):
     keyword = KeywordModel.get_by_pk(keyword_id)
     if not keyword:
-        return None
+        raise ValueError('Get None when keyword id is {}'.format(keyword_id))
     return keyword.name
-
-
-def get_keyword_id_by_name(name):
-    keyword = KeywordModel.get_one(filter_by={'name': name})
-    if not keyword:
-        return None
-    return keyword.id

@@ -93,4 +93,5 @@ LOGGING_CONFIG = {
 
 
 def config_logging():
+    """配置日志"""
     logging.config.dictConfig(LOGGING_CONFIG)

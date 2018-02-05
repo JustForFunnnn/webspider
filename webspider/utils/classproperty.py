@@ -2,7 +2,7 @@
 
 
 class ClassPropertyDescriptor(object):
-
+    """类属性"""
     def __init__(self, fget, fset=None):
         self.fget = fget
         self.fset = fset
@@ -10,7 +10,6 @@ class ClassPropertyDescriptor(object):
     def __get__(self, obj, obj_type=None):
         if obj_type is None:
             obj_type = type(obj)
-        print('__get__', obj, obj_type, self.fget)
         return self.fget.__get__(obj, obj_type)()
 
     def __set__(self, obj, value):

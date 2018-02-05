@@ -3,7 +3,7 @@ from tornado.escape import json_encode
 from tornado.web import RequestHandler
 
 from webspider import constants
-from webspider.exceptions import BaseException, ResourceNotFoundException
+from webspider.exceptions import BaseException, ResourceNotFoundWebException
 from webspider.web.formatter import Formatter
 from webspider.utils.sql import remove_sessions
 
@@ -29,7 +29,7 @@ class BaseApiHandler(RequestHandler):
 
     def _handler_production_page_error(self, exception):
         """处理生产环境下页面的错误"""
-        if isinstance(exception, ResourceNotFoundException):
+        if isinstance(exception, ResourceNotFoundWebException):
             self.render('404.html')
         else:
             self.render('500.html')

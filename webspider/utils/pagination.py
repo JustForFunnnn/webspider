@@ -3,6 +3,7 @@ from math import ceil
 
 
 class Pagination(object):
+    """分页"""
     def __init__(self, page=1, per_page=10, total=0):
         self.page = page
         self.per_page = per_page

@@ -1,24 +1,27 @@
 # coding=utf-8
 from tornado.util import ObjectDict
 
-from webspider.models.base import BaseModel
+from webspider.exceptions import DowngradeException
 
 
 class Downgrade(object):
+    """降级"""
     def __init__(self, value):
         self.value = value
 
 
 class Field(object):
+    """Formatter字段"""
     def __init__(self, name, converter=None, downgrade=None):
         self.name = name
         self.converter = converter
-        if downgrade and not isinstance(downgrade, Downgrade):
-            raise ValueError(u'downgrade must be Downgrade instance')
+        if downgrade is not None and not isinstance(downgrade, Downgrade):
+            raise DowngradeException(u'downgrade must be Downgrade instance')
         self.downgrade = downgrade
 
 
 class Formatter(object):
+    """Formatter 根据设定的 FORMATTER_MAPS 自动渲染"""
     _FORMATTER_MAPS = {}
     FIELDS = {}
 
@@ -41,7 +44,8 @@ class Formatter(object):
                     raise ValueError('formatter field must be Field instance')
                 try:
                     value = getattr(data, field.name)
-                    if isinstance(value, BaseModel) or isinstance(value, list):
+                    # 可再次渲染
+                    if isinstance(value, list) or cls.get_formatter(value):
                         value = cls.format(value)
                     if field.converter:
                         value = field.converter(value)
@@ -57,6 +61,8 @@ class Formatter(object):
 
     @classmethod
     def get_formatter(cls, data):
+        if data in cls._FORMATTER_MAPS:
+            return cls._FORMATTER_MAPS[data]
         for model, formatter in cls._FORMATTER_MAPS.items():
             if type(data) is model:
                 return formatter
