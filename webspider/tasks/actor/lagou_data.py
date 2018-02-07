@@ -23,12 +23,9 @@ def crawl_lagou_data_task():
 
     crawl_lagou_city_data_task.delay()
     # 目前只抓取这几个城市 全国:0, 北京:2 上海:3 杭州:6 深圳:215 广州:213 成都:252
-    # lagou_city_ids = [2, 3, 6, 215, 213, 252]
-    lagou_city_ids = [0]
-    # lagou_finance_stage_ids = [1, 2, 3, 4, 5, 6, 7, 8]
-    lagou_finance_stage_ids = [0]
-    # lagou_industry_ids = [24, 25, 33, 27, 29, 45, 31, 28, 47, 34, 35, 43, 32, 41, 26, 48, 38, 49, 10594]
-    lagou_industry_ids = [0]
+    lagou_city_ids = [2, 3, 6, 215, 213, 252]
+    lagou_finance_stage_ids = [1, 2, 3, 4, 5, 6, 7, 8]
+    lagou_industry_ids = [24, 25, 33, 27, 29, 45, 31, 28, 47, 34, 35, 43, 32, 41, 26, 48, 38, 49, 10594]
     # 爬取公司数据
     for industry_id in lagou_industry_ids:
         for city_id in lagou_city_ids:

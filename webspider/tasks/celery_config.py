@@ -64,5 +64,5 @@ CELERY_ROUTES = {
                                                                    'routing_key': 'for_lagou_jobs_data'},
     'webspider.tasks.actor.lagou_jobs_count.*': {'exchange': 'lagou', 'routing_key': 'for_lagou_jobs_count'},
     'webspider.tasks.actor.lagou_data.*': {'exchange': 'lagou', 'routing_key': 'for_lagou_data'},
-    '*': {'exchange': 'default', 'routing_key': 'default'}
+    'webspider.tasks.actor.keyword_statistic.*': {'exchange': 'default', 'routing_key': 'default'}
 }
