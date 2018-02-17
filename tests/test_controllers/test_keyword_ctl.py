@@ -12,6 +12,13 @@ class TestKeywordController(BaseTestCase):
         with self.assertRaises(ValueError):
             keyword_ctl.get_keyword_name_by_id(keyword_id=10001)
 
+    def test_get_keyword_id_by_name(self):
+        keyword_id = keyword_ctl.get_keyword_id_by_name(name='python')
+        self.assertEqual(keyword_id, 100)
+
+        with self.assertRaises(ValueError):
+            keyword_ctl.get_keyword_id_by_name(name='go')
+
     def test_insert_keyword_if_not_exist(self):
         keyword_name = 'C--'
         keyword_id = keyword_ctl.insert_keyword_if_not_exist(keyword_name)

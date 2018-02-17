@@ -99,3 +99,4 @@ oj.py
 /webspider/security_constants.py
 celerybeat-schedule
 cove
+nohup.out
