@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="container center_div">
+    
+    <h1>about {{ keyword_name }}: </h1>
+    <br>
+    {% include 'work-year-chart-module.html' %}
+    {% include 'salary-chart-module.html' %}
+    {% include 'city-jobs-count-chart-module.html' %}
+    {% include 'education-chart-module.html' %}
+    {% include 'per-day-jobs-count-chart-module.html' %}
+    {% include 'finance-stage-chart-module.html' %}
+
+</div>
+{% end %}
+
+{% block header %}
+<script src="{{ static_url('js/echarts.min.js') }}"></script>
+{% end %}

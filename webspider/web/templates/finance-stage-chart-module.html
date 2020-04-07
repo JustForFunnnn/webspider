@@ -1,0 +1,85 @@
+<div id="finance-stage-chart" class="large-chart-div col-md-12"></div>
+
+<script type="text/javascript">
+    var financeStageChart = echarts.init(document.getElementById('finance-stage-chart'));
+    // 指定图表的配置项和数据
+
+
+    var option = {
+        title: {
+            text: '公司融资情况',
+            subtext: '统计招聘该岗位的公司'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'value',
+            boundaryGap: [0, 0.01]
+        },
+        yAxis: {
+            type: 'category',
+            data: ['未融资', '天使轮', 'A轮', 'B轮', 'C轮', 'D轮及以上', '上市公司', '不需要融资']
+        },
+        series: [
+            {
+                name: '数量(单位:个)',
+                type: 'bar',
+                data: [
+                    {% if '未融资' in finance_stage_statistic %}
+                        {{finance_stage_statistic['未融资']}}
+                    {% else %}
+                        0
+                    {% end %},
+                    {% if '天使轮' in finance_stage_statistic %}
+                        {{finance_stage_statistic['天使轮']}}
+                    {% else %}
+                        0
+                    {% end %},
+                    {% if 'A轮' in finance_stage_statistic %}
+                        {{finance_stage_statistic['A轮']}}
+                    {% else %}
+                        0
+                    {% end %},
+                    {% if 'B轮' in finance_stage_statistic %}
+                        {{finance_stage_statistic['B轮']}}
+                    {% else %}
+                        0
+                    {% end %},
+                    {% if 'C轮' in finance_stage_statistic %}
+                        {{finance_stage_statistic['C轮']}}
+                    {% else %}
+                        0
+                    {% end %},
+                    {% if 'D轮及以上' in finance_stage_statistic %}
+                        {{finance_stage_statistic['D轮及以上']}}
+                    {% else %}
+                        0
+                    {% end %},
+                    {% if '上市公司' in finance_stage_statistic %}
+                        {{finance_stage_statistic['上市公司']}}
+                    {% else %}
+                        0
+                    {% end %},
+                    {% if '不需要融资' in finance_stage_statistic %}
+                        {{finance_stage_statistic['不需要融资']}}
+                    {% else %}
+                        0
+                    {% end %}
+                ]
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    financeStageChart.setOption(option);
+</script>

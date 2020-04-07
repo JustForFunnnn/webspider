@@ -1,0 +1,24 @@
+<div align="center">
+    <ul class="pagination">
+        <li {% if not pagination.has_prev %} class="disabled" {% else %} class="previous" {% end %}>
+            <a {% if pagination.has_prev %} href="/keyword?keyword={{ keyword }}&page={{ pagination.prev_num }}" {% else %} href="#"{% end %}>
+                &laquo;
+            </a>
+        </li>
+        {% for p in pagination.iter_pages() %}
+            {% if p %}
+                <li {% if p == pagination.page %} class="active" {% end %} >
+                    <a href="/keyword?keyword={{ keyword }}&page={{ p }}">{{ p }}</a>
+                </li>
+            {% else %}
+                <li class="disabled"><a href="#">&hellip;</a></li>
+            {% end %}
+        {% end %}
+        <li {% if not pagination.has_next %} class="disabled" {% else %} class="next" {% end %}>
+            <a {% if pagination.has_next %} href="/keyword?keyword={{ keyword }}&page={{ pagination.next_num }}" {% else %} href="#"{% end %}>
+                &raquo;
+            </a>
+        </li>
+    </ul>
+</div>
+

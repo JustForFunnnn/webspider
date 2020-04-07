@@ -1,0 +1,34 @@
+body {
+    font-family: "Hiragino Sans GB", "Microsoft Yahei", SimSun, Arial, "Helvetica Neue", Helvetica;
+    color: #333;
+    word-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+}
+
+footer {
+    font-size: 14px;
+    border-radius: 5px;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.main-body {
+    min-height: 780px;
+}
+
+.chart-div {
+    width: 550px;
+    height: 400px;
+    padding-top: 30px;
+    margin: 0 auto;
+}
+
+.large-chart-div {
+    width: 1000px;
+    height: 700px;
+    padding-top: 30px;
+    margin: 0 auto;
+}
