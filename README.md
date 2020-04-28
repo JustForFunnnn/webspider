@@ -9,7 +9,7 @@
 | --       | --                                         |
 | -------- | ------------------------------------------ |
 | Version  | 1.0.1                                      |
-| WebSite  | 119.23.223.90:8000:8000                    |
+| WebSite  | http://119.23.223.90:8000                  |
 | Source   | https://github.com/GuozhuHe/webspider      |
 | Keywords | `Python3`, `Tornado`, `Celery`, `Requests` |
 
