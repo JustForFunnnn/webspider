@@ -1,0 +1,32 @@
+autodetect: yes
+test-warnings: true
+doc-warnings: true
+strictness: veryhigh
+max-line-length: 120
+python-targets: 3
+
+uses:
+  - celery
+
+ignore-paths:
+  - .git
+  - coverage
+  - env
+  - test
+  - webspider/web/templates
+  - webspider/web/static
+
+pep8:
+  run: true
+  disable:
+    - W291
+    - E501
+
+pyflakes:
+    run: true
+
+inherits: [flake8]
+
+requirements:
+  - requirements.txt
+
