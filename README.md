@@ -13,93 +13,106 @@
 | Source   | https://github.com/JustForFunnnn/webspider |
 | Keywords | `Python3`, `Tornado`, `Celery`, `Requests` |
 
-## 项目简介
+## Introduction
 
-本项目使用的编程语言是`python3`，数据库用的是`MySQL`, 主要用到的库是`celery`和`requests`，并实现了定时任务，出错重试，日志记录，自动更改`Cookies`等的功能，使用`ECharts` + `Bootstrap` 来构建前端页面。
+This project crawls job&company data from job-seeking websites, cleans the data, modelizes, converts, and stores it in the database. then use [Echarts](https://echarts.apache.org/en/index.html) and [Bootstrap](https://getbootstrap.com/) to build a front-end page to display the IT job statistics, to show the newest requirements and trends of the IT job market.
 
-## 展示页面
+## Demo
+
+You can input the keyword you are interested in into the search box, such as "Python", then click the search button, and the statistics of this keyword will show.
+
+* The first chart `Years of Working(工作年限要求`) is about the experience requirement of the `Python`, according to the data, the "3 ~ 5 years" is the most frequent requirement, then the following is `1 ~ 3 years`  ([Chart Source Code](https://github.com/JustForFunnnn/webspider/blob/8664fdd135d0ee4322169e484ba9a35bc46032bf/webspider/web/templates/work-year-chart-module.html))
+
+* The second chart `Salary Range(薪水分布`) is about the salary of the `Python`, according to the data,  the "11k ~ 20k" is the most frequent salary provided, then the following is `21k ~ 35k`  ([Chart Source Code](https://github.com/JustForFunnnn/webspider/blob/8664fdd135d0ee4322169e484ba9a35bc46032bf/webspider/web/templates/salary-chart-module.html))
+
+and we also got charts:
+* [Education Requirement Data Chart](https://github.com/JustForFunnnn/webspider/blob/8664fdd135d0ee4322169e484ba9a35bc46032bf/webspider/web/templates/education-chart-module.html)
+* [City Job Count Chart](https://github.com/JustForFunnnn/webspider/blob/8664fdd135d0ee4322169e484ba9a35bc46032bf/webspider/web/templates/city-jobs-count-chart-module.html)
+* [Job Count Change Chart](https://github.com/JustForFunnnn/webspider/blob/8664fdd135d0ee4322169e484ba9a35bc46032bf/webspider/web/templates/per-day-jobs-count-chart-module.html)
+* [Company Finance Stage Chart](https://github.com/JustForFunnnn/webspider/blob/8664fdd135d0ee4322169e484ba9a35bc46032bf/webspider/web/templates/finance-stage-chart-module.html)
+
+Python Charts Example:
 
 ![Alt text](job-chart.jpg)
 
 ## Quick Start
-> 以下操作均是在 `Linux - Ubuntu` 环境下执行
+> This tutorial is based on `Linux - Ubuntu`, for other systems, please find the corresponding command
 
-* 克隆项目
+* Clone the project
 
 ```bash
 git clone git@github.com:JustForFunnnn/webspider.git
 ```
 
-* 安装 `MySQL`, `Redis`, `Python3`
+* Install `MySQL`, `Redis`, `Python3`
 
 ```bash
-# 安装 redis
+# install Redis
 apt-get install redis-server
 
-# 后台启动 redis-server
+# run Redis in background
 nohup redis-server &
 
-# 安装 python3
+# install Python3
 apt-get install python3
 
-# 安装 MySQL
+# install MySQL
 apt-get install mysql-server
 
-# 启动 MySQL
+# start MySQL
 sudo service mysql start
 ```
 
-* 配置数据库和表
-```mysql
-# 创建数据库
+* Config database and table
+```
+# create database
 CREATE DATABASE `spider` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-# 还需要创建相关表，表的定义语句在 tests/schema.sql 文件中，可自行复制进 MySQL 命令行中执行。
 ```
+We still need to create the tables, copy the table definition SQL from `tests/schema.sql` and run it in MySQL
 
-* 在项目根目录下构建
+* Build project
 ```bash
+# after a successful build, some executable jobs will be generated under the path env/bin 
 make
-# 构建成功后项目的 env/bin 目录下会有可执行脚本
 ```
 
-* 执行单元测试
+* Run unit-test
 ```bash
 make test
 ```
 
-* 代码风格检查
+* Run code style check
 ```bash
 make flake8
 ```
 
-* 运行 `Web Server`
+* Start web service
 ```bash
 env/bin/web
 ```
 
-* 运行爬虫程序
+* Stat crawler
 ```bash
-# 启动定时任务分发器
+# run task scheduler/dispatcher
 env/bin/celery_beat
-# 启动爬取 数据 的 worker
-env/bin/celery_lg_data_worker
-# 启动爬取 职位数据 的 worker
+# run celery worker for job data
 env/bin/celery_lg_jobs_data_worker
-# 启动爬取 职位数量 的 worker
+# run celery worker for job count
 env/bin/celery_lg_jobs_count_worker
 ```
 
-* env/bin 目录下其他可执行脚本
+* Other jobs
 ```bash
-# 直接爬取职位数量
+# start crawl job count immediately
 env/bin/crawl_lg_jobs_count
-# 直接爬取职位数据
+# start crawl job data immediately
 env/bin/crawl_lg_data
-# 启动celery监控
+# start celery monitoring
 env/bin/celery_flower
 ```
 
-* 清除构建信息
+* Clean
 ```bash
+# clean the existing build result
 make clean
 ```
